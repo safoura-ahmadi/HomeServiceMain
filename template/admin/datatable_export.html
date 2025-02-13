@@ -1,0 +1,2637 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="rtl">
+    
+<!-- Mirrored from demo.rayanik.com/modiran/light/datatable_export.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 11 Jan 2025 13:57:26 GMT -->
+<head>
+        <title>قالب مدیریتی مدیران</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="قالب مدیریت ایرانی مدیران ">
+        <meta name="keywords" content="قالب مدیریت, قالب داشبورد, قالب ادمین, قالب مدیران, قالب مدیریت راستچین , قالب ایرانی مدیریت, پوسته مدیریت, قالب ادمین داشبورد سایت, قالب مدیریتی, مدیران, قالب مدیریت مدیران, پنل مدیریت, پنل مدیریت مدرن, قالب ادمین متریال, قالب مدیریت بوت استرپ, قالب ادمین بوتسترپ, قالب ادمین سایت, پوسته مدیریتی ایرانی, قالب مدیرتی مدیران ایرانی, بهترین قالب مدیریت, قالب مدیریت ریسپانسیو, قالب مدیریت ارزان, قالب admin">
+        <meta name="fontiran.com:license" content="NE29X">
+        <link rel="shortcut icon" href="assets/images/favicon.png">
+
+        <!-- BEGIN CSS -->
+        <link href="assets/plugins/bootstrap/bootstrap5/css/bootstrap.rtl.min.css" rel="stylesheet">
+        <link href="assets/plugins/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+        <link href="assets/plugins/simple-line-icons/css/simple-line-icons.min.css" rel="stylesheet">
+        <link href="assets/plugins/font-awesome/css/all.min.css" rel="stylesheet">
+        <link href="assets/plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet">
+        <link href="assets/plugins/switchery/dist/switchery.min.css" rel="stylesheet">
+        <link href="assets/plugins/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+        <link href="assets/plugins/paper-ripple/dist/paper-ripple.min.css" rel="stylesheet">
+        <link href="assets/plugins/iCheck/skins/square/_all.css" rel="stylesheet">
+        <link href="assets/css/style.css" rel="stylesheet">
+        <link href="assets/css/colors.css" rel="stylesheet">
+        <!-- END CSS -->
+        <!-- BEGIN PAGE CSS -->
+        <link href="assets/plugins/data-table/DataTables-1.10.16/css/jquery.dataTables.css" rel="stylesheet">
+        <!-- END PAGE CSS -->
+    </head>
+    <body class="active-ripple theme-darkpurple fix-header sidebar-extra bg-1">
+        <!-- BEGIN LOEADING -->
+        <div id="loader">
+            <div class="spinner"></div>
+        </div><!-- /loader -->
+        <!-- END LOEADING -->
+        
+        <!-- BEGIN HEADER -->
+        <div class="navbar navbar-fixed-top" id="main-navbar">            
+            <div class="header-right">
+                <a href="dashboard.html" class="logo-con">
+                    <img src="assets/images/logo.png" class="img-responsive center-block" alt="لوگو قالب مدیران">
+                </a>
+            </div><!-- /.header-right -->
+            <div class="header-left">
+                <div class="top-bar">                        
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>                                
+                            <a href="#" class="btn" id="toggle-sidebar">
+                                <span class="menu"></span>
+                            </a>
+                        </li>
+                        <li>                                
+                            <a href="#" class="btn open" id="toggle-sidebar-top">
+                                <i class="icon-user-following"></i>
+                            </a>
+                        </li>
+                        <li>                                
+                            <a href="#" class="btn" id="toggle-dark-mode">
+                                <i class="icon-bulb"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-left">
+                        <li class="dropdown">
+                            <a href="#" class="btn" id="toggle-fullscreen">
+                                <i class="icon-size-fullscreen"></i>
+                            </a>
+                        </li>
+                        <li class="dropdown dropdown-messages">
+                            <a href="#" class="dropdown-toggle btn" data-bs-toggle="dropdown">
+                                <i class="icon-envelope"></i>
+                                <span class="badge badge-primary">
+                                    4
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu has-scrollbar">
+                                <li class="dropdown-header clearfix">
+                                    <span class="float-start">
+                                        <a href="#" rel="tooltip" title="خواندن همه" data-placement="left">
+                                            <i class="icon-eye"></i>
+                                        </a>
+                                        شما 4 پیام تازه دارید.
+                                    </span>
+                                </li>
+                                <li class="dropdown-body">
+                                    <ul class="dropdown-menu-list" >
+                                        <li class="clearfix">
+                                            <a href="#">
+                                                <p class="clearfix">
+                                                    <strong class="float-start">
+                                                        <img src="assets/images/user/32.png" class="img-circle" alt="">
+                                                        سهراب سپهری
+                                                    </strong> 
+                                                    <small class="float-end text-muted">
+                                                        <i class="icon-clock"></i>
+                                                        ده دقیقه پیش
+                                                    </small>
+                                                </p>
+                                                <p>پیام پرمهرتان دریافت شد!</p>
+                                            </a>
+                                        </li>
+                                        <li class="clearfix">
+                                            <a href="#">
+                                                <p class="clearfix">
+                                                    <strong class="float-start">
+                                                        <img src="assets/images/user/32.png" class="img-circle" alt="">
+                                                        شفیعی کدکنی
+                                                    </strong> 
+                                                    <small class="float-end text-muted">
+                                                        <i class="icon-clock"></i>
+                                                        سی دقیقه پیش
+                                                    </small>
+                                                </p>
+                                                <p>بسته ارسالی شما به دستم رسید.</p>
+                                            </a>
+                                        </li>
+                                        <li class="clearfix">
+                                            <a href="#">
+                                                <p class="clearfix">
+                                                    <strong class="float-start">
+                                                        <img src="assets/images/user/32.png" class="img-circle" alt="">
+                                                        قیصر امین پور
+                                                    </strong> 
+                                                    <small class="float-end text-muted">
+                                                        <i class="icon-clock"></i>
+                                                        یک ساعت پیش
+                                                    </small>
+                                                </p>
+                                                <p>مجموعه آثار بنده را ببینید.</p>
+                                            </a>
+                                        </li>
+                                        <li class="clearfix">
+                                            <a href="#">
+                                                <p class="clearfix">
+                                                    <strong class="float-start">
+                                                        <img src="assets/images/user/32.png" class="img-circle" alt="">
+                                                        مهدی اخوان ثالث
+                                                    </strong> 
+                                                    <small class="float-end text-muted">
+                                                        <i class="icon-clock"></i>
+                                                        دو ساعت پیش
+                                                    </small>
+                                                </p>
+                                                <p>با تشکر...</p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-footer clearfix">
+                                    <a href="#">
+                                        <i class="icon-list fa-flip-horizontal"></i>
+                                        مشاهده همه پیام ها
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown dropdown-announces">
+                            <a href="#" class="dropdown-toggle btn" data-bs-toggle="dropdown">
+                                <i class="icon-bell"></i>
+                                <span class="badge badge-success">
+                                    5
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu has-scrollbar">
+                                <li class="dropdown-header clearfix">
+                                    <span class="float-start">
+                                        <a href="#" rel="tooltip" title="خواندن همه" data-placement="left">
+                                            <i class="icon-eye"></i>
+                                        </a>
+                                        <span>
+                                            شما 8 اعلان تازه دارید.
+                                        </span>
+                                    </span>
+
+                                </li>
+                                <li class="dropdown-body">
+                                    <ul class="dropdown-menu-list" >
+                                        <li class="clearfix">
+                                            <a href="#">
+                                                <p class="clearfix">
+                                                    <strong class="float-start">عباس دوران</strong> 
+                                                    <small class="float-end text-muted">
+                                                        <i class="icon-clock"></i>
+                                                        21:30
+                                                    </small>
+                                                </p>
+                                                <p>بسته ارسالی شما به دستم رسید.</p>
+                                            </a>
+                                        </li>
+                                        <li class="clearfix">
+                                            <a href="#">
+                                                <p class="clearfix">
+                                                    <strong class="float-start">حسن باقری</strong> 
+                                                    <small class="float-end text-muted">
+                                                        <i class="icon-clock"></i>
+                                                        20:20
+                                                    </small>
+                                                </p>
+                                                <p>از محبت شما ممنونم.</p>
+                                            </a>
+                                        </li>
+                                        <li class="clearfix">
+                                            <a href="#">
+                                                <p class="clearfix">
+                                                    <strong class="float-start">مدیر کل</strong> 
+                                                    <small class="float-end text-muted">
+                                                        <i class="icon-clock"></i>
+                                                        19:20
+                                                    </small>
+                                                </p>
+                                                <p>سفارش شما ارسال گردید..</p>
+                                            </a>
+                                        </li>
+                                        <li class="clearfix">
+                                            <a href="#">
+                                                <p class="clearfix">
+                                                    <strong class="float-start">مدیر مالی</strong> 
+                                                    <small class="float-end text-muted">
+                                                        <i class="icon-clock"></i>
+                                                        17:40
+                                                    </small>
+                                                </p>
+                                                <p>درخواست فیش حقوقی</p>
+                                            </a>
+                                        </li>
+                                        <li class="clearfix">
+                                            <a href="#">
+                                                <p class="clearfix">
+                                                    <strong class="float-start">ابراهیم همت</strong> 
+                                                    <small class="float-end text-muted">
+                                                        <i class="icon-clock"></i>
+                                                        15:45
+                                                    </small>
+                                                </p>
+                                                <p>پیام های مرا دنبال کنید.</p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-footer clearfix">
+                                    <a href="#">
+                                        <i class="icon-list fa-flip-horizontal"></i>
+                                        مشاهده همه اعلانات  
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown dropdown-user">
+                            <a href="#" class="dropdown-toggle dropdown-hover" data-bs-toggle="dropdown">
+                                <img src="assets/images/user/48.png" alt="عکس پرفایل" class="img-circle img-responsive">
+                                <span>حمید آفرینش فر</span>
+                                <i class="icon-arrow-down"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="edit_profile.html">
+                                        <i class="icon-note"></i>
+                                        ویرایش پروفایل
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="change_password.html">
+                                        <i class="icon-key"></i>
+                                        تغییر رمز عبور
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="chat.html">
+                                        <span class="badge badge-primary float-end"> 14 </span>
+                                        <i class="icon-envelope"></i>
+                                        تیکت های جدید 
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="icon-wallet"></i>
+                                        کیف پول
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="login.html">
+                                        <i class="icon-power"></i>
+                                        خروج
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul><!-- /.navbar-left -->
+                </div><!-- /.top-bar -->
+            </div><!-- /.header-left -->
+        </div><!-- /.navbar -->
+        <!-- END HEADER -->
+              
+        <!-- BEGIN WRAPPER -->
+        <div id="wrapper">
+
+            <!-- BEGIN SIDEBAR -->
+            <div id="sidebar">
+                <div class="sidebar-top">
+                    <div class="search-box">                        
+                        <form class="search-form" action="#" method="GET">
+                            <div class="input-group">
+                                <input type="text" class="form-control placeholder-light" placeholder="جستجو..." name="key">
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-round submit">
+                                        <i class="icon-magnifier"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </form>
+                    </div><!-- /.search-box -->
+                    <div class="user-box">
+                        <a href="#">
+                            <img src="assets/images/user/128.png" alt="عکس پروفایل" class="img-circle img-responsive">
+                        </a>
+                        <div class="user-details">
+                            <h4>حمید آفرینش فر</h4>
+                            <p class="role">مدیر فنی</p>
+                            <div class="dropdown user-login">
+                                <button class="btn btn-xs btn-status dropdown-toggle btn-round" type="button" data-bs-toggle="dropdown" data-hover="dropdown">
+                                    <i class="fas fa-circle text-success"></i>
+                                    <span>دردسترس</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-status">
+                                    <li>
+                                        <a href="#" class="busy">
+                                            <i class="fas fa-circle text-success"></i>
+                                            <span>دردسترس</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="busy">
+                                            <i class="fas fa-circle text-danger"></i>
+                                            <span>مشغول</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fas fa-circle text-gray"></i>
+                                            <span>مخفی</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fas fa-circle text-warning"></i>
+                                            <span>سایر</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div><!-- /dropdown -->
+                        </div><!-- /.user-details -->
+                    </div><!-- /.user-box -->
+                </div><!-- /.sidebar-top -->
+                <div class="side-menu-container">
+                    <ul class="metismenu" id="side-menu">
+                        <li>
+                            <a href="#" class="dropdown-toggle">
+                                <i class="icon-home"></i>
+                                <span>پیشخوان</span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="dashboard.html" class="">
+                                        <i class="icon-home"></i>
+                                        <span>پیشخوان یک</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="dashboard2.html" class="">
+                                        <i class="icon-home"></i>
+                                        <span>پیشخوان دو</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="parastoo.html" class="">
+                                        <i class="icon-home"></i>
+                                        <span>پیشخوان با فونت پرستو</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="yekan.html" class="">
+                                        <i class="icon-home"></i>
+                                        <span>پیشخوان با فونت یکان</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#" class="dropdown-toggle">
+                                <i class="icon-frame"></i>
+                                <span>فرم ها</span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="forms.html" class="">
+                                        <i class="icon-frame"></i>
+                                        <span>فرم ها</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="validation.html" class="">
+                                        <i class="icon-shield"></i>
+                                        <span>اعتبارسنجی</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="grid.html" class="">
+                                        <i class="icon-grid"></i>
+                                        <span>تقسیم صفحات|Grid</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="calendar.html" class="">
+                                        <i class="icon-calendar"></i>
+                                        <span>تقویم شمسی </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="calendar_ui.html" class="">
+                                        <i class="icon-calendar"></i>
+                                        <span>تقویم شمسی UI</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="calendar_kama.html" class="">
+                                        <i class="icon-calendar"></i>
+                                        <span>تقویم شمسی Kama</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="clock.html" class="">
+                                        <i class="icon-clock"></i>
+                                        <span>ساعت</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="select2.html" class="">
+                                        <i class="icon-energy"></i>
+                                        <span>چند گزنینه ای|Select2</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="knob.html" class="">
+                                        <i class="fas fa-circle-notch"></i>
+                                        <span>نمودار Knob</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="cropper.html" class="">
+                                        <i class="icon-crop"></i>
+                                        <span>برش عکس Cropper</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="wizard.html" class="">
+                                        <i class="icon-directions"></i>
+                                        <span>فرم مرحله ای|Wizard</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="ladda.html" class="">
+                                        <i class="icon-energy"></i>
+                                        <span>دکمه با لودینگ|Ladda</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="ckeditor.html" class="">
+                                        <i class="icon-note"></i>
+                                        <span>ویرایشگر Ckeditor</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="summernote.html" class="">
+                                        <i class="icon-note"></i>
+                                        <span>ویرایشگر Summernote</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#" class="dropdown-toggle">
+                                <i class="icon-eye"></i>
+                                <span>عناصر UI</span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="buttons.html" class="">
+                                        <i class="icon-settings"></i>
+                                        <span>دکمه ها</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="labels.html" class="">
+                                        <i class="icon-badge"></i>
+                                        <span>برچسب و تعداد</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="tabs.html" class="">
+                                        <i class="icon-target"></i>
+                                        <span>تب و آکوردئون</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="icons.html" class="">
+                                        <i class="icon-vector"></i>
+                                        <span>آیکون ها</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="panels.html" class="">
+                                        <i class="icon-social-dropbox"></i>
+                                        <span>دربرگیرنده و پنل ها</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="alerts.html" class="">
+                                        <i class="icon-bubble"></i>
+                                        <span>پیام ها  Alerts</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="modals.html" class="">
+                                        <i class="icon-frame"></i>
+                                        <span>مودال Modals</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="swal.html" class="">
+                                        <i class="icon-bubble"></i>
+                                        <span>پیام Sweet Alert</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="noty.html" class="">
+                                        <i class="icon-speech"></i>
+                                        <span>اخطار Noty</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="nestable.html" class="">
+                                        <i class="far fa-rectangle-list fa-flip-horizontal"></i>
+                                        <span>لیست تودرتو Nestable</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="open active conditional-bg">
+                            <a href="#" class="dropdown-toggle">
+                                <i class="icon-list fa-flip-horizontal"></i>
+                                <span>جدول ها</span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="tables.html" class="">
+                                        <i class="icon-screen-tablet"></i>
+                                        <span>جدول ریسپانسیو</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="datatable.html" class="">
+                                        <i class="fas fa-grip"></i>
+                                        <span>پلاگین Data Table</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="datatable_export.html" class="current">
+                                        <i class="fas fa-grip"></i>
+                                        <span>خروجی از Data Table</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#" class="dropdown-toggle">
+                                <i class="icon-pie-chart"></i>
+                                <span>نمودارها</span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="pie_chart.html" class="">
+                                        <i class="icon-pie-chart"></i>
+                                        <span>دایره ای</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="line_chart.html" class="">
+                                        <i class="icon-graph"></i>
+                                        <span>خطی</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="bar_chart.html" class="">
+                                        <i class="icon-chart"></i>
+                                        <span>ستونی</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="realtime_chart.html" class="">
+                                        <i class="icon-equalizer"></i>
+                                        <span>بیدرنگ</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#" class="dropdown-toggle">
+                                <i class="icon-layers"></i>
+                                <span>صفحات</span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="blank.html" class="">
+                                        <i class="icon-folder"></i>
+                                        <span>صفحه خام</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="login.html" class="">
+                                        <i class="icon-login"></i>
+                                        <span>ورود</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="register.html" class="">
+                                        <i class="icon-user-follow"></i>
+                                        <span>ثبت نام</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="edit_profile.html" class="">
+                                        <i class="icon-note"></i>
+                                        <span>ویرایش پروفایل</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="forget.html" class="">
+                                        <i class="icon-key"></i>
+                                        <span>بازیابی رمز عبور</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="change_password.html" class="">
+                                        <i class="icon-lock"></i>
+                                        <span>تغییر رمز عبور</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="effects.html" class="">
+                                        <i class="icon-briefcase"></i>
+                                        <span>افکت ها</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="orders.html" class="">
+                                        <i class="icon-basket-loaded fa-flip-horizontal"></i>
+                                        <span>سفارشات</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="ammap.html" class="">
+                                        <i class="icon-map"></i>
+                                        <span>نقشه وکتور</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="leaflet.html" class="">
+                                        <i class="icon-location-pin"></i>
+                                        <span>نقشه Leaflet</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="googlemap.html" class="">
+                                        <i class="icon-location-pin"></i>
+                                        <span>نقشه گوگل</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="chat.html" class="">
+                                        <i class="icon-bubble"></i>
+                                        <span>گفت و گو ، چت</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="loadings.html" class="">
+                                        <i class="fas fa-spinner"></i>
+                                        <span>انیمیشن لودینگ</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#" class="dropdown-toggle">
+                                <i class="icon-exclamation"></i>
+                                <span>صفحات خطا</span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="offline.html" class="">
+                                        <i class="icon-exclamation"></i>
+                                        <span>آفلاین</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="under_construction.html" class="">
+                                        <i class="icon-exclamation"></i>
+                                        <span>در دست بازسازی</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="error400.html" class="">
+                                        <i class="icon-exclamation"></i>
+                                        <span>صفحه 400</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="error403.html" class="">
+                                        <i class="icon-exclamation"></i>
+                                        <span>صفحه 403</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="error404.html" class="">
+                                        <i class="icon-exclamation"></i>
+                                        <span>صفحه  404</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="error500.html" class="">
+                                        <i class="icon-exclamation"></i>
+                                        <span>صفحه 500</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="error503.html" class="">
+                                        <i class="icon-exclamation"></i>
+                                        <span>صفحه 503</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul><!-- /#side-menu -->
+                </div><!-- /.side-menu-container -->
+            </div><!-- /#sidebar -->
+            <!-- END SIDEBAR -->            
+            <!-- BEGIN PAGE CONTENT -->
+            <div id="page-content">
+                <div id="inner-content">
+                    <div class="row">                    
+                        <!-- BEGIN BREADCRUMB -->
+                        <div class="col-md-12">
+                            <div class="breadcrumb-box shadow"> 
+                                <ul class="breadcrumb">
+                                    <li><a href="dashboard.html">پیشخوان</a></li>
+                                    <li><a href="#">جدول ها</a></li>                                    
+                                    <li class="active">خروجی از Data Table</li>                                
+                                </ul>
+                                <div class="breadcrumb-left">
+                                    شنبه، 1403/09/3                                    
+                                    <i class="icon-calendar"></i>
+                                </div><!-- /.breadcrumb-left -->
+                            </div><!-- /.breadcrumb-box -->
+                        </div><!-- /.col-md-12 -->
+                        <!-- END BREADCRUMB -->                        
+                        
+                        <div class="col-lg-12">
+                            <div class="portlet box shadow">
+                                <div class="portlet-heading">
+                                    <div class="portlet-title">
+                                        <h3 class="title">                                        
+                                            <i class="icon-frane"></i>
+                                            جدول با Data Table
+                                        </h3>
+                                    </div><!-- /.portlet-title -->
+                                    <div class="buttons-box">
+                                        <a class="btn btn-sm btn-default btn-round btn-code" rel="tooltip" title="کدها" href="#">
+                                            <i class="icon-arrow-left"></i><span>/</span><i class="icon-arrow-right"></i>
+                                        </a>
+                                        <div class="code-modal hide">
+<!-- 
+// HTML
+<div class="table-responsive">
+    <table class="table table-bordered table-hover table-striped" id="data-table">
+        <thead>
+            <tr>
+                <th>ردیف</th>
+                <th>ماده غذایی</th>
+                <th>مقدار</th>
+                <th>کالری</th>
+                <td>عملیات</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>مغز فندق</td>
+                <td>100گرم</td>
+                <td>630</td>
+                <td>
+                    <a href="#" class="btn btn-info">ویرایش</a>
+                    <a href="#" class="btn btn-danger">حذف</a>
+                </td>
+            </tr>
+            ...
+        </tbody>
+    </table>
+</div>
+
+
+// JS
+var tableMain = $("#data-table").DataTable({
+    dom: "Bfrtip",
+    lengthChange: true,
+    buttons: [
+        { extend: "copy", className: "btn btn-success" },
+        { extend: "csv", className: "btn btn-success" },
+        { extend: "excel", className: "btn btn-success" },
+        {
+            extend: 'pdf',
+            className: "btn btn-success",
+            customize: function (doc) {
+                processFont(doc);
+
+                doc.content[0]['text'] = doc.content[0]['text'].split(' ').reverse().join(' ');
+                try {                    
+                    for (var i = 0; i < doc.content[1].table.body.length; i++) {
+                        for (var j = 0; j < doc.content[1].table.body[i].length; j++) {
+                            doc.content[1].table.body[i][j]['text'] = doc.content[1].table.body[i][j]['text'].split(' ').reverse().join(' ');
+                        }
+                    }
+                } catch (error) {
+                    console.log("Unsupported content for PDF");
+                }
+            }
+        }
+    ],
+    language: language,
+    "columnDefs": [{
+        "targets": [4],
+        "orderable": false
+    }],
+    "aaSorting": []
+});
+
+function processFont(doc) {
+    pdfMake.fonts = {
+        IranSans: {
+            normal: 'IranSans.ttf',
+            bold: 'IranSans.ttf',
+            italics: 'IranSans.ttf',
+            bolditalics: 'IranSans.ttf'
+        }
+    };
+    doc.defaultStyle.font = "IranSans";
+}
+
+$(window).on( 'resize', function () {
+    $('#data-table').css("width", "100%");
+});
+
+-->
+                                        </div>
+                                        <a class="btn btn-sm btn-default btn-round btn-fullscreen" rel="tooltip" title="تمام صفحه" href="#">
+                                            <i class="icon-size-fullscreen"></i>
+                                        </a>
+                                        <a class="btn btn-sm btn-default btn-round btn-collapse" rel="tooltip" title="کوچک کردن" href="#">
+                                            <i class="icon-arrow-up"></i>
+                                        </a>
+                                    </div><!-- /.buttons-box -->
+                                </div><!-- /.portlet-heading -->
+                                <div class="portlet-body">
+                                    <div class="top-buttons-box mb-2">
+                                        <a class="btn btn-success" href="#">
+                                            <i class="icon-plus"></i>
+                                            افزودن
+                                        </a>
+                                        <a class="btn btn-danger" href="#">
+                                            <i class="icon-trash"></i>
+                                            حذف جمعی
+                                        </a>
+                                    </div><!-- /.top-buttons-box -->
+
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover table-striped" id="data-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>ردیف</th>
+                                                    <th>ماده غذایی</th>
+                                                    <th>مقدار</th>
+                                                    <th>کالری</th>
+                                                    <td>عملیات</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>مغز فندق</td>
+                                                    <td>100گرم</td>
+                                                    <td>630</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>آب سیب</td>
+                                                    <td>یک لیوان</td>
+                                                    <td>90</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3</td>
+                                                    <td>آب نارنج</td>
+                                                    <td>یک قاشق</td>
+                                                    <td>4</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>4</td>
+                                                    <td>آبغوره</td>
+                                                    <td>100گرم</td>
+                                                    <td>20</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>5</td>
+                                                    <td>آجیل</td>
+                                                    <td>یک لیوان</td>
+                                                    <td>750</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>6</td>
+                                                    <td>آجیل درهم</td>
+                                                    <td>100گرم</td>
+                                                    <td>650</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>7</td>
+                                                    <td>آرد ذرت</td>
+                                                    <td>100 گرم</td>
+                                                    <td>370</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>8</td>
+                                                    <td>آرد گندم</td>
+                                                    <td>100 گرم</td>
+                                                    <td>360</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>9</td>
+                                                    <td>آلبالو ( کمپوت)</td>
+                                                    <td>100 گرم</td>
+                                                    <td>90</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>10</td>
+                                                    <td>آلبالو با هسته</td>
+                                                    <td>100گرم</td>
+                                                    <td>60</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>11</td>
+                                                    <td>آلبالو با هسته</td>
+                                                    <td>یک لیوان</td>
+                                                    <td>60</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>12</td>
+                                                    <td>آلوی زرد</td>
+                                                    <td>100گرم</td>
+                                                    <td>75</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>13</td>
+                                                    <td>آلوی قرمز</td>
+                                                    <td>100گرم</td>
+                                                    <td>45</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>14</td>
+                                                    <td>آناناس</td>
+                                                    <td>100گرم</td>
+                                                    <td>45</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>15</td>
+                                                    <td>آناناس (کمپوت)</td>
+                                                    <td>100گرم</td>
+                                                    <td>90</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>16</td>
+                                                    <td>آناناس کنسرو در شربت</td>
+                                                    <td>یک لیوان</td>
+                                                    <td>200</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>17</td>
+                                                    <td>اسفناج خام</td>
+                                                    <td>100گرم</td>
+                                                    <td>25</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>18</td>
+                                                    <td>الو بخارا</td>
+                                                    <td>یک عدد</td>
+                                                    <td>15</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>19</td>
+                                                    <td>انار تازه (دانه)</td>
+                                                    <td>100گرم</td>
+                                                    <td>60</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>20</td>
+                                                    <td>انار کامل با پوست</td>
+                                                    <td>100کرم</td>
+                                                    <td>35</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>21</td>
+                                                    <td>انبه هندی</td>
+                                                    <td>100گرم</td>
+                                                    <td>60</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>22</td>
+                                                    <td>انجیر</td>
+                                                    <td>یک عدد</td>
+                                                    <td>20</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>23</td>
+                                                    <td>انجیر (تازه)</td>
+                                                    <td>100گرم</td>
+                                                    <td>60</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>24</td>
+                                                    <td>انجیر خشک</td>
+                                                    <td>100گرم</td>
+                                                    <td>270</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>25</td>
+                                                    <td>انگور</td>
+                                                    <td>100گرم</td>
+                                                    <td>80</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>26</td>
+                                                    <td>انگور(آب)</td>
+                                                    <td>100گرم</td>
+                                                    <td>90</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>27</td>
+                                                    <td>بادام بوداده</td>
+                                                    <td>100گرم</td>
+                                                    <td>666</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>28</td>
+                                                    <td>بادام بونداده</td>
+                                                    <td>100گرم</td>
+                                                    <td>660</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>29</td>
+                                                    <td>بادام درشت</td>
+                                                    <td>یک عدد</td>
+                                                    <td>10</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>30</td>
+                                                    <td>زمینی بی پوست</td>
+                                                    <td>100گرم</td>
+                                                    <td>560</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>31</td>
+                                                    <td>بادمجان</td>
+                                                    <td>100گرم</td>
+                                                    <td>17</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>32</td>
+                                                    <td>باقلا</td>
+                                                    <td>یک عدد</td>
+                                                    <td>5</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>33</td>
+                                                    <td>باقلای خشک</td>
+                                                    <td>100گرم</td>
+                                                    <td>360</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>34</td>
+                                                    <td>باقلای سبز</td>
+                                                    <td>100گرم</td>
+                                                    <td>108</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>35</td>
+                                                    <td>باقلوا با پسته</td>
+                                                    <td>100گرم</td>
+                                                    <td>540</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>36</td>
+                                                    <td>بامیه</td>
+                                                    <td>100گرم</td>
+                                                    <td>40</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>37</td>
+                                                    <td>برگ چغندر</td>
+                                                    <td>100گرم</td>
+                                                    <td>30</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>38</td>
+                                                    <td>برگ مو</td>
+                                                    <td>100گرم</td>
+                                                    <td>60</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>39</td>
+                                                    <td>برنج</td>
+                                                    <td>100گرم</td>
+                                                    <td>360</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>40</td>
+                                                    <td>برنج (نیم لیوان)</td>
+                                                    <td>130گرم</td>
+                                                    <td>450</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>41</td>
+                                                    <td>برنج (یک لیوان)</td>
+                                                    <td>190گرم</td>
+                                                    <td>660</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>42</td>
+                                                    <td>مغز حیوان</td>
+                                                    <td>100گرم</td>
+                                                    <td>130</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>43</td>
+                                                    <td>جگر سفید</td>
+                                                    <td>100گرم</td>
+                                                    <td>160</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>44</td>
+                                                    <td>جگر مرغ</td>
+                                                    <td>20 گرم</td>
+                                                    <td>30</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>45</td>
+                                                    <td>جگر مرغ خام</td>
+                                                    <td>100گرم</td>
+                                                    <td>125</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>46</td>
+                                                    <td>جگر یک سیخ</td>
+                                                    <td>100گرم</td>
+                                                    <td>80</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>47</td>
+                                                    <td>جو</td>
+                                                    <td>100گرم</td>
+                                                    <td>350</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>48</td>
+                                                    <td>چاشنی مایونز</td>
+                                                    <td>100گرم</td>
+                                                    <td>720</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>49</td>
+                                                    <td>چای تلخ</td>
+                                                    <td>یک لیوان</td>
+                                                    <td>0</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>50</td>
+                                                    <td>چای شیرین (4حبه قند)</td>
+                                                    <td>یک لیوان</td>
+                                                    <td>40</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>51</td>
+                                                    <td>چغندر آب پز</td>
+                                                    <td>100گرم</td>
+                                                    <td>35</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>52</td>
+                                                    <td>چغندر خام</td>
+                                                    <td>100گرم</td>
+                                                    <td>45</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>53</td>
+                                                    <td>چیپس سیب زمینی</td>
+                                                    <td>ده عدد</td>
+                                                    <td>110</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>54</td>
+                                                    <td>حلوا</td>
+                                                    <td>100گرم</td>
+                                                    <td>400</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>55</td>
+                                                    <td>حلوا ارده</td>
+                                                    <td>100گرم</td>
+                                                    <td>500</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>56</td>
+                                                    <td>حلیم بدون روغن</td>
+                                                    <td>یک لیوان</td>
+                                                    <td>180</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>57</td>
+                                                    <td>خامه سفت</td>
+                                                    <td>100گرم</td>
+                                                    <td>350</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>58</td>
+                                                    <td>خامه شل</td>
+                                                    <td>100گرم</td>
+                                                    <td>250</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>59</td>
+                                                    <td>خاویار</td>
+                                                    <td>100گرم</td>
+                                                    <td>300</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>60</td>
+                                                    <td>خربزه</td>
+                                                    <td>100گرم</td>
+                                                    <td>23</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>61</td>
+                                                    <td>خربزه</td>
+                                                    <td>یک لیوان</td>
+                                                    <td>50</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>62</td>
+                                                    <td>خردل</td>
+                                                    <td>100گرم</td>
+                                                    <td>80</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>63</td>
+                                                    <td>خرما</td>
+                                                    <td>یک عدد</td>
+                                                    <td>20</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>64</td>
+                                                    <td>خرما با هسته</td>
+                                                    <td>100گرم</td>
+                                                    <td>240</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>65</td>
+                                                    <td>خرما یک فنجان</td>
+                                                    <td>100گرم</td>
+                                                    <td>505</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>66</td>
+                                                    <td>خرمالو</td>
+                                                    <td>یک عدد</td>
+                                                    <td>80</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>67</td>
+                                                    <td>خرمای تازه</td>
+                                                    <td>100گرم</td>
+                                                    <td>140</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>68</td>
+                                                    <td>خرمای خشک</td>
+                                                    <td>100گرم</td>
+                                                    <td>310</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>69</td>
+                                                    <td>خیار</td>
+                                                    <td>100گرم</td>
+                                                    <td>15</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>70</td>
+                                                    <td>خیار شور</td>
+                                                    <td>100گرم</td>
+                                                    <td>12</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>71</td>
+                                                    <td>دانه آفتابگردان</td>
+                                                    <td>100گرم</td>
+                                                    <td>300</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>72</td>
+                                                    <td>دسر (ژلاتین)</td>
+                                                    <td>یک لیوان</td>
+                                                    <td>180</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>73</td>
+                                                    <td>دل گوسفند</td>
+                                                    <td>100گرم</td>
+                                                    <td>260</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>74</td>
+                                                    <td>دل مرغ</td>
+                                                    <td>100گرم</td>
+                                                    <td>170</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>75</td>
+                                                    <td>دلمه متوسط</td>
+                                                    <td>یک عدد</td>
+                                                    <td>150</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>76</td>
+                                                    <td>دوغ</td>
+                                                    <td>100گرم</td>
+                                                    <td>15</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>77</td>
+                                                    <td>ذرت</td>
+                                                    <td>100گرم</td>
+                                                    <td>80</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>78</td>
+                                                    <td>ذرت بو داده با روغن</td>
+                                                    <td>100گرم</td>
+                                                    <td>357</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>79</td>
+                                                    <td>ذرت خام یک عدد</td>
+                                                    <td>100گرم</td>
+                                                    <td>75</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>80</td>
+                                                    <td>ذرت دانه درشت</td>
+                                                    <td>100گرم</td>
+                                                    <td>85</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>81</td>
+                                                    <td>رطب</td>
+                                                    <td>100گرم</td>
+                                                    <td>150</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>82</td>
+                                                    <td>روغن حیوانی</td>
+                                                    <td>100گرم</td>
+                                                    <td>890</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>83</td>
+                                                    <td>مغز پسته</td>
+                                                    <td>100گرم</td>
+                                                    <td>680</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>84</td>
+                                                    <td>شرینی</td>
+                                                    <td>100گرم</td>
+                                                    <td>500</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>85</td>
+                                                    <td>شکر</td>
+                                                    <td>100گرم</td>
+                                                    <td>400</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>86</td>
+                                                    <td>شکر(یک پیمانه)</td>
+                                                    <td>10گرم</td>
+                                                    <td>40</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>87</td>
+                                                    <td>شکلات</td>
+                                                    <td>100گرم</td>
+                                                    <td>500</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>88</td>
+                                                    <td>شکلات قلمی</td>
+                                                    <td>یک عدد</td>
+                                                    <td>20</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>89</td>
+                                                    <td>شکوفه ذرت بدون روغن</td>
+                                                    <td>یک لیوان</td>
+                                                    <td>25</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>90</td>
+                                                    <td>شلغم</td>
+                                                    <td>100گرم</td>
+                                                    <td>25</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>91</td>
+                                                    <td>شلیل</td>
+                                                    <td>100گرم</td>
+                                                    <td>60</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>92</td>
+                                                    <td>شنبلیله</td>
+                                                    <td>100گرم</td>
+                                                    <td>30</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>93</td>
+                                                    <td>شوید(شبد)</td>
+                                                    <td>100گرم</td>
+                                                    <td>30</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>94</td>
+                                                    <td>شیر</td>
+                                                    <td>یک لیوان</td>
+                                                    <td>110</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>95</td>
+                                                    <td>شیرتصفیه شده</td>
+                                                    <td>یک فنجان</td>
+                                                    <td>90</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>96</td>
+                                                    <td>شیرخشک</td>
+                                                    <td>100گرم</td>
+                                                    <td>500</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>97</td>
+                                                    <td>شیرغلیظ نستله</td>
+                                                    <td>100گرم</td>
+                                                    <td>250</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>98</td>
+                                                    <td>شیرگاوکم چربی</td>
+                                                    <td>100گرم</td>
+                                                    <td>55</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>99</td>
+                                                    <td>شیرمیش</td>
+                                                    <td>100گرم</td>
+                                                    <td>95</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>100</td>
+                                                    <td>صدف دریایی</td>
+                                                    <td>100گرم</td>
+                                                    <td>65</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>101</td>
+                                                    <td>طالبی</td>
+                                                    <td>100گرم</td>
+                                                    <td>20</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>102</td>
+                                                    <td>طالبی(بدون شکر)</td>
+                                                    <td>یک لیوان</td>
+                                                    <td>40</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>103</td>
+                                                    <td>عدس</td>
+                                                    <td>100گرم</td>
+                                                    <td>340</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>104</td>
+                                                    <td>عدسی با کمی روغن</td>
+                                                    <td>یک لیوان</td>
+                                                    <td>185</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>105</td>
+                                                    <td>عسل</td>
+                                                    <td>100گرم</td>
+                                                    <td>300</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>106</td>
+                                                    <td>عسل(غذا خوری)</td>
+                                                    <td>یک قاشق</td>
+                                                    <td>50</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>107</td>
+                                                    <td>عسل(مربا خوری)</td>
+                                                    <td>یک قاشق</td>
+                                                    <td>20</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>108</td>
+                                                    <td>فرنی</td>
+                                                    <td>یک لیوان</td>
+                                                    <td>200</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>109</td>
+                                                    <td>فلفل سبزیا قرمز</td>
+                                                    <td>100گرم</td>
+                                                    <td>22</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>110</td>
+                                                    <td>فندق</td>
+                                                    <td>یک عدد</td>
+                                                    <td>10</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>111</td>
+                                                    <td>فندق با پوست</td>
+                                                    <td>100گرم</td>
+                                                    <td>300</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>112</td>
+                                                    <td>قارچ</td>
+                                                    <td>100گرم</td>
+                                                    <td>27</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>113</td>
+                                                    <td>قارقروت</td>
+                                                    <td>100گرم</td>
+                                                    <td>240</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>114</td>
+                                                    <td>قلوه</td>
+                                                    <td>100گرم</td>
+                                                    <td>105</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>115</td>
+                                                    <td>قند</td>
+                                                    <td>100گرم</td>
+                                                    <td>400</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>116</td>
+                                                    <td>قهوه</td>
+                                                    <td>100گرم</td>
+                                                    <td>2</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>117</td>
+                                                    <td>کاکائو(چای خوری)</td>
+                                                    <td>یک قاشق</td>
+                                                    <td>10</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>118</td>
+                                                    <td>کالباس</td>
+                                                    <td>100گرم</td>
+                                                    <td>300</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>119</td>
+                                                    <td>کاهو</td>
+                                                    <td>100گرم</td>
+                                                    <td>17</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>120</td>
+                                                    <td>کاهو(درشت)</td>
+                                                    <td>یک برگ</td>
+                                                    <td>4</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>121</td>
+                                                    <td>کباب برگ</td>
+                                                    <td>یک سیخ</td>
+                                                    <td>200</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>122</td>
+                                                    <td>کباب کوبیده</td>
+                                                    <td>یک سیخ</td>
+                                                    <td>270</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>123</td>
+                                                    <td>کتلت</td>
+                                                    <td>یک عدد</td>
+                                                    <td>150</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>124</td>
+                                                    <td>مربا (غذا خوری)</td>
+                                                    <td>یک قاشق</td>
+                                                    <td>54</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>125</td>
+                                                    <td>گوشت گاوبدون چربی</td>
+                                                    <td>100گرم</td>
+                                                    <td>200</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>126</td>
+                                                    <td>گوشت گوساله</td>
+                                                    <td>100گرم</td>
+                                                    <td>200</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>127</td>
+                                                    <td>گوشت گوسفند</td>
+                                                    <td>100گرم</td>
+                                                    <td>320</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>128</td>
+                                                    <td>گوشت ماهی</td>
+                                                    <td>100گرم</td>
+                                                    <td>100</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>129</td>
+                                                    <td>گوشت مرغ</td>
+                                                    <td>100گرم</td>
+                                                    <td>200</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>130</td>
+                                                    <td>گوشت همبرگربدون چربی</td>
+                                                    <td>100گرم</td>
+                                                    <td>200</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>131</td>
+                                                    <td>گیلاس</td>
+                                                    <td>100گرم</td>
+                                                    <td>60</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>132</td>
+                                                    <td>لپه</td>
+                                                    <td>100گرم</td>
+                                                    <td>359</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>133</td>
+                                                    <td>لپه پخته</td>
+                                                    <td>100گرم</td>
+                                                    <td>115</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>134</td>
+                                                    <td>لوبیا چشم بلبلی پخته</td>
+                                                    <td>100گرم</td>
+                                                    <td>80</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>135</td>
+                                                    <td>لوبیا سبز</td>
+                                                    <td>100گرم</td>
+                                                    <td>30</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>136</td>
+                                                    <td>لوبیا سفید</td>
+                                                    <td>100گرم</td>
+                                                    <td>340</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>137</td>
+                                                    <td>لوبیا قرمز</td>
+                                                    <td>100گرم</td>
+                                                    <td>340</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>138</td>
+                                                    <td>لوبیا قرمز پخته</td>
+                                                    <td>100گرم</td>
+                                                    <td>110</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>139</td>
+                                                    <td>لوبیا قرمزپخته</td>
+                                                    <td>یک لیوان</td>
+                                                    <td>200</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>140</td>
+                                                    <td>لیمو تازه باپوست</td>
+                                                    <td>100گرم</td>
+                                                    <td>23</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>141</td>
+                                                    <td>لیمو ترش</td>
+                                                    <td>100گرم</td>
+                                                    <td>42</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>142</td>
+                                                    <td>لیمو ترش(آب لیمو)
+                                                    </td>
+                                                    <td>100گرم</td>
+                                                    <td>26</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>143</td>
+                                                    <td>لیمو شیرین</td>
+                                                    <td>100گرم</td>
+                                                    <td>40</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>144</td>
+                                                    <td>لیمو(آب لیمو)</td>
+                                                    <td>یک قاشق</td>
+                                                    <td>4</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>145</td>
+                                                    <td>مارتادلا</td>
+                                                    <td>100گرم</td>
+                                                    <td>315</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>146</td>
+                                                    <td>مارچوبه</td>
+                                                    <td>100گرم</td>
+                                                    <td>20</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>147</td>
+                                                    <td>مارگارین یا کره نبات</td>
+                                                    <td>100گرم</td>
+                                                    <td>850</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>148</td>
+                                                    <td>مارگارین یک قاشق</td>
+                                                    <td>100گرم</td>
+                                                    <td>110</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>149</td>
+                                                    <td>ماست</td>
+                                                    <td>100گرم</td>
+                                                    <td>55</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>150</td>
+                                                    <td>ماست کم چرب</td>
+                                                    <td>یک لیوان</td>
+                                                    <td>110</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>151</td>
+                                                    <td>ماست کیسه ای</td>
+                                                    <td>100گرم</td>
+                                                    <td>155</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>152</td>
+                                                    <td>ماکارونی</td>
+                                                    <td>100گرم</td>
+                                                    <td>360</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>153</td>
+                                                    <td>ماکارونی پخته</td>
+                                                    <td>یک لیوان</td>
+                                                    <td>150</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>154</td>
+                                                    <td>ماکارونی خشک</td>
+                                                    <td>100گرم</td>
+                                                    <td>360</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>155</td>
+                                                    <td>ماهی</td>
+                                                    <td>100گرم</td>
+                                                    <td>100</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>156</td>
+                                                    <td>مخمرآبجوفرنگی خشک</td>
+                                                    <td>100گرم</td>
+                                                    <td>285</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>157</td>
+                                                    <td>مربا</td>
+                                                    <td>100گرم</td>
+                                                    <td>300</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-info">ویرایش</a>
+                                                        <a href="#" class="btn btn-danger">حذف</a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div><!-- /.table-responsive -->
+                                </div><!-- /.portlet-body -->
+                            </div><!-- /.portlet -->
+                        </div><!-- /.col-lg-12 -->                    </div><!-- /.row -->
+                </div><!-- /#inner-content -->
+            </div><!-- /#page-content -->
+            <!-- END PAGE CONTENT -->
+
+        </div><!-- /#wrapper -->
+        <!-- END WRAPPER -->
+        
+        <div class="row footer-container">
+            <div class="col-md-12">
+                <div class="copyright">
+                    <p class="float-start">
+                        کلیه حقوق قالب مدیران محفوظ می باشد و کپی برداری از آن به هیچ عنوان جایز نیست.
+                    </p>
+                    <p class="float-end ltr tahoma">
+                        <span>©</span>
+                        <a href="#" target="_blank">Rayanik</a>
+                    </p>
+                </div><!-- /.copyright -->
+            </div><!-- /.col-md-12 -->
+        </div><!-- /.row -->
+        
+        <!-- BEGIN SETTING -->
+        <div class="settings d-none d-sm-block">
+            <a href="#" class="btn" id="toggle-setting">
+                <i class="icon-settings"></i>
+            </a>
+            
+            <div class="setting-content">               
+                <h3 class="text-center">تنظیمات</h3>
+                <div class="fix-header-box">
+                    <p class="h6">
+                        هدر ثابت: 
+                        <span class="float-end">
+                            <input type="checkbox" class="fix-header-switch normal" checked>
+                        </span>
+                    </p>
+                </div><!-- /.fix-header-box -->
+                <hr class="light">
+                <div class="toggle-sidebar-box">
+                    <p class="h6">
+                        جمع کردن سایدبار: 
+                        <span class="float-end">
+                            <input type="checkbox" class="toggle-sidebar-switch normal">
+                        </span>
+                    </p>
+                </div><!-- /.toggle-sidebar-box -->
+                <hr class="light">
+                <div class="toggle-sidebar-box">
+                    <p class="h6">
+                        سایدبار خلاقانه: 
+                        <span class="float-end">
+                            <input type="checkbox" class="creative-sidebar-switch normal">
+                        </span>
+                    </p>
+                </div><!-- /.toggle-sidebar-box -->
+                <hr class="light">
+                <div class="theme-colors">
+                    <p class="h6">رنگ قالب : </p>
+                    <a class="btn btn-round btn-darkpurple ripple-effect active" data-color="darkpurple"></a>
+                    <a class="btn btn-round btn-blue ripple-effect" data-color="blue"></a>
+                    <a class="btn btn-round btn-red ripple-effect" data-color="red"></a>
+                    <a class="btn btn-round btn-green ripple-effect" data-color="green"></a>
+                    <a class="btn btn-round btn-orange ripple-effect" data-color="orange"></a>
+                    <a class="btn btn-round btn-purple ripple-effect" data-color="purple"></a>
+                    <a class="btn btn-round btn-deeporange ripple-effect" data-color="deeporange"></a>
+                    <a class="btn btn-round btn-cyan ripple-effect" data-color="cyan"></a>
+                    <a class="btn btn-round btn-rose ripple-effect" data-color="rose"></a>
+                    <a class="btn btn-round btn-lime ripple-effect" data-color="lime"></a>
+                    <a class="btn btn-round btn-darkorange ripple-effect" data-color="darkorange"></a>
+                    <a class="btn btn-round btn-darkblue ripple-effect" data-color="darkblue"></a>
+                </div><!-- /.theme-colors -->
+                <hr class="light">
+                <div class="sidebar-bg-box">
+                    <p class="h6 bold">تصویر سایدبار: </p>
+                    <ul class="sidebar-bg">
+                        <li class="active">
+                            <a href="#" href="javascript:void(0)">
+                                <img src="assets/images/sidebar-bg/thumb/1.jpg" data-bg="1" alt="sidebar background">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" href="javascript:void(0)">
+                                <img src="assets/images/sidebar-bg/thumb/2.jpg" data-bg="2"  alt="sidebar background">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" href="javascript:void(0)">
+                                <img src="assets/images/sidebar-bg/thumb/3.jpg" data-bg="3"  alt="sidebar background">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" href="javascript:void(0)">
+                                <img src="assets/images/sidebar-bg/thumb/4.jpg" data-bg="4"  alt="sidebar background">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" href="javascript:void(0)">
+                                <img src="assets/images/sidebar-bg/thumb/5.jpg" data-bg="5"  alt="sidebar background">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" href="javascript:void(0)">
+                                <img src="assets/images/sidebar-bg/thumb/no-image.png" data-bg=""  alt="no image">
+                            </a>
+                        </li>
+                    </ul>
+                </div><!-- /.sidebar-bg-box -->
+                <div class="theme-code ltr text-left">
+                    <code></code>
+                </div><!-- /.theme-code -->
+            </div><!-- /.setting-content -->
+
+
+            <div class="img-box">
+                <img class="img-bottom dark" src="assets/images/logo-dark.png">
+                <img class="img-bottom light" src="assets/images/logo.png">
+            </div><!-- /.img-box -->
+        </div><!-- /.settings -->
+        <!-- END SETTING -->
+        
+        <!-- BEGIN CODE MODAL -->
+        <div class="modal fade" id="code-modal" role="dialog" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn btn-default btn-round btn-icon float-start" id="btn-copy"><i class="far fa-copy"></i></button>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">کپی کردن کدها</h4>
+                    </div>
+                    <div class="modal-body"></div>
+                </div> <!-- /.modal-content -->
+            </div> <!-- /.modal-dialog -->
+        </div> <!-- /.modal -->
+        <!-- END CODE MODAL -->        
+        
+        <!-- BEGIN JS -->
+        <script src="assets/plugins/jquery/dist/jquery-3.6.1.min.js"></script>
+        <script src="assets/plugins/bootstrap/bootstrap5/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/plugins/metisMenu/dist/metisMenu.min.js"></script>
+        <script src="assets/plugins/paper-ripple/dist/PaperRipple.min.js"></script>
+        <script src="assets/plugins/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+        <script src="assets/plugins/sweetalert2/dist/sweetalert2.min.js"></script>
+        <script src="assets/plugins/screenfull/dist/screenfull.min.js"></script>
+        <script src="assets/plugins/iCheck/icheck.min.js"></script>
+        <script src="assets/plugins/switchery/dist/switchery.js"></script>
+        <script src="assets/js/core.js"></script>
+        
+        <!-- BEGIN PAGE JAVASCRIPT -->
+        <script src="assets/plugins/data-table/js/export/jquery.dataTables.min.js"></script>
+        <script src="assets/plugins/data-table/js/export/dataTables.buttons.min.js"></script>
+        <script src="assets/plugins/data-table/js/export/jszip.min.js"></script>
+        <script src="assets/plugins/data-table/js/export/pdfmake.min.js"></script>
+        <script src="assets/plugins/data-table/js/export/vfs_fonts-iransans.js"></script>
+        <script src="assets/plugins/data-table/js/export/buttons.html5.min.js"></script>
+        <script src="assets/plugins/data-table/js/export/buttons.print.min.js"></script>
+        <script src="assets/plugins/data-table/js/export/fa.json"></script>
+        <script src="assets/js/pages/datatable-export.js"></script>
+        <!-- END PAGE JAVASCRIPT -->    
+    </body>
+
+<!-- Mirrored from demo.rayanik.com/modiran/light/datatable_export.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 11 Jan 2025 13:57:29 GMT -->
+</html>

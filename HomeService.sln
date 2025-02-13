@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F61EF5F0-4A9F-4BEB-BF76-F5526180AAF6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01-Domain", "01-Domain", "{7B502660-C865-43C5-8B62-92CD0991F1D5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02-Infrastructure", "02-Infrastructure", "{CBCA1669-9B5B-4FB1-8BE0-2FA64270BDCC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03-EndPoint", "03-EndPoint", "{F0D96B26-BB7E-479C-870C-BFF62CE83E6D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{F9A18D79-D17A-494C-BC77-008A5C98C31F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{1A939BCF-372B-4051-86A5-AFDF55C508D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeService.Domain.Core", "src\01-Domain\Core\HomeService.Domain.Core\HomeService.Domain.Core.csproj", "{2655E6C9-964B-4AAA-94F1-04468FA3137F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EfCore", "EfCore", "{A02C07C9-9E95-4946-A0E8-6F2D5528BA1F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeService.Infrastructure.EfCore", "src\02-Infrastructure\EfCore\HomeService.Infrastructure.EfCore\HomeService.Infrastructure.EfCore.csproj", "{196FE36F-907B-4E1F-ACCC-28F58971F540}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeService.Endpoint.Razor", "src\03-Endpoint\HomeService.Endpoint.Razor\HomeService.Endpoint.Razor.csproj", "{1E56BF65-C66D-4607-8243-BB5F6486D633}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2655E6C9-964B-4AAA-94F1-04468FA3137F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2655E6C9-964B-4AAA-94F1-04468FA3137F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2655E6C9-964B-4AAA-94F1-04468FA3137F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2655E6C9-964B-4AAA-94F1-04468FA3137F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{196FE36F-907B-4E1F-ACCC-28F58971F540}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{196FE36F-907B-4E1F-ACCC-28F58971F540}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{196FE36F-907B-4E1F-ACCC-28F58971F540}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{196FE36F-907B-4E1F-ACCC-28F58971F540}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E56BF65-C66D-4607-8243-BB5F6486D633}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E56BF65-C66D-4607-8243-BB5F6486D633}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E56BF65-C66D-4607-8243-BB5F6486D633}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E56BF65-C66D-4607-8243-BB5F6486D633}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7B502660-C865-43C5-8B62-92CD0991F1D5} = {F61EF5F0-4A9F-4BEB-BF76-F5526180AAF6}
+		{CBCA1669-9B5B-4FB1-8BE0-2FA64270BDCC} = {F61EF5F0-4A9F-4BEB-BF76-F5526180AAF6}
+		{F0D96B26-BB7E-479C-870C-BFF62CE83E6D} = {F61EF5F0-4A9F-4BEB-BF76-F5526180AAF6}
+		{F9A18D79-D17A-494C-BC77-008A5C98C31F} = {7B502660-C865-43C5-8B62-92CD0991F1D5}
+		{1A939BCF-372B-4051-86A5-AFDF55C508D1} = {7B502660-C865-43C5-8B62-92CD0991F1D5}
+		{2655E6C9-964B-4AAA-94F1-04468FA3137F} = {F9A18D79-D17A-494C-BC77-008A5C98C31F}
+		{A02C07C9-9E95-4946-A0E8-6F2D5528BA1F} = {CBCA1669-9B5B-4FB1-8BE0-2FA64270BDCC}
+		{196FE36F-907B-4E1F-ACCC-28F58971F540} = {A02C07C9-9E95-4946-A0E8-6F2D5528BA1F}
+		{1E56BF65-C66D-4607-8243-BB5F6486D633} = {F0D96B26-BB7E-479C-870C-BFF62CE83E6D}
+	EndGlobalSection
+EndGlobal
