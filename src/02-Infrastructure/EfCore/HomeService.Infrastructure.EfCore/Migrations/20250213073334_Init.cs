@@ -349,12 +349,14 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                 name: "ExpertSubServices",
                 columns: table => new
                 {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     ExpertId = table.Column<int>(type: "int", nullable: false),
                     SubServiceId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ExpertSubServices", x => new { x.ExpertId, x.SubServiceId });
+                    table.PrimaryKey("PK_ExpertSubServices", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ExpertSubServices_Experts_ExpertId",
                         column: x => x.ExpertId,
@@ -413,6 +415,7 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                     Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     IsAccepted = table.Column<bool>(type: "bit", nullable: false),
                     TimeToDone = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
                     ExpertId = table.Column<int>(type: "int", nullable: false),
                     OrderId = table.Column<int>(type: "int", nullable: false)
@@ -445,7 +448,7 @@ namespace HomeService.Infrastructure.EfCore.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { 1, 0, "510f7f5d-4455-4423-8389-7cf594151ec4", "Admin@gmail.com", false, false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "AQAAAAIAAYagAAAAEEYElkmU8CUuRLrvzHwkr+KZQSIYjReSWOd2FzOAPi3sm+ZxaBpA9F+fqwsJ3soaSA==", null, false, "MS23CZ5FYG75543TAIMC5DDNKCVV7B74", false, "Admin@gmail.com" });
+                values: new object[] { 1, 0, "d9b0f212-3c43-4c67-bba1-303cc82f13f5", "Admin@gmail.com", false, false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "AQAAAAIAAYagAAAAEEYElkmU8CUuRLrvzHwkr+KZQSIYjReSWOd2FzOAPi3sm+ZxaBpA9F+fqwsJ3soaSA==", null, false, "MS23CZ5FYG75543TAIMC5DDNKCVV7B74", false, "Admin@gmail.com" });
 
             migrationBuilder.InsertData(
                 table: "Categories",
@@ -631,6 +634,11 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                 table: "Experts",
                 column: "UserId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExpertSubServices_ExpertId",
+                table: "ExpertSubServices",
+                column: "ExpertId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ExpertSubServices_SubServiceId",

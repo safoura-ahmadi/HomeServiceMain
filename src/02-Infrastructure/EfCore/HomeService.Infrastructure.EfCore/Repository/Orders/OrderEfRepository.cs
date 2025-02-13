@@ -37,15 +37,6 @@ public class OrderEfRepository(ApplicationDbContext dbContext)
             return false;
         }
     }
-    public async Task<bool> Delete(int id, CancellationToken cancellationToken)
-    {
-        var item = await _dbContext.Orders.FirstOrDefaultAsync(o => o.Id == id);
-        if (item is null)
-            return false;
-        item.IsActive = false;
-        await _dbContext.SaveChangesAsync(cancellationToken);
-        return true;
-    }
     public async Task<List<GetOrderDto>> GetForExpert(int cityId, int subserviceId, CancellationToken cancellationToken)
     {
         var item = await _dbContext.Orders.AsNoTracking()
@@ -97,6 +88,7 @@ public class OrderEfRepository(ApplicationDbContext dbContext)
         await _dbContext.SaveChangesAsync(cancellationToken);
         return true;
     }
+    //admin
     public async Task<List<GetOrderDto>> GetAll(CancellationToken cancellationToken)
     {
         var item = await _dbContext.Orders.AsNoTracking()
@@ -121,6 +113,14 @@ public class OrderEfRepository(ApplicationDbContext dbContext)
             .CountAsync(cancellationToken);
         return item;
     }
-
+    public async Task<bool> Delete(int id, CancellationToken cancellationToken)
+    {
+        var item = await _dbContext.Orders.FirstOrDefaultAsync(o => o.Id == id);
+        if (item is null)
+            return false;
+        item.IsActive = false;
+        await _dbContext.SaveChangesAsync(cancellationToken);
+        return true;
+    }
 
 }

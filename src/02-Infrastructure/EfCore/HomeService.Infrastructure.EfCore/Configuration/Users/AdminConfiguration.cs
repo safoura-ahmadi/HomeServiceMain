@@ -13,7 +13,18 @@ namespace HomeService.Infrastructure.EfCore.Configuration.Users
 
             builder.HasOne(a => a.User)
                 .WithOne(ap => ap.Admin);
+            builder.HasData(
+                new Admin()
+                {
+                    Id = 1,
+                    UserId = 1,
+                    Balance = 100000,
+                    Fname = "safoura",
+                    Lname = "ahmadi"
 
+                }
+
+                );
         }
     }
 }

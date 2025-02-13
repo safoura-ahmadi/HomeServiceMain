@@ -30,21 +30,21 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
             .HasForeignKey(o => o.SubServiceId)
             .OnDelete(DeleteBehavior.NoAction);
 
-        //builder.HasData(
-        //    new Order()
-        //    {
-        //        Id = 1,
+        builder.HasData(
+            new Order()
+            {
+                Id = 1,
 
-        //        IsActive = true,
-        //        Price = 500000,
-        //        CustomerId = 1,
-        //        Status = Domain.Core.Enums.Orders.OrderStatusEnum.WaitingForExpertSelection,
-        //        SubServiceId = 1,
-        //        CreateAt = null,
-        //        TimeToDone = null,
-        //        ImagePath = "Images/trending/2.jpg"
+                IsActive = true,
+                Price = 500000,
+                CustomerId = 1,
+                Status = Domain.Core.Enums.Orders.OrderStatusEnum.WaitingForExpertSelection,
+                SubServiceId = 1,
+                CreateAt = null,
+                TimeToDone = null,
+                ImagePath = "Images/trending/2.jpg"
 
-        //    });
+            });
     }
 
 }

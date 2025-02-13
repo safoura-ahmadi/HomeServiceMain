@@ -25,20 +25,20 @@ public class SuggestionConfiguration : IEntityTypeConfiguration<Suggestion>
             .HasForeignKey(s => s.OrderId)
             .OnDelete(DeleteBehavior.NoAction);
 
-        //builder.HasData(
+        builder.HasData(
 
-        //    new Suggestion()
-        //    {
-        //        Id = 1,
-        //        OrderId = 1,
-        //        Price = 505000,
-        //        ExpertId = 1,
-        //        IsAccepted = false,
-        //        TimeToDone = null
+            new Suggestion()
+            {
+                Id = 1,
+                OrderId = 1,
+                Price = 505000,
+                ExpertId = 1,
+                IsAccepted = false,
+                TimeToDone = null
 
-        //    }
+            }
 
-        //    );
+            );
 
     }
 }

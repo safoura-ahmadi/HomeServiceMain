@@ -34,24 +34,6 @@ public class CommentEfRepository(ApplicationDbContext dbContext)
 
         }
     }
-    public async Task<List<GetCommentDto>> GetAll(CancellationToken cancellationToken)
-    {
-        var item = await _dbContext.Comments.AsNoTracking().
-            Select(c => new GetCommentDto
-            {
-
-                Id = c.Id,
-                Score = c.Score,
-                Text = c.Text,
-                IsActive = false,
-                ExpertId = c.ExpertId,
-                CustomerId = c.CustomerId,
-
-            }
-
-            ).ToListAsync(cancellationToken);
-        return item;
-    }
     public async Task<List<GetCommentDto>> GetByExpertId(int expertId, CancellationToken cancellationToken)
     {
         var item = await _dbContext.Comments.AsNoTracking().
@@ -68,6 +50,25 @@ public class CommentEfRepository(ApplicationDbContext dbContext)
             }
 
            ).ToListAsync(cancellationToken);
+        return item;
+    }
+    //admin
+    public async Task<List<GetCommentDto>> GetAll(CancellationToken cancellationToken)
+    {
+        var item = await _dbContext.Comments.AsNoTracking().
+            Select(c => new GetCommentDto
+            {
+
+                Id = c.Id,
+                Score = c.Score,
+                Text = c.Text,
+                IsActive = false,
+                ExpertId = c.ExpertId,
+                CustomerId = c.CustomerId,
+
+            }
+
+            ).ToListAsync(cancellationToken);
         return item;
     }
     public async Task<bool> Delete(int id, CancellationToken cancellationToken)

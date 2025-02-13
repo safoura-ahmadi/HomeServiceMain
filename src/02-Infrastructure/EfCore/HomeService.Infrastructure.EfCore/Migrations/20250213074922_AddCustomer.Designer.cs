@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HomeService.Infrastructure.EfCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250213055517_Init")]
-    partial class Init
+    [Migration("20250213074922_AddCustomer")]
+    partial class AddCustomer
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -772,6 +772,9 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                     b.Property<bool>("IsAccepted")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
@@ -826,6 +829,16 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                         .IsUnique();
 
                     b.ToTable("Admins", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Balance = 100000m,
+                            Fname = "safoura",
+                            Lname = "ahmadi",
+                            UserId = 1
+                        });
                 });
 
             modelBuilder.Entity("HomeService.Domain.Core.Entities.Users.Customer", b =>
@@ -872,6 +885,18 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                         .IsUnique();
 
                     b.ToTable("Customers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Balance = 100000m,
+                            CityId = 1,
+                            Fname = "customer",
+                            IsConfirmed = false,
+                            Lname = "customeri",
+                            UserId = 3
+                        });
                 });
 
             modelBuilder.Entity("HomeService.Domain.Core.Entities.Users.Expert", b =>
@@ -926,13 +951,21 @@ namespace HomeService.Infrastructure.EfCore.Migrations
 
             modelBuilder.Entity("HomeService.Domain.Core.Entities.Users.ExpertSubService", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<int>("ExpertId")
                         .HasColumnType("int");
 
                     b.Property<int>("SubServiceId")
                         .HasColumnType("int");
 
-                    b.HasKey("ExpertId", "SubServiceId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExpertId");
 
                     b.HasIndex("SubServiceId");
 
@@ -1011,7 +1044,7 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "510f7f5d-4455-4423-8389-7cf594151ec4",
+                            ConcurrencyStamp = "d9b0f212-3c43-4c67-bba1-303cc82f13f5",
                             Email = "Admin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -1022,6 +1055,38 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                             SecurityStamp = "MS23CZ5FYG75543TAIMC5DDNKCVV7B74",
                             TwoFactorEnabled = false,
                             UserName = "Admin@gmail.com"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "a3d5f1c2-9b12-4e7a-a3c1-45edc91e36b7",
+                            Email = "Expert@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "EXPERT@GMAIL.COM",
+                            NormalizedUserName = "EXPERT@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJkglU8KXnLbrWvBHwkr+KZQSIYjReSWOd2FzOAPi3sm+ZxaBpA9F+fqwsJ3soaSA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "JK98SD2FYG75543TAIMC5DDNKCVV7B89",
+                            TwoFactorEnabled = false,
+                            UserName = "Expert@gmail.com"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "f7c8e9a1-2b34-4d59-931a-72bf4c61c5f9",
+                            Email = "Customer@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "Customer@GMAIL.COM",
+                            NormalizedUserName = "CUSTOMER@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMGklU8NXYfKrZHvBHwkr+KZQSIYjReSWOd2FzOAPi3sm+ZxaBpA9F+fqwsJ3soaSA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "PQ76XZ9FYG75543TAIMC5DDNKCVV7B32",
+                            TwoFactorEnabled = false,
+                            UserName = "Customer@gmail.com"
                         });
                 });
 

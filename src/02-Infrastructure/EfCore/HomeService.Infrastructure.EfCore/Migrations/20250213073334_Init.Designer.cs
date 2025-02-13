@@ -4,6 +4,7 @@ using HomeService.Infrastructure.EfCore.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HomeService.Infrastructure.EfCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250213073334_Init")]
+    partial class Init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -749,18 +752,6 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                     b.HasIndex("SubServiceId");
 
                     b.ToTable("Orders");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CustomerId = 1,
-                            ImagePath = "Images/trending/2.jpg",
-                            IsActive = true,
-                            Price = 500000,
-                            Status = 1,
-                            SubServiceId = 1
-                        });
                 });
 
             modelBuilder.Entity("HomeService.Domain.Core.Entities.Orders.Suggestion", b =>
@@ -800,17 +791,6 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                     b.HasIndex("OrderId");
 
                     b.ToTable("Suggestions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ExpertId = 1,
-                            IsAccepted = false,
-                            IsActive = false,
-                            OrderId = 1,
-                            Price = 505000
-                        });
                 });
 
             modelBuilder.Entity("HomeService.Domain.Core.Entities.Users.Admin", b =>
@@ -849,16 +829,6 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                         .IsUnique();
 
                     b.ToTable("Admins", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Balance = 100000m,
-                            Fname = "safoura",
-                            Lname = "ahmadi",
-                            UserId = 1
-                        });
                 });
 
             modelBuilder.Entity("HomeService.Domain.Core.Entities.Users.Customer", b =>
@@ -905,18 +875,6 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                         .IsUnique();
 
                     b.ToTable("Customers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Balance = 100000m,
-                            CityId = 1,
-                            Fname = "customer",
-                            IsConfirmed = true,
-                            Lname = "customeri",
-                            UserId = 3
-                        });
                 });
 
             modelBuilder.Entity("HomeService.Domain.Core.Entities.Users.Expert", b =>
@@ -967,18 +925,6 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                         .IsUnique();
 
                     b.ToTable("Experts");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Balance = 100000m,
-                            CityId = 1,
-                            Fname = "Expert",
-                            IsConfirmed = true,
-                            Lname = "experti",
-                            UserId = 2
-                        });
                 });
 
             modelBuilder.Entity("HomeService.Domain.Core.Entities.Users.ExpertSubService", b =>
@@ -1087,38 +1033,6 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                             SecurityStamp = "MS23CZ5FYG75543TAIMC5DDNKCVV7B74",
                             TwoFactorEnabled = false,
                             UserName = "Admin@gmail.com"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "a3d5f1c2-9b12-4e7a-a3c1-45edc91e36b7",
-                            Email = "Expert@gmail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = true,
-                            NormalizedEmail = "EXPERT@GMAIL.COM",
-                            NormalizedUserName = "EXPERT@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJkglU8KXnLbrWvBHwkr+KZQSIYjReSWOd2FzOAPi3sm+ZxaBpA9F+fqwsJ3soaSA==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "JK98SD2FYG75543TAIMC5DDNKCVV7B89",
-                            TwoFactorEnabled = false,
-                            UserName = "Expert@gmail.com"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "f7c8e9a1-2b34-4d59-931a-72bf4c61c5f9",
-                            Email = "Customer@gmail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "Customer@GMAIL.COM",
-                            NormalizedUserName = "CUSTOMER@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMGklU8NXYfKrZHvBHwkr+KZQSIYjReSWOd2FzOAPi3sm+ZxaBpA9F+fqwsJ3soaSA==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "PQ76XZ9FYG75543TAIMC5DDNKCVV7B32",
-                            TwoFactorEnabled = false,
-                            UserName = "Customer@gmail.com"
                         });
                 });
 

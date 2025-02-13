@@ -14,14 +14,19 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
         builder.HasOne(c => c.User)
             .WithOne(u => u.Customer);
 
-        //builder.HasData(
-        //    new Customer()
-        //    {
-        //        Id = 1,
-        //        UserId = 3
-        //    });
-       
+        builder.HasData(
+            new Customer()
+            {
+                Id = 1,
+                UserId = 3,
+                Fname = "customer",
+                Lname = "customeri",
+                Balance = 100000,
+                CityId = 1,
+                IsConfirmed = true
+            });
 
-       
+
+
     }
 }

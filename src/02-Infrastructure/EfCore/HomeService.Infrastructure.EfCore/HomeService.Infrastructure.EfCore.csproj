@@ -19,8 +19,4 @@
     <ProjectReference Include="..\..\..\01-Domain\Core\HomeService.Domain.Core\HomeService.Domain.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repository\Users\" />
-  </ItemGroup>
-
 </Project>

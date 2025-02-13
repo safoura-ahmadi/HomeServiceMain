@@ -9,6 +9,25 @@ namespace HomeService.Infrastructure.EfCore.Repository.Categories;
 public class CategoryEfRepository(ApplicationDbContext dbContext)
 {
     private readonly ApplicationDbContext _dbContext = dbContext;
+    public async Task<List<GetCategoryForMainPageDto>> GetAllForMainPage(CancellationToken cancellationToken)
+    {
+        var item = await _dbContext.Categories.AsNoTracking()
+            .Where(c => c.IsActive)
+            .Select(c => new GetCategoryForMainPageDto
+            {
+                Id = c.Id,
+                Tilte = c.Title,
+                ImagePath = c.ImagePath,
+                SubCategories = c.SubCategories.Select(sc => new GetSubCategoryDto
+                {
+                    Id = sc.Id,
+                    Tilte = sc.Title
+                }
+                ).ToList()
+            }).ToListAsync(cancellationToken);
+        return item;
+    }
+    //admin
     public async Task<bool> Delete(int id, CancellationToken cancellationToken)
     {
         try
@@ -33,24 +52,6 @@ public class CategoryEfRepository(ApplicationDbContext dbContext)
         await _dbContext.SaveChangesAsync(cancellationToken);
         return true;
 
-    }
-    public async Task<List<GetCategoryForMainPageDto>> GetAllForMainPage(CancellationToken cancellationToken)
-    {
-        var item = await _dbContext.Categories.AsNoTracking()
-            .Where(c => c.IsActive)
-            .Select(c => new GetCategoryForMainPageDto
-            {
-                Id = c.Id,
-                Tilte = c.Title,
-                ImagePath = c.ImagePath,
-                SubCategories = c.SubCategories.Select(sc => new GetSubCategoryDto
-                {
-                    Id = sc.Id,
-                    Tilte = sc.Title
-                }
-                ).ToList()
-            }).ToListAsync(cancellationToken);
-        return item;
     }
     public async Task<List<GetCategoryForAdminPageDto>> GetAll(CancellationToken cancellationToken)
     {

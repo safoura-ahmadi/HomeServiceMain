@@ -9,7 +9,7 @@ public class ExpertSubServiceConfiguration : IEntityTypeConfiguration<ExpertSubS
 {
     public void Configure(EntityTypeBuilder<ExpertSubService> builder)
     {
-        builder.HasKey(x => new { x.ExpertId, x.SubServiceId });
+     
 
         builder.HasOne(x => x.SubService)
             .WithMany(x => x.ExpertSubServices)

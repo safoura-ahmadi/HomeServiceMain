@@ -8,6 +8,32 @@ namespace HomeService.Infrastructure.EfCore.Repository.Categories;
 public class SubCategoryEfRepository(ApplicationDbContext dbContext)
 {
     private readonly ApplicationDbContext _dbContext = dbContext;
+  
+    public async Task<List<GetSubCategoryDto>> GetByCategoryId(int categoryId, CancellationToken cancellationToken)
+    {
+        var item = await _dbContext.SubCategories.AsNoTracking()
+            .Where(sc => sc.IsActive && sc.CategoryId == categoryId)
+            .Select(sc => new GetSubCategoryDto
+            {
+
+                Id = sc.Id,
+                Tilte = sc.Title
+            }).ToListAsync(cancellationToken);
+        return item;
+    }
+    //admin
+    public async Task<List<GetSubCategoryDto>> GetAll(CancellationToken cancellationToken)
+    {
+        var item = await _dbContext.SubCategories.AsNoTracking()
+            .Where(sc => sc.IsActive)
+            .Select(sc => new GetSubCategoryDto
+            {
+
+                Id = sc.Id,
+                Tilte = sc.Title
+            }).ToListAsync(cancellationToken);
+        return item;
+    }
     public async Task<bool> Create(string title, int CategoryId, CancellationToken cancellationToken)
     {
         try
@@ -49,39 +75,5 @@ public class SubCategoryEfRepository(ApplicationDbContext dbContext)
         return true;
 
     }
-    public async Task<List<GetSubCategoryDto>> GetByCategoryId(int categoryId, CancellationToken cancellationToken)
-    {
-        var item = await _dbContext.SubCategories.AsNoTracking()
-            .Where(sc => sc.IsActive && sc.CategoryId == categoryId)
-            .Select(sc => new GetSubCategoryDto
-            {
 
-                Id = sc.Id,
-                Tilte = sc.Title
-            }).ToListAsync(cancellationToken);
-        return item;
-    }
-    public async Task<List<GetSubCategoryDto>> GetAll(CancellationToken cancellationToken)
-    {
-        var item = await _dbContext.SubCategories.AsNoTracking()
-            .Where(sc => sc.IsActive)
-            .Select(sc => new GetSubCategoryDto
-            {
-
-                Id = sc.Id,
-                Tilte = sc.Title
-            }).ToListAsync(cancellationToken);
-        return item;
-    }
-    public async Task<GetSubCategoryDto?> GetById(int id, CancellationToken cancellationToken)
-    {
-        var item = await _dbContext.SubCategories.AsNoTracking()
-            .Where(sc => sc.Id == id && sc.IsActive)
-            .Select(sc => new GetSubCategoryDto
-            {
-                Id = sc.Id,
-                Tilte = sc.Title
-            }).FirstOrDefaultAsync(cancellationToken);
-        return item;
-    }
 }

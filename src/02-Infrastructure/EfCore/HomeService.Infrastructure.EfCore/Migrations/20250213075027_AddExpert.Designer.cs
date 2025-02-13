@@ -4,6 +4,7 @@ using HomeService.Infrastructure.EfCore.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HomeService.Infrastructure.EfCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250213075027_AddExpert")]
+    partial class AddExpert
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -749,18 +752,6 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                     b.HasIndex("SubServiceId");
 
                     b.ToTable("Orders");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CustomerId = 1,
-                            ImagePath = "Images/trending/2.jpg",
-                            IsActive = true,
-                            Price = 500000,
-                            Status = 1,
-                            SubServiceId = 1
-                        });
                 });
 
             modelBuilder.Entity("HomeService.Domain.Core.Entities.Orders.Suggestion", b =>
@@ -800,17 +791,6 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                     b.HasIndex("OrderId");
 
                     b.ToTable("Suggestions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ExpertId = 1,
-                            IsAccepted = false,
-                            IsActive = false,
-                            OrderId = 1,
-                            Price = 505000
-                        });
                 });
 
             modelBuilder.Entity("HomeService.Domain.Core.Entities.Users.Admin", b =>
@@ -913,7 +893,7 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                             Balance = 100000m,
                             CityId = 1,
                             Fname = "customer",
-                            IsConfirmed = true,
+                            IsConfirmed = false,
                             Lname = "customeri",
                             UserId = 3
                         });
@@ -975,7 +955,7 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                             Balance = 100000m,
                             CityId = 1,
                             Fname = "Expert",
-                            IsConfirmed = true,
+                            IsConfirmed = false,
                             Lname = "experti",
                             UserId = 2
                         });

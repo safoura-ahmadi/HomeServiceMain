@@ -18,16 +18,22 @@ public class ExpertConfiguration : IEntityTypeConfiguration<Expert>
                .HasMaxLength(500);
 
 
-        //builder.HasData(
-        //    new Expert ()
-        //    {
-        //        Id = 1,
-        //         UserId = 2,
-                  
-        //    }
+        builder.HasData(
+            new Expert()
+            {
+                Id = 1,
+                UserId = 2,
+                Fname = "Expert",
+                Lname = "experti",
+                Balance = 100000,
+                CityId = 1,
+                IsConfirmed = true
+                 
+
+            }
 
 
-        //    );
-      
+            );
+
     }
 }

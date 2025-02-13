@@ -8,6 +8,7 @@ public class Suggestion
     public string? Description { get; set; }
     public bool IsAccepted { get; set; }
     public DateTime? TimeToDone { get; set; }
+    public bool IsActive { get; set; }
     public int Price { get; set; }
     //navigation
     public int ExpertId { get; set; }
