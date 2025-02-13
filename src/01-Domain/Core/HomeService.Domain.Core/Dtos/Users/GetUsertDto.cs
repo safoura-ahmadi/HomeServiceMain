@@ -6,19 +6,22 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HomeService.Domain.Core.Dtos.Users;
 
-public class GetExpertDto
+public class GetUsertDto
 {
     public int Id { get; set; }
-    [MaxLength(255)]
+    [MaxLength(255,ErrorMessage = "تعداد کاراکتر استفاده شده مجاز نیست")]
     public string? Fname { get; set; }
-    [MaxLength(100)]
+    [MaxLength(100,ErrorMessage = "تعداد کاراکتر استفاده شده مجاز نیست")]
     public string? Lname { get; set; }
+    [MaxLength(255, ErrorMessage = "تعداد کاراکتر استفاده شده مجاز نیست")]
+    public string? Biography { get; set; }
     [MaxLength(500)]
     public string? ImagePath { get; set; }
     [Column(TypeName = "decimal(18, 2)")]
     public decimal Balance { get; set; }
     public int CityId { get; set; }
     public int UserId { get; set; }
-    public List<int> ServicesId { get; set; } = [];
+    public bool IsConfirmed { get; set; }
+    public string? RoleName { get; set; }
 
 }
