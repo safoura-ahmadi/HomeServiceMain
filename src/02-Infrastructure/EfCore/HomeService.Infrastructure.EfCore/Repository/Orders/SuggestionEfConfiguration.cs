@@ -1,15 +1,15 @@
-﻿using HomeService.Domain.Core.Dtos.Orders;
+﻿using HomeService.Domain.Core.Contracts.Repository.Orders;
+using HomeService.Domain.Core.Dtos.Orders;
 using HomeService.Domain.Core.Entities.Orders;
 using HomeService.Infrastructure.EfCore.Common;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 namespace HomeService.Infrastructure.EfCore.Repository.Orders;
 
-public class SuggestionEfConfiguration(ApplicationDbContext dbContext)
+public class SuggestionEfConfiguration(ApplicationDbContext dbContext) : ISuggestionRepository
 {
     private readonly ApplicationDbContext _dbContext = dbContext;
-   
+
 
     public async Task<bool> Create(SuggestionDto suggestion, CancellationToken cancellationToken)
     {
@@ -37,60 +37,94 @@ public class SuggestionEfConfiguration(ApplicationDbContext dbContext)
     }
     public async Task<List<SuggestionDto>> GetSuggestionByOrder(int orderId, CancellationToken cancellationToken)
     {
-        var item = await _dbContext.Suggestions.AsNoTracking()
-            .Where(s => s.OrderId == orderId && s.IsActive)
-            .Select(s => new SuggestionDto
-            {
-                Id = s.Id,
-                Description = s.Description,
-                ExperLname = s.Expert.Lname,
-                Price = s.Price,
-                ExpertId = s.ExpertId,
-                OrderId = s.OrderId,
-                TimeToDone = s.TimeToDone
-            }).ToListAsync(cancellationToken);
-        return item;
+        try
+        {
+            var item = await _dbContext.Suggestions.AsNoTracking()
+                .Where(s => s.OrderId == orderId && s.IsActive)
+                .Select(s => new SuggestionDto
+                {
+                    Id = s.Id,
+                    Description = s.Description,
+                    ExperLname = s.Expert.Lname,
+                    Price = s.Price,
+                    ExpertId = s.ExpertId,
+                    OrderId = s.OrderId,
+                    TimeToDone = s.TimeToDone
+                }).ToListAsync(cancellationToken);
+            return item;
+        }
+        catch
+        {
+            return [];
+        }
     }
     public async Task<bool> ChangeStatetoAccepted(int id, CancellationToken cancellationToken)
     {
-        var item = await _dbContext.Suggestions.FirstOrDefaultAsync(s => s.Id == id && s.IsActive, cancellationToken);
-        if (item is null)
+        try
+        {
+            var item = await _dbContext.Suggestions.FirstAsync(s => s.Id == id && s.IsActive, cancellationToken);
+            item.IsAccepted = true;
+            return true;
+        }
+
+        catch
+        {
             return false;
-        item.IsAccepted = true;
-        return true;
+        }
     }
 
     //admin
-    public async Task<List<SuggestionDto>> GetAll(CancellationToken cancellationToken)
+    public async Task<List<SuggestionDto>> GetAll(int pageNumber,int pageSize,CancellationToken cancellationToken)
     {
-        var item = await _dbContext.Suggestions.AsNoTracking()
-            .Where(s => s.IsActive)
-            .Select(s => new SuggestionDto
-            {
-                Id = s.Id,
-                Description = s.Description,
-                ExperLname = s.Expert.Lname,
-                ExpertId = s.ExpertId,
-                OrderId = s.OrderId,
-                Price = s.Price,
-                TimeToDone = s.TimeToDone
-            }).ToListAsync(cancellationToken);
-        return item;
+        try
+        {
+            var item = await _dbContext.Suggestions.AsNoTracking()
+                .Where(s => s.IsActive)
+                .Skip((pageNumber  - 1) * pageSize)
+                .Take(pageSize)
+                .Select(s => new SuggestionDto
+                {
+                    Id = s.Id,
+                    Description = s.Description,
+                    ExperLname = s.Expert.Lname,
+                    ExpertId = s.ExpertId,
+                    OrderId = s.OrderId,
+                    Price = s.Price,
+                    TimeToDone = s.TimeToDone
+                }).ToListAsync(cancellationToken);
+            return item;
+        }
+        catch
+        {
+            return [];
+        }
     }
-    public async Task<bool> Delete(int id,CancellationToken cancellationToken)
+    public async Task<int> GetTotalCount(CancellationToken cancellationToken)
     {
-        var item = await _dbContext.Suggestions.FirstOrDefaultAsync(s => s.Id == id);
-        if (item is null)
+        try
+        {
+            var item = await _dbContext.Suggestions.AsNoTracking()
+                .CountAsync(cancellationToken);
+            return item;
+        }
+        catch
+        {
+            return 0;
+        }
+    }
+    public async Task<bool> Delete(int id, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var item = await _dbContext.Suggestions.FirstAsync(s => s.Id == id);
+            item.IsActive = false;
+            await _dbContext.SaveChangesAsync(cancellationToken);
+            return true;
+        }
+        catch
+        {
             return false;
-        item.IsActive = false;
-        await _dbContext.SaveChangesAsync(cancellationToken);
-        return true;
+        }
     }
-    public async Task<int> Count(CancellationToken cancellationToken)
-    {
-
-        var item = await _dbContext.Suggestions.AsNoTracking().CountAsync(cancellationToken);
-
-        return item;
-    }
+   
 }

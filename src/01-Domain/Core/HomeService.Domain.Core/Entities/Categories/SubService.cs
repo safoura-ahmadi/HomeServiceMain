@@ -7,12 +7,12 @@ namespace HomeService.Domain.Core.Entities.Categories;
 public class SubService
 {
     public int Id { get; set; }
-    [MaxLength(100, ErrorMessage = "تعداد کاراکتر استفاده شده مجاز نیست")]
+    [MaxLength(100)]
     public string Title { get; set; } = null!;
     [MaxLength(500)]
     public string? ImagePath { get; set; }
     public int BasePrice { get; set; }
-    [MaxLength(255, ErrorMessage = "تعداد کاراکتر استفاده شده مجاز نیست")]
+    [MaxLength(255)]
     public string Description { get; set; } = null!;
     public bool IsActive { get; set; }
     //navigation

@@ -1,11 +1,12 @@
-﻿using HomeService.Domain.Core.Dtos.Categories;
+﻿using HomeService.Domain.Core.Contracts.Repository.Categories;
+using HomeService.Domain.Core.Dtos.Categories;
 using HomeService.Infrastructure.EfCore.Common;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace HomeService.Infrastructure.EfCore.Repository.Categories;
 
-public class SubServiceEfRepository(ApplicationDbContext dbContext)
+public class SubServiceEfRepository(ApplicationDbContext dbContext) : ISubServiceRepository
 {
     private readonly ApplicationDbContext _dbContext = dbContext;
 
@@ -42,52 +43,91 @@ public class SubServiceEfRepository(ApplicationDbContext dbContext)
             }).ToListAsync(cancellationToken);
         return item;
     }
-     public async Task<int> GetBasePrice(int id, CancellationToken cancellationToken )
+    public async Task<int> GetBasePrice(int id, CancellationToken cancellationToken)
     {
-        var item = await _dbContext.SubServices.AsNoTracking()
-            .Where(s => s.Id == id && s.IsActive)
-            .FirstOrDefaultAsync(cancellationToken);
-        if (item is null)
+        try
+        {
+            var item = await _dbContext.SubServices.AsNoTracking()
+                .Where(s => s.Id == id && s.IsActive)
+                .Select(s => s.BasePrice)
+                .FirstAsync(cancellationToken);
+            return item;
+        }
+        catch
+        {
             return 0;
-        return item.BasePrice;
+        }
     }
 
     //admin
     public async Task<bool> Update(GetSubServiceDto model, CancellationToken cancellationToken)
+
     {
-        var item = await _dbContext.SubServices.FirstOrDefaultAsync(s => s.Id == model.Id, cancellationToken);
-        if (item is null)
+        try
+        {
+            var item = await _dbContext.SubServices.FirstAsync(s => s.Id == model.Id, cancellationToken);
+            item.Title = model.Title;
+            item.Description = model.Description;
+            item.ImagePath = model.ImagePath;
+            item.BasePrice = model.BasePrice;
+            await _dbContext.SaveChangesAsync(cancellationToken);
+            return true;
+        }
+        catch
+        {
             return false;
-        item.Title = model.Title;
-        item.Description = model.Description;
-        item.ImagePath = model.ImagePath;
-        item.BasePrice = model.BasePrice;
-        await _dbContext.SaveChangesAsync(cancellationToken);
-        return true;
+        }
     }
     public async Task<bool> Delete(int id, CancellationToken cancellationToken)
     {
-        var item = await _dbContext.SubServices.FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
-        if (item is null)
+        try
+        {
+            var item = await _dbContext.SubServices.FirstAsync(s => s.Id == id, cancellationToken);
+            item.IsActive = false;
+            await _dbContext.SaveChangesAsync(cancellationToken);
+            return true;
+        }
+        catch
+        {
             return false;
-        item.IsActive = false;
-        await _dbContext.SaveChangesAsync(cancellationToken);
-        return true;
+        }
     }
-    public async Task<List<GetSubServiceDto>> GetAll(CancellationToken cancellationToken)
+    public async Task<List<GetSubServiceDto>> GetAll(int pageNumber,int pageSize,CancellationToken cancellationToken)
     {
-        var item = await _dbContext.SubServices.AsNoTracking()
-             .Where(s => s.IsActive)
-             .Select(s => new GetSubServiceDto
-             {
-                 Id = s.Id,
-                 Title = s.Title,
-                 Description = s.Description,
-                 BasePrice = s.BasePrice,
-                 ImagePath = s.ImagePath,
+        try
+        {
+            var item = await _dbContext.SubServices.AsNoTracking()
+                 .Where(s => s.IsActive)
+                 .Skip((pageNumber - 1) * pageSize)
+                 .Take(pageSize)
+                 .Select(s => new GetSubServiceDto
+                 {
+                     Id = s.Id,
+                     Title = s.Title,
+                     Description = s.Description,
+                     BasePrice = s.BasePrice,
+                     ImagePath = s.ImagePath,
 
-             }
-             ).ToListAsync(cancellationToken);
-        return item;
+                 }
+                 ).ToListAsync(cancellationToken);
+            return item;
+        }
+        catch
+        {
+            return [];
+        }
+    }
+    public async Task<int> GetTotalCount(CancellationToken cancellationToken)
+    {
+        try
+        {
+            var item = await _dbContext.SubServices.AsNoTracking()
+                .CountAsync(cancellationToken);
+            return item;
+        }
+        catch
+        {
+            return 0;
+        }
     }
 }

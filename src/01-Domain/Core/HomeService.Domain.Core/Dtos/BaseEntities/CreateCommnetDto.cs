@@ -7,10 +7,9 @@ public class CreateCommentDto
 {
     public int CustomerId { get; set; }
     public int ExpertId { get; set; }
-    public int RequestId { get; set; }
     [Required(ErrorMessage = "امتیاز دهید")]
     [Range(0, 5, ErrorMessage = "امتیاز باید بین 0 تا 10 باشد")]
-    [Display(Name = "امتیاز دهید")]
+    [Display(Name = "امتیاز")]
     public int Score { get; set; }
     [Display(Name = "متن نظر")]
     public string Text { get; set; }

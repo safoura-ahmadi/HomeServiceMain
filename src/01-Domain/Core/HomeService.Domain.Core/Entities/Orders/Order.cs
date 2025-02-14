@@ -10,9 +10,10 @@ public class Order
 {
     public int Id { get; set; }
     public bool IsActive { get; set; }
-    public DateTime? CreateAt { get; set; }
-    public DateTime? TimeToDone { get; set; }
+    public DateTime CreateAt { get; set; }
+    public DateTime TimeToDone { get; set; }
     public int Price { get; set; }
+    [MaxLength(255)]
     public string? Description { get; set; }
     [MaxLength(500)]
     public string? ImagePath { get; set; }

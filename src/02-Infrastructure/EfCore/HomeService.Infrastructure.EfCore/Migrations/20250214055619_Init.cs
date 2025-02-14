@@ -243,6 +243,7 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                     Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     ImagePath = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     Balance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Biography = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     IsConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     CityId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false)
@@ -349,14 +350,12 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                 name: "ExpertSubServices",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     ExpertId = table.Column<int>(type: "int", nullable: false),
                     SubServiceId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ExpertSubServices", x => x.Id);
+                    table.PrimaryKey("PK_ExpertSubServices", x => new { x.ExpertId, x.SubServiceId });
                     table.ForeignKey(
                         name: "FK_ExpertSubServices_Experts_ExpertId",
                         column: x => x.ExpertId,
@@ -376,8 +375,8 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreateAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    TimeToDone = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TimeToDone = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     ImagePath = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
@@ -414,7 +413,7 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     IsAccepted = table.Column<bool>(type: "bit", nullable: false),
-                    TimeToDone = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    TimeToDone = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
                     ExpertId = table.Column<int>(type: "int", nullable: false),
@@ -448,7 +447,12 @@ namespace HomeService.Infrastructure.EfCore.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { 1, 0, "d9b0f212-3c43-4c67-bba1-303cc82f13f5", "Admin@gmail.com", false, false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "AQAAAAIAAYagAAAAEEYElkmU8CUuRLrvzHwkr+KZQSIYjReSWOd2FzOAPi3sm+ZxaBpA9F+fqwsJ3soaSA==", null, false, "MS23CZ5FYG75543TAIMC5DDNKCVV7B74", false, "Admin@gmail.com" });
+                values: new object[,]
+                {
+                    { 1, 0, "d9b0f212-3c43-4c67-bba1-303cc82f13f5", "Admin@gmail.com", false, false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "AQAAAAIAAYagAAAAEEYElkmU8CUuRLrvzHwkr+KZQSIYjReSWOd2FzOAPi3sm+ZxaBpA9F+fqwsJ3soaSA==", null, false, "MS23CZ5FYG75543TAIMC5DDNKCVV7B74", false, "Admin@gmail.com" },
+                    { 2, 0, "a3d5f1c2-9b12-4e7a-a3c1-45edc91e36b7", "Expert@gmail.com", false, true, null, "EXPERT@GMAIL.COM", "EXPERT@GMAIL.COM", "AQAAAAIAAYagAAAAEJkglU8KXnLbrWvBHwkr+KZQSIYjReSWOd2FzOAPi3sm+ZxaBpA9F+fqwsJ3soaSA==", null, false, "JK98SD2FYG75543TAIMC5DDNKCVV7B89", false, "Expert@gmail.com" },
+                    { 3, 0, "f7c8e9a1-2b34-4d59-931a-72bf4c61c5f9", "Customer@gmail.com", false, false, null, "Customer@GMAIL.COM", "CUSTOMER@GMAIL.COM", "AQAAAAIAAYagAAAAEMGklU8NXYfKrZHvBHwkr+KZQSIYjReSWOd2FzOAPi3sm+ZxaBpA9F+fqwsJ3soaSA==", null, false, "PQ76XZ9FYG75543TAIMC5DDNKCVV7B32", false, "Customer@gmail.com" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Categories",
@@ -498,9 +502,24 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Admins",
+                columns: new[] { "Id", "Address", "Balance", "Fname", "ImagePath", "Lname", "UserId" },
+                values: new object[] { 1, null, 100000m, "safoura", null, "ahmadi", 1 });
+
+            migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[] { 1, 1 });
+
+            migrationBuilder.InsertData(
+                table: "Customers",
+                columns: new[] { "Id", "Address", "Balance", "Biography", "CityId", "Fname", "ImagePath", "IsConfirmed", "Lname", "UserId" },
+                values: new object[] { 1, null, 100000m, null, 1, "customer", null, true, "customeri", 3 });
+
+            migrationBuilder.InsertData(
+                table: "Experts",
+                columns: new[] { "Id", "Address", "Balance", "Biography", "CityId", "Fname", "ImagePath", "IsConfirmed", "Lname", "UserId" },
+                values: new object[] { 1, null, 100000m, null, 1, "Expert", null, true, "experti", 2 });
 
             migrationBuilder.InsertData(
                 table: "SubCategories",
@@ -557,6 +576,21 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                     { 17, 300000, "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است", "\\UserTemplate\\images\\icon\\hardWareUpgrade.png", true, 23, "ارتقای سخت افزاری" },
                     { 18, 300000, "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است", "\\UserTemplate\\images\\icon\\computerWebs.png", true, 24, "شبکه کامپیوتری" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "ExpertSubServices",
+                columns: new[] { "ExpertId", "SubServiceId" },
+                values: new object[] { 1, 1 });
+
+            migrationBuilder.InsertData(
+                table: "Orders",
+                columns: new[] { "Id", "CreateAt", "CustomerId", "Description", "ExpertId", "ImagePath", "IsActive", "Price", "Status", "SubServiceId", "TimeToDone" },
+                values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, null, null, "Images/trending/2.jpg", true, 500000, 1, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
+
+            migrationBuilder.InsertData(
+                table: "Suggestions",
+                columns: new[] { "Id", "Description", "ExpertId", "IsAccepted", "IsActive", "OrderId", "Price", "TimeToDone" },
+                values: new object[] { 1, null, 1, false, false, 1, 505000, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Admins_UserId",
@@ -634,11 +668,6 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                 table: "Experts",
                 column: "UserId",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ExpertSubServices_ExpertId",
-                table: "ExpertSubServices",
-                column: "ExpertId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ExpertSubServices_SubServiceId",

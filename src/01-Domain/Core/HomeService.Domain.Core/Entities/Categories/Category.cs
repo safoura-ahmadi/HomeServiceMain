@@ -5,6 +5,7 @@ namespace HomeService.Domain.Core.Entities.Categories;
 public class Category
 {
     public int Id { get; set; }
+    [MaxLength(100)]
     public string Title { get; set; } = null!;
     [MaxLength(500)]
     public string ImagePath { get; set; } = null!;

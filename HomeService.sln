@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F61EF5F0-4A9F-4BEB-BF76-F5526180AAF6}"
 EndProject
@@ -23,6 +23,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeService.Infrastructure.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeService.Endpoint.Razor", "src\03-Endpoint\HomeService.Endpoint.Razor\HomeService.Endpoint.Razor.csproj", "{1E56BF65-C66D-4607-8243-BB5F6486D633}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{7C4AA1E0-1D3D-4E1D-A49F-73322914629A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AppServices", "AppServices", "{7ABC8B80-D1E5-4C14-B9E9-39C3B420282B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeService.Domain.Service.Services", "src\01-Domain\Service\HomeService.Domain.Service.Services\HomeService.Domain.Service.Services.csproj", "{1FB000C9-A90E-4E4C-91CD-131DDB312319}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +47,10 @@ Global
 		{1E56BF65-C66D-4607-8243-BB5F6486D633}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E56BF65-C66D-4607-8243-BB5F6486D633}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E56BF65-C66D-4607-8243-BB5F6486D633}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FB000C9-A90E-4E4C-91CD-131DDB312319}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FB000C9-A90E-4E4C-91CD-131DDB312319}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FB000C9-A90E-4E4C-91CD-131DDB312319}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FB000C9-A90E-4E4C-91CD-131DDB312319}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,5 +65,8 @@ Global
 		{A02C07C9-9E95-4946-A0E8-6F2D5528BA1F} = {CBCA1669-9B5B-4FB1-8BE0-2FA64270BDCC}
 		{196FE36F-907B-4E1F-ACCC-28F58971F540} = {A02C07C9-9E95-4946-A0E8-6F2D5528BA1F}
 		{1E56BF65-C66D-4607-8243-BB5F6486D633} = {F0D96B26-BB7E-479C-870C-BFF62CE83E6D}
+		{7C4AA1E0-1D3D-4E1D-A49F-73322914629A} = {1A939BCF-372B-4051-86A5-AFDF55C508D1}
+		{7ABC8B80-D1E5-4C14-B9E9-39C3B420282B} = {1A939BCF-372B-4051-86A5-AFDF55C508D1}
+		{1FB000C9-A90E-4E4C-91CD-131DDB312319} = {7C4AA1E0-1D3D-4E1D-A49F-73322914629A}
 	EndGlobalSection
 EndGlobal

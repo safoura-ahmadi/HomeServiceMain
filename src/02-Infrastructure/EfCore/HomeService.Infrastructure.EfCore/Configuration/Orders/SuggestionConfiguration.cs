@@ -34,7 +34,7 @@ public class SuggestionConfiguration : IEntityTypeConfiguration<Suggestion>
                 Price = 505000,
                 ExpertId = 1,
                 IsAccepted = false,
-                TimeToDone = null
+                               
 
             }
 

@@ -40,8 +40,6 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
                 CustomerId = 1,
                 Status = Domain.Core.Enums.Orders.OrderStatusEnum.WaitingForExpertSelection,
                 SubServiceId = 1,
-                CreateAt = null,
-                TimeToDone = null,
                 ImagePath = "Images/trending/2.jpg"
 
             });

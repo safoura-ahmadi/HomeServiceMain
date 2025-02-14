@@ -17,7 +17,7 @@ public class Customer
     public string? ImagePath { get; set; }
     [Column(TypeName = "decimal(18, 2)")]
     public decimal Balance { get; set; }
-    [MaxLength(255, ErrorMessage = "تعداد کاراکتر استفاده شده مجاز نیست")]
+    [MaxLength(255)]
     public string? Biography { get; set; }
     public bool IsConfirmed { get; set; }
     //navigation

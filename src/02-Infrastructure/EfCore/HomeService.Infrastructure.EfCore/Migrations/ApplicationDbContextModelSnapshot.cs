@@ -708,7 +708,7 @@ namespace HomeService.Infrastructure.EfCore.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime?>("CreateAt")
+                    b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("CustomerId")
@@ -737,7 +737,7 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                     b.Property<int>("SubServiceId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("TimeToDone")
+                    b.Property<DateTime>("TimeToDone")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -754,12 +754,14 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                         new
                         {
                             Id = 1,
+                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CustomerId = 1,
                             ImagePath = "Images/trending/2.jpg",
                             IsActive = true,
                             Price = 500000,
                             Status = 1,
-                            SubServiceId = 1
+                            SubServiceId = 1,
+                            TimeToDone = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -790,7 +792,7 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("TimeToDone")
+                    b.Property<DateTime>("TimeToDone")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -809,7 +811,8 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                             IsAccepted = false,
                             IsActive = false,
                             OrderId = 1,
-                            Price = 505000
+                            Price = 505000,
+                            TimeToDone = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -875,6 +878,10 @@ namespace HomeService.Infrastructure.EfCore.Migrations
 
                     b.Property<decimal>("Balance")
                         .HasColumnType("decimal(18, 2)");
+
+                    b.Property<string>("Biography")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<int>("CityId")
                         .HasColumnType("int");
@@ -983,25 +990,24 @@ namespace HomeService.Infrastructure.EfCore.Migrations
 
             modelBuilder.Entity("HomeService.Domain.Core.Entities.Users.ExpertSubService", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<int>("ExpertId")
                         .HasColumnType("int");
 
                     b.Property<int>("SubServiceId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("ExpertId");
+                    b.HasKey("ExpertId", "SubServiceId");
 
                     b.HasIndex("SubServiceId");
 
                     b.ToTable("ExpertSubServices");
+
+                    b.HasData(
+                        new
+                        {
+                            ExpertId = 1,
+                            SubServiceId = 1
+                        });
                 });
 
             modelBuilder.Entity("HomeService.Domain.Core.Entities.Users.User", b =>

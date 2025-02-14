@@ -5,6 +5,7 @@ namespace HomeService.Domain.Core.Entities.Categories;
 public class SubCategory
 {
     public int Id { get; set; }
+    [MaxLength(100)]
     public string Title { get; set; } = null!;
     public bool IsActive { get; set; }
  

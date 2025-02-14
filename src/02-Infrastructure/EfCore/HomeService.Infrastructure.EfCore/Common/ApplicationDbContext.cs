@@ -52,4 +52,5 @@ public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<int>, i
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Expert> Experts { get; set; }
     public DbSet<Admin> Admins { get; set; }
+   
 }
