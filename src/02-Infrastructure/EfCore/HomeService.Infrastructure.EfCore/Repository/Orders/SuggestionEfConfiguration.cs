@@ -1,6 +1,8 @@
 ﻿using HomeService.Domain.Core.Contracts.Repository.Orders;
 using HomeService.Domain.Core.Dtos.Orders;
+using HomeService.Domain.Core.Entities;
 using HomeService.Domain.Core.Entities.Orders;
+using HomeService.Domain.Core.Enums.Orders;
 using HomeService.Infrastructure.EfCore.Common;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +13,7 @@ public class SuggestionEfConfiguration(ApplicationDbContext dbContext) : ISugges
     private readonly ApplicationDbContext _dbContext = dbContext;
 
 
-    public async Task<bool> Create(SuggestionDto suggestion, CancellationToken cancellationToken)
+    public async Task<Result> Create(SuggestionDto suggestion, CancellationToken cancellationToken)
     {
         try
         {
@@ -25,17 +27,17 @@ public class SuggestionEfConfiguration(ApplicationDbContext dbContext) : ISugges
                 IsAccepted = false,
                 IsActive = false
             };
-            await _dbContext.AddAsync(item);
+            await _dbContext.AddAsync(item,cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);
-            return true;
+            return Result.Ok("پیشنهاد با موفقیت ایجاد شد");
 
         }
         catch
         {
-            return false;
+            return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
-    public async Task<List<SuggestionDto>> GetSuggestionByOrder(int orderId, CancellationToken cancellationToken)
+    public async Task<List<SuggestionDto>> GetByOrderId(int orderId, CancellationToken cancellationToken)
     {
         try
         {
@@ -58,21 +60,54 @@ public class SuggestionEfConfiguration(ApplicationDbContext dbContext) : ISugges
             return [];
         }
     }
-    public async Task<bool> ChangeStatetoAccepted(int id, CancellationToken cancellationToken)
+    public async Task<Result> ChangeStatetoAccepted(int id, CancellationToken cancellationToken)
     {
         try
         {
             var item = await _dbContext.Suggestions.FirstAsync(s => s.Id == id && s.IsActive, cancellationToken);
             item.IsAccepted = true;
-            return true;
+            await _dbContext.SaveChangesAsync(cancellationToken);
+            return Result.Ok("وضعیت پیشنهاد در حالت تایید شده قرار گرفت");
         }
 
         catch
         {
-            return false;
+            return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
-
+    public async Task<Result> IsOrderHaveActiveSuggestion(int orderId,CancellationToken  cancellationToken)
+    {
+        try
+        {
+            var result = await _dbContext.Suggestions.AsNoTracking()
+                .AnyAsync(s => s.OrderId == orderId && s.IsActive, cancellationToken);
+            if (result is true)
+                return Result.Ok();
+            else
+                return Result.Fail("پیشنهاد فعالی برای این سفارش وجود ندارد");
+        }
+        catch
+        {
+            return Result.Fail("مشکلی در دیتا بیس وجود دارد");
+        }
+    }
+    public async Task<Result> IsOrderHaveAcceptedSugestion(int orderId,CancellationToken cancellationToken)
+    {
+        try
+        {
+            var result = await _dbContext.Suggestions.AsNoTracking()
+                .AnyAsync(s => s.OrderId == orderId && s.IsActive && s.IsAccepted, cancellationToken);
+            if (result is true)
+                return Result.Ok();
+            else
+                return Result.Fail("پیشنهاد تایید شده ای برای این سفارش وجود ندارد");
+        }
+        catch
+        {
+            return Result.Fail("مشکلی در دیتا بیس وجود دارد");
+        }
+    }
+   
     //admin
     public async Task<List<SuggestionDto>> GetAll(int pageNumber,int pageSize,CancellationToken cancellationToken)
     {
@@ -112,18 +147,20 @@ public class SuggestionEfConfiguration(ApplicationDbContext dbContext) : ISugges
             return 0;
         }
     }
-    public async Task<bool> Delete(int id, CancellationToken cancellationToken)
+    public async Task<Result> Delete(int id, CancellationToken cancellationToken)
     {
         try
         {
-            var item = await _dbContext.Suggestions.FirstAsync(s => s.Id == id);
+            var item = await _dbContext.Suggestions.FirstOrDefaultAsync(s => s.Id == id,cancellationToken);
+            if (item is null)
+                return Result.Fail("سفارشی  با این مشخصات برای حذف کردن یافت نشد");
             item.IsActive = false;
             await _dbContext.SaveChangesAsync(cancellationToken);
-            return true;
+            return Result.Ok("سفارش با موفقیت حذف شد");
         }
         catch
         {
-            return false;
+            return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
    
