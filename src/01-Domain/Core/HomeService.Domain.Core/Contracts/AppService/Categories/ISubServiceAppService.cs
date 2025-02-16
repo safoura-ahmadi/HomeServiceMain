@@ -1,0 +1,13 @@
+﻿using HomeService.Domain.Core.Dtos.Categories;
+using HomeService.Domain.Core.Entities;
+
+namespace HomeService.Domain.Core.Contracts.AppService.Categories;
+
+public interface ISubServiceAppService
+{
+    Task<Result> Create(CreateSubServiceDto model, CancellationToken cancellationToken);
+    Task<List<GetSubServiceDto>> GetAll(int pageNumber, CancellationToken cancellationToken);
+    Task<int> GetTotalConut(CancellationToken cancellationToken);
+    Task<Result> Update(CreateSubServiceDto model, CancellationToken cancellationToken);
+    Task<Result> Delete(int id, CancellationToken cancellationToken);
+}

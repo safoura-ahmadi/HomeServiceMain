@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="BaseEntities\" />
-    <Folder Include="Categories\" />
     <Folder Include="Users\" />
   </ItemGroup>
 

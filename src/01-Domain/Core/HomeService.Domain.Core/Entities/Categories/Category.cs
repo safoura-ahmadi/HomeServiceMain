@@ -11,6 +11,7 @@ public class Category
     [Required]
     public string Title { get; set; } = null!;
     [MaxLength(500)]
+    [Required]
     public string ImagePath { get; set; } = null!;
     public bool IsActive { get; set; } = true;
     #endregion

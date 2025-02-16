@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace HomeService.Domain.Service.AppServices.Orders;
 
-public class OrderAppService(IOrderService orderService,ISuggestionService suggestionService) : IOrderAppService
+public class OrderAppService(IOrderService orderService, ISuggestionService suggestionService) : IOrderAppService
 {
     private readonly IOrderService _orderService = orderService;
     private readonly ISuggestionService _suggestionService = suggestionService;
@@ -56,9 +56,21 @@ public class OrderAppService(IOrderService orderService,ISuggestionService sugge
         return await _orderService.ChangeStateToWorkCompletedAndPaid(id, cancellationToken);
     }
 
-    public async Task<List<GetOrderDto>> GetAll(int pageNumber,int pageSize,CancellationToken cancellationToken)
+    public async Task<List<GetOrderDto>> GetAll(int pageNumber,CancellationToken cancellationToken)
     {
-        return await _orderService.GetAll(pageNumber, pageSize, cancellationToken);
+        if (pageNumber <= 0)
+            pageNumber = 1;
+        return await _orderService.GetAll(pageNumber, 10, cancellationToken);
+    }
+
+    public async Task<int> GetTotalConut(CancellationToken cancellationToken)
+    {
+        return await _orderService.GetTotalConut(cancellationToken);
+    }
+
+    public async Task<List<GetOrderDto>> Search(string text, CancellationToken cancellationToken)
+    {
+        return await _orderService.Search(text, cancellationToken);
     }
 }
 

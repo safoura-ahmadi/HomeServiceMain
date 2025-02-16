@@ -1,5 +1,6 @@
 ﻿using HomeService.Domain.Core.Contracts.Repository.Categories;
 using HomeService.Domain.Core.Dtos.Categories;
+using HomeService.Domain.Core.Entities;
 using HomeService.Domain.Core.Entities.Categories;
 using HomeService.Infrastructure.EfCore.Common;
 using Microsoft.EntityFrameworkCore;
@@ -37,34 +38,37 @@ public class CategoryEfRepository(ApplicationDbContext dbContext) : ICategoryRep
         ;
     }
     //admin
-    public async Task<bool> Delete(int id, CancellationToken cancellationToken)
+    public async Task<Result> Delete(int id, CancellationToken cancellationToken)
     {
         try
         {
-            var item = await _dbContext.Categories.FirstAsync(c => c.Id == id, cancellationToken);
+            var item = await _dbContext.Categories.FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+            if (item is null)
+                return Result.Fail("دسته بندی با این مشخصات یافت نشد");
             item.IsActive = false;
             await _dbContext.SaveChangesAsync(cancellationToken);
-            return true;
+            return Result.Ok("دسته بندی با موفقیت حذف شد");
 
         }
         catch
         {
-            return false;
+            return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
-    public async Task<bool> Update(int id, string title, CancellationToken cancellationToken)
+    public async Task<Result> Update(int id, string title, CancellationToken cancellationToken)
     {
         try
         {
-            var item = await _dbContext.Categories.FirstAsync(c => c.Id == id && c.IsActive, cancellationToken);
-
+            var item = await _dbContext.Categories.FirstOrDefaultAsync(c => c.Id == id && c.IsActive, cancellationToken);
+            if (item is null)
+                return Result.Fail("دسته بندی با این مشخصات وجود ندارد");
             item.Title = title;
             await _dbContext.SaveChangesAsync(cancellationToken);
-            return true;
+            return Result.Ok("مشخصات دسته بندی با موفقیت ویرایش شد");
         }
         catch
         {
-            return false;
+            return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
 
     }
@@ -73,12 +77,15 @@ public class CategoryEfRepository(ApplicationDbContext dbContext) : ICategoryRep
         try
         {
             var item = await _dbContext.Categories.AsNoTracking()
-                .Where(c => c.IsActive)
-                .Select(c => new GetCategoryForAdminPageDto
-                {
-                    Id = c.Id,
-                    Title = c.Title
-                }).ToListAsync(cancellationToken);
+                      .Where(c => c.IsActive)
+                      .Include(c => c.SubCategories)
+                      .ThenInclude(c => c.SubServices)
+                       .Select(c => new GetCategoryForAdminPageDto
+                       {
+                           Id = c.Id,
+                           Title = c.Title,
+                           SubServiceCount = c.SubCategories.Count(sc => sc.IsActive)
+                       }).ToListAsync(cancellationToken);
             return item;
         }
         catch
@@ -88,7 +95,7 @@ public class CategoryEfRepository(ApplicationDbContext dbContext) : ICategoryRep
 
 
     }
-    public async Task<bool> Create(string title, string imagePath, CancellationToken cancellationToken)
+    public async Task<Result> Create(string title, string imagePath, CancellationToken cancellationToken)
     {
         try
         {
@@ -100,12 +107,12 @@ public class CategoryEfRepository(ApplicationDbContext dbContext) : ICategoryRep
             };
             await _dbContext.Categories.AddAsync(item, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);
-            return true;
+            return Result.Ok(" دسته بندی جدید با موفقیت ایجاد شد");
 
         }
         catch
         {
-            return false;
+            return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
 }

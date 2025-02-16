@@ -60,6 +60,11 @@ public class OrderService(IOrderRepository repository) : IOrderService
         return await _repository.GetTotalConut(cancellationToken);
     }
 
+    public async Task<List<GetOrderDto>> Search(string text, CancellationToken cancellationToken)
+    {
+        return await _repository.Search(text, cancellationToken);
+    }
+
     public async Task<Result> SetFinalPrice(int id, int price, CancellationToken cancellationToken)
     {
         return await _repository.SetFinalPrice(id, price, cancellationToken);

@@ -1,6 +1,7 @@
 ﻿using HomeService.Domain.Core.Contracts.Repository.Categories;
 using HomeService.Domain.Core.Contracts.Service.Categories;
 using HomeService.Domain.Core.Dtos.Categories;
+using HomeService.Domain.Core.Entities;
 
 namespace HomeService.Domain.Service.Services.Categories;
 
@@ -8,7 +9,12 @@ public class SubServiceService(ISubServiceRepository repository) : ISubServiceSe
 {
     private readonly ISubServiceRepository _repository = repository;
 
-    public async Task<bool> Delete(int id, CancellationToken cancellationToken)
+    public async Task<Result> Create(CreateSubServiceDto model, CancellationToken cancellationToken)
+    {
+        return await _repository.Create(model, cancellationToken);
+    }
+
+    public async Task<Result> Delete(int id, CancellationToken cancellationToken)
     {
         return await _repository.Delete(id, cancellationToken);
     }
@@ -38,7 +44,7 @@ public class SubServiceService(ISubServiceRepository repository) : ISubServiceSe
         return await _repository.Search(text, cancellationToken);
     }
 
-    public async Task<bool> Update(GetSubServiceDto model, CancellationToken cancellationToken)
+    public async Task<Result> Update(CreateSubServiceDto model, CancellationToken cancellationToken)
     {
         return await _repository.Update(model, cancellationToken);
     }

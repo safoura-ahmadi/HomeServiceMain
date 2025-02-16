@@ -242,4 +242,38 @@ public class OrderEfRepository(ApplicationDbContext dbContext) : IOrderRepositor
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
+
+    public async Task<List<GetOrderDto>> Search(string text, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var item = await _dbContext.Orders.AsNoTracking()
+                .Include(o => o.Customer)
+                .Include(o => o.Expert)
+                .Include(o => o.SubService)
+                .Where(o => o.IsActive && o.Customer!.Lname.Contains(text))
+                .Select(o => new GetOrderDto
+                {
+                    Id = o.Id,
+                    CreateAt = o.CreateAt,
+                    CustomerId = o.CustomerId,
+                    CustomerLname = o.Customer!.Lname,
+                    Description = o.Description,
+                    Images = o.Images,
+                    Price = o.Price,
+                    Status = o.Status,
+                    SubServiceName = o.SubService!.Title,
+                    TimeToDone = o.TimeToDone,
+
+
+                })
+                .ToListAsync(cancellationToken);
+
+            return item;
+        }
+        catch
+        {
+            return [];
+        }
+    }
 }
