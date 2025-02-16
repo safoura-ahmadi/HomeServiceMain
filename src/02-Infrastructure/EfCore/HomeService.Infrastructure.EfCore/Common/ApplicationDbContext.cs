@@ -23,7 +23,7 @@ public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<int>, i
     }
     protected override void OnModelCreating(ModelBuilder builder)
     {
-
+        builder.ApplyConfiguration(new ImageConfiguration());
         builder.ApplyConfiguration(new ExpertSubServiceConfiguration());
         builder.ApplyConfiguration(new CityConfiguration());
         builder.ApplyConfiguration(new CommentConfiguration());

@@ -5,6 +5,8 @@ namespace HomeService.Domain.Core.Entities.Users;
 
 public class Admin
 {
+    #region Properties
+    [Key]
     public int Id { get; set; }
     [MaxLength(100)]
     public string? Fname { get; set; }
@@ -16,9 +18,11 @@ public class Admin
     public string? ImagePath { get; set; }
     [Column(TypeName = "decimal(18, 2)")]
     public decimal Balance { get; set; }
+    #endregion
 
-    //navigation
+    #region NavigationProperties
     public int UserId { get; set; }
-    public User User { get; set; }
+    public User? User { get; set; }
+    #endregion
 
 }

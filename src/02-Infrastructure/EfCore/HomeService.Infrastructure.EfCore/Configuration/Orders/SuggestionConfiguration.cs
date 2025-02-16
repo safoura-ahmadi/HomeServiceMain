@@ -9,12 +9,6 @@ public class SuggestionConfiguration : IEntityTypeConfiguration<Suggestion>
 {
     public void Configure(EntityTypeBuilder<Suggestion> builder)
     {
-        builder.HasKey(s => s.Id);
-
-        builder.Property(s => s.Description)
-            .HasMaxLength(255)
-            .HasColumnType("nvarchar");
-
         builder.HasOne(s => s.Expert)
             .WithMany(e => e.Suggestions)
             .HasForeignKey(e => e.ExpertId)
@@ -29,14 +23,24 @@ public class SuggestionConfiguration : IEntityTypeConfiguration<Suggestion>
 
             new Suggestion()
             {
-                Id = 1,
-                OrderId = 1,
+                Id = 2,
+                OrderId = 2,
                 Price = 505000,
                 ExpertId = 1,
                 IsAccepted = false,
                                
 
-            }
+            },
+              new Suggestion()
+              {
+                  Id = 1,
+                  OrderId = 1,
+                  Price = 505000,
+                  ExpertId = 1,
+                  IsAccepted = true,
+
+
+              }
 
             );
 

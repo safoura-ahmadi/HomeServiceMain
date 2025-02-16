@@ -7,7 +7,7 @@ namespace HomeService.Domain.Core.Entities.Users;
 public class User : IdentityUser<int>
 {
 
-    //navigation
+    
     public Admin? Admin { get; set; }
     public Expert? Expert { get; set; }
     public Customer? Customer { get; set; }

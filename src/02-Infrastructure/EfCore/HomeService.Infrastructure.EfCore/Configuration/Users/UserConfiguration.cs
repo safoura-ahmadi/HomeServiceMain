@@ -8,7 +8,7 @@ public class UserConfiguration
     {
         var users = new List<User>
         {
-            new User()
+            new()
             {
                 Id = 1,
                 UserName = "Admin@gmail.com",
@@ -22,7 +22,7 @@ public class UserConfiguration
                 LockoutEnabled = false,
 
 
-            },new User()
+            },new()
             {
                 Id = 2,
                 UserName = "Expert@gmail.com",
@@ -36,7 +36,7 @@ public class UserConfiguration
                 LockoutEnabled = true,
             },
 
-            new User()
+            new()
             {
                 Id = 3,
                 UserName = "Customer@gmail.com",

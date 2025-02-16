@@ -6,6 +6,7 @@ namespace HomeService.Domain.Core.Entities.BaseEntities;
 public class Image
 {
     #region Properties
+    [Key]
     public int Id { get; set; }
     [MaxLength(500)]
     [Required]

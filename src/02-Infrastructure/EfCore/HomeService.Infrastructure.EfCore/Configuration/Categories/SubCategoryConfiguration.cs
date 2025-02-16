@@ -9,18 +9,10 @@ public class SubCategoryConfiguration : IEntityTypeConfiguration<SubCategory>
 {
     public void Configure(EntityTypeBuilder<SubCategory> builder)
     {
-        builder.HasKey(sc => sc.Id);
-
-        builder.Property(sc => sc.Title)
-            .IsRequired()
-            .HasMaxLength(55)
-            .HasColumnType("nvarchar");
-
-
         builder.HasOne(sc => sc.Category)
-            .WithMany(c => c.SubCategories)
-            .HasForeignKey(sc => sc.CategoryId)
-            .OnDelete(DeleteBehavior.NoAction);
+              .WithMany(c => c.SubCategories)
+              .HasForeignKey(sc => sc.CategoryId)
+              .OnDelete(DeleteBehavior.NoAction);
 
 
         builder.HasData(

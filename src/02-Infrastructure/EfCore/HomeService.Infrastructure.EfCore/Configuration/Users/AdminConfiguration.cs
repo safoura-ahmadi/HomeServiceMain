@@ -8,8 +8,7 @@ namespace HomeService.Infrastructure.EfCore.Configuration.Users
     {
         public void Configure(EntityTypeBuilder<Admin> builder)
         {
-            builder.ToTable("Admins");
-            builder.HasKey(x => x.Id);
+            
 
             builder.HasOne(a => a.User)
                 .WithOne(ap => ap.Admin);

@@ -6,6 +6,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace HomeService.Domain.Core.Entities.Users;
 public class Customer
 {
+    #region Properties
+    [Key]
     public int Id { get; set; }
     [MaxLength(100)]
     public string? Fname { get; set; }
@@ -19,12 +21,16 @@ public class Customer
     public decimal Balance { get; set; }
     [MaxLength(255)]
     public string? Biography { get; set; }
-    public bool IsConfirmed { get; set; }
-    //navigation
+    public bool IsConfirmed { get; set; } = false;
+    #endregion
+
+
+    #region NavigationProperties
     public int CityId { get; set; }
-    public City City { get; set; }
+    public City? City { get; set; }
     public int UserId { get; set; }
-    public User User { get; set; }
+    public User? User { get; set; }
     public List<Order> Orders { get; set; } = [];
     public List<Comment> Comments { get; set; } = [];
+    #endregion
 }

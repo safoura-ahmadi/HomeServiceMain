@@ -9,18 +9,33 @@ public class CommentConfiguration : IEntityTypeConfiguration<Comment>
 {
     public void Configure(EntityTypeBuilder<Comment> builder)
     {
-        builder.HasKey(c => c.Id);
-        builder.Property(c => c.Text)
-            .HasMaxLength(255);
 
         builder.HasOne(c => c.Expert)
-            .WithMany(e => e.Comments)
-            .HasForeignKey(e => e.ExpertId)
-            .OnDelete(DeleteBehavior.NoAction);
+                .WithMany(e => e.Comments)
+                .HasForeignKey(e => e.ExpertId)
+                .OnDelete(DeleteBehavior.NoAction);
 
         builder.HasOne(c => c.Customer)
-            .WithMany(c => c.Comments)
-            .HasForeignKey(c => c.CustomerId)
-            .OnDelete(DeleteBehavior.NoAction);
+                .WithMany(c => c.Comments)
+                .HasForeignKey(c => c.CustomerId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+        builder.HasOne(c => c.Order)
+           .WithMany(o => o.Comments)
+           .HasForeignKey(c => c.OrderId)
+           .OnDelete(DeleteBehavior.NoAction);
+
+        builder.HasData(
+            new Comment()
+            {
+                Id = 1,
+                OrderId = 1,
+                ExpertId = 1,
+                CustomerId = 1,
+                IsActive = false,
+                Text = "کارشون عالیه",
+                Score = 8
+            }
+            );
     }
 }

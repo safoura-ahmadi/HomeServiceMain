@@ -10,19 +10,16 @@ public class CityConfiguration : IEntityTypeConfiguration<City>
 {
     public void Configure(EntityTypeBuilder<City> builder)
     {
-        builder.HasKey(c => c.Id);
-
-        builder.Property(c => c.Title).IsRequired().HasMaxLength(100);
 
         builder.HasMany(x => x.Customers)
-    .WithOne(x => x.City)
-    .HasForeignKey(x => x.CityId)
-    .OnDelete(DeleteBehavior.NoAction);
+                .WithOne(x => x.City)
+                .HasForeignKey(x => x.CityId)
+                .OnDelete(DeleteBehavior.NoAction);
 
         builder.HasMany(x => x.Experts)
-    .WithOne(x => x.City)
-    .HasForeignKey(x => x.CityId)
-    .OnDelete(DeleteBehavior.NoAction);
+                .WithOne(x => x.City)
+                .HasForeignKey(x => x.CityId)
+                .OnDelete(DeleteBehavior.NoAction);
 
         builder.HasData(new List<City>()
             {

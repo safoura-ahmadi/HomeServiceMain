@@ -9,11 +9,7 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
 {
     public void Configure(EntityTypeBuilder<Order> builder)
     {
-        builder.HasKey(o => o.Id);
 
-        builder.Property(o => o.Description)
-            .HasMaxLength(255)
-            .HasColumnType("nvarchar");
 
         builder.HasOne(o => o.Customer)
             .WithMany(c => c.Orders)
@@ -33,16 +29,28 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
         builder.HasData(
             new Order()
             {
-                Id = 1,
+                Id = 2,
 
                 IsActive = true,
                 Price = 500000,
                 CustomerId = 1,
                 Status = Domain.Core.Enums.Orders.OrderStatusEnum.WaitingForExpertSelection,
                 SubServiceId = 1,
-                ImagePath = "Images/trending/2.jpg"
 
-            });
+            }, new Order()
+            {
+                Id = 1,
+                IsActive = true,
+                Price = 500000,
+                CustomerId = 1,
+                Status = Domain.Core.Enums.Orders.OrderStatusEnum.WorkCompletedAndPaid,
+                SubServiceId = 1,
+
+            }
+
+
+            );
+
     }
 
 }

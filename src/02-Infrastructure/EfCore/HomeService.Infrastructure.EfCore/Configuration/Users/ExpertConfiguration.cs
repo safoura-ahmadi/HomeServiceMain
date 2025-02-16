@@ -9,7 +9,7 @@ public class ExpertConfiguration : IEntityTypeConfiguration<Expert>
 {
     public void Configure(EntityTypeBuilder<Expert> builder)
     {
-        builder.HasKey(e => e.Id);
+       
 
         builder.HasOne(e => e.User)
             .WithOne(u => u.Expert);

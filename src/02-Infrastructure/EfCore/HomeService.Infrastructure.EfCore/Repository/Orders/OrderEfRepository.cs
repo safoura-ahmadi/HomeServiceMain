@@ -22,7 +22,6 @@ public class OrderEfRepository(ApplicationDbContext dbContext) : IOrderRepositor
                 CustomerId = order.CustomerId,
                 CreateAt = DateTime.Now,
                 Description = order.Description,
-                ImagePath = order.ImagePath,
                 Price = order.Price,
                 IsActive = true,
                 Status = Domain.Core.Enums.Orders.OrderStatusEnum.WaitingForExpertOffer,
@@ -54,7 +53,6 @@ public class OrderEfRepository(ApplicationDbContext dbContext) : IOrderRepositor
                     CustomerId = o.CustomerId,
                     CustomerLname = o.Customer.Lname,
                     Description = o.Description,
-                    ImagePath = o.ImagePath,
                     Price = o.Price,
                     TimeToDone = o.TimeToDone
                 }).ToListAsync(cancellationToken);
@@ -112,7 +110,7 @@ public class OrderEfRepository(ApplicationDbContext dbContext) : IOrderRepositor
         }
     }
     //admin
-    public async Task<List<GetOrderDto>> GetAll(int pageNumber,int pageSize,CancellationToken cancellationToken)
+    public async Task<List<GetOrderDto>> GetAll(int pageNumber, int pageSize, CancellationToken cancellationToken)
     {
         try
         {
@@ -127,8 +125,7 @@ public class OrderEfRepository(ApplicationDbContext dbContext) : IOrderRepositor
                     CustomerId = o.CustomerId,
                     CustomerLname = o.Customer.Lname,
                     Description = o.Description,
-                    ImagePath = o.ImagePath,
-                    Price = o.Price,
+                     Price = o.Price,
                     TimeToDone = o.TimeToDone
                 }).ToListAsync(cancellationToken);
             return item;
@@ -146,7 +143,8 @@ public class OrderEfRepository(ApplicationDbContext dbContext) : IOrderRepositor
                 .Where(o => o.IsActive)
                 .CountAsync(cancellationToken);
             return item;
-        }catch
+        }
+        catch
         {
             return 0;
         }

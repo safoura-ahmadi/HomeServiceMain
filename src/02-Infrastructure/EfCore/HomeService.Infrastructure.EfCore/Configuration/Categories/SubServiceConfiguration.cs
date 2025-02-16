@@ -8,22 +8,12 @@ public class SubServiceConfiguration : IEntityTypeConfiguration<SubService>
 {
     public void Configure(EntityTypeBuilder<SubService> builder)
     {
-        builder.HasKey(s => s.Id);
-
-        builder.Property(s => s.Title)
-            .IsRequired()
-            .HasMaxLength(55)
-            .HasColumnType("nvarchar");
-
-        builder.Property(s => s.Description)
-            .IsRequired()
-            .HasMaxLength(255)
-            .HasColumnType("nvarchar");
+        //\\UserTemplate\\images\\icon\\banaii.png
 
         builder.HasOne(S => S.SubCategory)
-            .WithMany(sc => sc.SubServices)
-            .HasForeignKey(s => s.SubCategoryId)
-            .OnDelete(DeleteBehavior.NoAction);
+                .WithMany(sc => sc.SubServices)
+                .HasForeignKey(s => s.SubCategoryId)
+                .OnDelete(DeleteBehavior.NoAction);
 
         builder.HasData(
             new SubService()
@@ -34,7 +24,7 @@ public class SubServiceConfiguration : IEntityTypeConfiguration<SubService>
                 SubCategoryId = 1,
                 IsActive = true,
                 BasePrice = 300000,
-                ImagePath = "\\UserTemplate\\images\\icon\\banaii.png"
+                ImagePath = "banaii.png"
 
 
             },
@@ -46,7 +36,7 @@ public class SubServiceConfiguration : IEntityTypeConfiguration<SubService>
                     SubCategoryId = 1,
                     IsActive = true,
                     BasePrice = 200000,
-                    ImagePath = "\\UserTemplate\\images\\icon\\gachKari.png"
+                    ImagePath = "gachKari.png"
 
                 },
                     new SubService()
@@ -57,7 +47,7 @@ public class SubServiceConfiguration : IEntityTypeConfiguration<SubService>
                         SubCategoryId = 4,
                         IsActive = true,
                         BasePrice = 300000,
-                        ImagePath = "\\UserTemplate\\images\\icon\\shisheBori.png"
+                        ImagePath = "shisheBori.png"
 
                     },
                         new SubService()
@@ -68,7 +58,7 @@ public class SubServiceConfiguration : IEntityTypeConfiguration<SubService>
                             SubCategoryId = 7,
                             IsActive = true,
                             BasePrice = 300000,
-                            ImagePath = "\\UserTemplate\\images\\icon\\waterCooler.png"
+                            ImagePath = "waterCooler.png"
 
 
                         }, new SubService()
@@ -79,7 +69,7 @@ public class SubServiceConfiguration : IEntityTypeConfiguration<SubService>
                             SubCategoryId = 7,
                             IsActive = true,
                             BasePrice = 300000,
-                            ImagePath = "\\UserTemplate\\images\\icon\\GasCooler.png"
+                            ImagePath = "GasCooler.png"
 
                         }, new SubService()
                         {
@@ -89,7 +79,7 @@ public class SubServiceConfiguration : IEntityTypeConfiguration<SubService>
                             SubCategoryId = 8,
                             IsActive = true,
                             BasePrice = 300000,
-                            ImagePath = "\\UserTemplate\\images\\icon\\openPipe.png"
+                            ImagePath = "openPipe.png"
 
 
                         }, new SubService()
@@ -100,7 +90,7 @@ public class SubServiceConfiguration : IEntityTypeConfiguration<SubService>
                             SubCategoryId = 9,
                             IsActive = true,
                             BasePrice = 300000,
-                            ImagePath = "\\UserTemplate\\images\\icon\\powerWork.png"
+                            ImagePath = "powerWork.png"
 
 
                         }, new SubService()
@@ -111,7 +101,7 @@ public class SubServiceConfiguration : IEntityTypeConfiguration<SubService>
                             SubCategoryId = 10,
                             IsActive = true,
                             BasePrice = 300000,
-                            ImagePath = "\\UserTemplate\\images\\icon\\oilChanging.png"
+                            ImagePath = "oilChanging.png"
 
 
                         }, new SubService()
@@ -122,7 +112,7 @@ public class SubServiceConfiguration : IEntityTypeConfiguration<SubService>
                             SubCategoryId = 10,
                             IsActive = true,
                             BasePrice = 300000,
-                            ImagePath = "\\UserTemplate\\images\\icon\\carRepairing.png"
+                            ImagePath = "carRepairing.png"
 
 
                         }
@@ -134,7 +124,7 @@ public class SubServiceConfiguration : IEntityTypeConfiguration<SubService>
                             SubCategoryId = 11,
                             IsActive = true,
                             BasePrice = 300000,
-                            ImagePath = "\\UserTemplate\\images\\icon\\changingPlace.png"
+                            ImagePath = "changingPlace.png"
 
 
                         }
@@ -146,7 +136,7 @@ public class SubServiceConfiguration : IEntityTypeConfiguration<SubService>
                             SubCategoryId = 12,
                             IsActive = true,
                             BasePrice = 300000,
-                            ImagePath = "\\UserTemplate\\images\\icon\\partialChanging.png"
+                            ImagePath = "partialChanging.png"
 
 
                         }
@@ -158,7 +148,7 @@ public class SubServiceConfiguration : IEntityTypeConfiguration<SubService>
                             SubCategoryId = 13,
                             IsActive = true,
                             BasePrice = 300000,
-                            ImagePath = "\\UserTemplate\\images\\icon\\freezer.png"
+                            ImagePath = "freezer.png"
 
 
                         }
@@ -170,7 +160,7 @@ public class SubServiceConfiguration : IEntityTypeConfiguration<SubService>
                             SubCategoryId = 14,
                             IsActive = true,
                             BasePrice = 300000,
-                            ImagePath = "\\UserTemplate\\images\\icon\\washingMachine.png"
+                            ImagePath = "washingMachine.png"
 
 
                         }, new SubService()
@@ -181,7 +171,7 @@ public class SubServiceConfiguration : IEntityTypeConfiguration<SubService>
                             SubCategoryId = 15,
                             IsActive = true,
                             BasePrice = 300000,
-                            ImagePath = "\\UserTemplate\\images\\icon\\photoCopy.png"
+                            ImagePath = "photoCopy.png"
 
 
                         }, new SubService()
@@ -192,7 +182,7 @@ public class SubServiceConfiguration : IEntityTypeConfiguration<SubService>
                             SubCategoryId = 22,
                             IsActive = true,
                             BasePrice = 300000,
-                            ImagePath = "\\UserTemplate\\images\\icon\\lapTop.png"
+                            ImagePath = "lapTop.png"
 
 
                         }, new SubService()
@@ -203,7 +193,7 @@ public class SubServiceConfiguration : IEntityTypeConfiguration<SubService>
                             SubCategoryId = 22,
                             IsActive = true,
                             BasePrice = 300000,
-                            ImagePath = "\\UserTemplate\\images\\icon\\mobileAndTablet.png"
+                            ImagePath = "mobileAndTablet.png"
 
 
                         }, new SubService()
@@ -214,7 +204,7 @@ public class SubServiceConfiguration : IEntityTypeConfiguration<SubService>
                             SubCategoryId = 23,
                             IsActive = true,
                             BasePrice = 300000,
-                            ImagePath = "\\UserTemplate\\images\\icon\\hardWareUpgrade.png"
+                            ImagePath = "hardWareUpgrade.png"
 
 
                         }, new SubService()
@@ -225,7 +215,7 @@ public class SubServiceConfiguration : IEntityTypeConfiguration<SubService>
                             SubCategoryId = 24,
                             IsActive = true,
                             BasePrice = 300000,
-                            ImagePath = "\\UserTemplate\\images\\icon\\computerWebs.png"
+                            ImagePath = "computerWebs.png"
 
 
                         }
