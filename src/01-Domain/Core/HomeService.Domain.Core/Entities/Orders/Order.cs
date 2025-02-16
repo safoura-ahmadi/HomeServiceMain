@@ -26,5 +26,6 @@ public class Order
     public int SubServiceId { get; set; }
     public SubService SubService { get; set; }
     public List<Suggestion> Suggestions { get; set; } = [];
+    public List<Image> Images { get; set; } = []; 
 
 }

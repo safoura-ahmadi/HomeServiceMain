@@ -4,7 +4,7 @@ namespace HomeService.Domain.Core.Enums.Orders;
 public enum OrderStatusEnum
 {
     [Display(Name = "در انتظار پیشنهاد متخصص")]
-    WaitingForExpertOffer = 0,
+    WaitingForExpertOffer = 1,
     [Display(Name = "در انتظار انتخاب متخصص")]
     WaitingForExpertSelection,
     [Display(Name = "امدن کارشناس به محل شما")]
