@@ -1,5 +1,6 @@
 ﻿using HomeService.Domain.Core.Contracts.Repository.BaseEntities;
 using HomeService.Domain.Core.Dtos.BaseEntities;
+using HomeService.Domain.Core.Entities;
 using HomeService.Domain.Core.Entities.BaseEntities;
 using HomeService.Infrastructure.EfCore.Common;
 using Microsoft.EntityFrameworkCore;
@@ -82,6 +83,7 @@ public class CommentEfRepository(ApplicationDbContext dbContext) : ICommentRepos
         try
         {
             var item = await _dbContext.Comments.AsNoTracking()
+                .Include(c => c.Expert)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .Select(c => new GetCommentDto
@@ -93,6 +95,7 @@ public class CommentEfRepository(ApplicationDbContext dbContext) : ICommentRepos
                     IsActive = false,
                     ExpertId = c.ExpertId,
                     CustomerId = c.CustomerId,
+                    ExpertLname = c.Expert!.Lname
 
                 }
 
@@ -117,23 +120,49 @@ public class CommentEfRepository(ApplicationDbContext dbContext) : ICommentRepos
             return 0;
         }
     }
-    public async Task<bool> Delete(int id, CancellationToken cancellationToken)
+    public async Task<Result> SetInActive(int id, CancellationToken cancellationToken)
     {
 
 
         try
         {
-            var item = await _dbContext.Comments.FirstAsync(c => c.Id == id, cancellationToken);
-
+            var item = await _dbContext.Comments.FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+            if (item is null)
+                return Result.Fail("کامنتی با این مشخصات یافت نشد");
             item.IsActive = false;
             await _dbContext.SaveChangesAsync(cancellationToken);
-            return true;
+            return Result.Ok("کامنت با موفقیت  غیرفعال شد");
         }
         catch
         {
-            return false;
+            return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
 
     }
 
+    public async Task<List<GetCommentDto>> Search(string text, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var items = await _dbContext.Comments.AsNoTracking()
+                .Include(c => c.Expert)
+                 .Where(c =>(!string.IsNullOrEmpty(c.Text) && c.Text.Contains(text)) || !string.IsNullOrEmpty(c.Expert!.Lname) && c.Expert.Lname.Contains(text))
+                .Select(c => new GetCommentDto
+                {
+                    Id = c.Id,
+                    Text = c.Text,
+                    CustomerId = c.CustomerId,
+                    ExpertId = c.ExpertId,
+                    ExpertLname = c.Expert!.Lname,
+                    IsActive = c.IsActive,
+                    Score = c.Score,
+                }).ToListAsync(cancellationToken);
+            return items;
+
+        }
+        catch
+        {
+            return [];
+        }
+    }
 }

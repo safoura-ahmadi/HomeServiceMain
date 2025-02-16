@@ -251,7 +251,7 @@ public class OrderEfRepository(ApplicationDbContext dbContext) : IOrderRepositor
                 .Include(o => o.Customer)
                 .Include(o => o.Expert)
                 .Include(o => o.SubService)
-                .Where(o => o.IsActive && o.Customer!.Lname.Contains(text))
+                .Where(o => o.IsActive && (!string.IsNullOrEmpty(o.Customer!.Lname) && o.Customer!.Lname.Contains(text)))
                 .Select(o => new GetOrderDto
                 {
                     Id = o.Id,

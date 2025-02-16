@@ -1,4 +1,5 @@
 ﻿using HomeService.Domain.Core.Dtos.BaseEntities;
+using HomeService.Domain.Core.Entities;
 
 namespace HomeService.Domain.Core.Contracts.Service.BaseEntities;
 
@@ -9,6 +10,7 @@ public interface ICommentService
     Task<float> GetExpertScore(int expertId, CancellationToken cancellationToken);
     Task<List<GetCommentDto>> GetAll(int pageNumber, int pageSize, CancellationToken cancellationToken);
     Task<int> GetTotalCount(CancellationToken cancellationToken);
-    Task<bool> Delete(int id, CancellationToken cancellationToken);
+    Task<Result> SetInActive(int id, CancellationToken cancellationToken);
+     Task<List<GetCommentDto>> Search(string text, CancellationToken cancellationToken);
 
 }

@@ -33,6 +33,11 @@ public class SubServiceAppService(ISubServiceService subService) : ISubServiceAp
         return await _subService.GetTotalCount(cancellationToken);
     }
 
+    public async Task<List<GetSubServiceDto>> Search(string text, CancellationToken cancellationToken)
+    {
+       return await _subService.Search(text, cancellationToken);
+    }
+
     public async Task<Result> Update(CreateSubServiceDto model, CancellationToken cancellationToken)
     {
         if (model.Id <= 0)

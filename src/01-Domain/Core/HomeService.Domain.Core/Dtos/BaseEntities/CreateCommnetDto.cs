@@ -11,8 +11,9 @@ public class CreateCommentDto
     [Range(0, 5, ErrorMessage = "امتیاز باید بین 0 تا 10 باشد")]
     [Display(Name = "امتیاز")]
     public int Score { get; set; }
-    [Display(Name = "متن نظر")]
-    public string Text { get; set; }
+    [Display(Name = "کامنت")]
+    [MaxLength(255, ErrorMessage = "متن کامنت نمیتواند از 255 کاراکتر بیتشر باشد")]
+    public string Text { get; set; } = null!;
 }
 
 

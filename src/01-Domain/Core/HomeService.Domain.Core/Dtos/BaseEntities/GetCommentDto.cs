@@ -9,6 +9,7 @@ public class GetCommentDto
     public int Score { get; set; } = 0;
     public bool IsActive { get; set; } = false;
     public int ExpertId { get; set; }
+    public string? ExpertLname { get; set; }
     public int CustomerId { get; set; }
 
 }

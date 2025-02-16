@@ -10,7 +10,7 @@ public class Comment
     [Key]
     public int Id { get; set; }
     [MaxLength(255)]
-    public string? Text { get; set; }
+    public string Text { get; set; }
     public int Score { get; set; } = 0;
     public bool IsActive { get; set; } = false;
     #endregion

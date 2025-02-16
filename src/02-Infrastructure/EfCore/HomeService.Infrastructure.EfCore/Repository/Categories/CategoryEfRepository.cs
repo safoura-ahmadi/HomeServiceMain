@@ -84,7 +84,9 @@ public class CategoryEfRepository(ApplicationDbContext dbContext) : ICategoryRep
                        {
                            Id = c.Id,
                            Title = c.Title,
-                           SubServiceCount = c.SubCategories.Count(sc => sc.IsActive)
+                           SubServiceCount = c.SubCategories
+                                         .SelectMany(sc => sc.SubServices)
+                                         .Count(ss => ss.IsActive)
                        }).ToListAsync(cancellationToken);
             return item;
         }

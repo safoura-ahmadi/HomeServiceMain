@@ -10,4 +10,5 @@ public interface ISubServiceAppService
     Task<int> GetTotalConut(CancellationToken cancellationToken);
     Task<Result> Update(CreateSubServiceDto model, CancellationToken cancellationToken);
     Task<Result> Delete(int id, CancellationToken cancellationToken);
+    Task<List<GetSubServiceDto>> Search(string text, CancellationToken cancellationToken);
 }
