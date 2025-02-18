@@ -146,7 +146,7 @@ public class CommentEfRepository(ApplicationDbContext dbContext) : ICommentRepos
         {
             var items = await _dbContext.Comments.AsNoTracking()
                 .Include(c => c.Expert)
-                 .Where(c =>(!string.IsNullOrEmpty(c.Text) && c.Text.Contains(text)) || !string.IsNullOrEmpty(c.Expert!.Lname) && c.Expert.Lname.Contains(text))
+                .Where(c => (!string.IsNullOrEmpty(c.Text) && c.Text.Contains(text)) ||string.IsNullOrEmpty(c.Expert!.Lname) && c.Expert.Lname.Contains(text))
                 .Select(c => new GetCommentDto
                 {
                     Id = c.Id,

@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Users\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Core\HomeService.Domain.Core\HomeService.Domain.Core.csproj" />
   </ItemGroup>
 

@@ -17,9 +17,7 @@ namespace HomeService.Infrastructure.EfCore.Configuration.Users
                 {
                     Id = 1,
                     UserId = 1,
-                    Balance = 100000,
-                    Fname = "safoura",
-                    Lname = "ahmadi"
+                   
 
                 }
 

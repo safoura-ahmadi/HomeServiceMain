@@ -11,15 +11,11 @@ public class CityConfiguration : IEntityTypeConfiguration<City>
     public void Configure(EntityTypeBuilder<City> builder)
     {
 
-        builder.HasMany(x => x.Customers)
+        builder.HasMany(x => x.Users)
                 .WithOne(x => x.City)
                 .HasForeignKey(x => x.CityId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-        builder.HasMany(x => x.Experts)
-                .WithOne(x => x.City)
-                .HasForeignKey(x => x.CityId)
-                .OnDelete(DeleteBehavior.NoAction);
 
         builder.HasData(new List<City>()
             {

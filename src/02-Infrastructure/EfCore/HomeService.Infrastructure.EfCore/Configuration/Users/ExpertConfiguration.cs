@@ -14,8 +14,7 @@ public class ExpertConfiguration : IEntityTypeConfiguration<Expert>
         builder.HasOne(e => e.User)
             .WithOne(u => u.Expert);
 
-        builder.Property(e => e.Biography)
-               .HasMaxLength(500);
+    
 
 
         builder.HasData(
@@ -23,11 +22,7 @@ public class ExpertConfiguration : IEntityTypeConfiguration<Expert>
             {
                 Id = 1,
                 UserId = 2,
-                Fname = "Expert",
-                Lname = "experti",
-                Balance = 100000,
-                CityId = 1,
-                IsConfirmed = true
+                Lname = "ahamdi"
                  
 
             }

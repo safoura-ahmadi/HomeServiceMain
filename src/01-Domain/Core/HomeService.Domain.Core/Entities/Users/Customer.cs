@@ -10,24 +10,12 @@ public class Customer
     [Key]
     public int Id { get; set; }
     [MaxLength(100)]
-    public string? Fname { get; set; }
-    [MaxLength(100)]
     public string? Lname { get; set; }
-    [MaxLength(100)]
-    public string? Address { get; set; }
-    [MaxLength(500)]
-    public string? ImagePath { get; set; }
-    [Column(TypeName = "decimal(18, 2)")]
-    public decimal Balance { get; set; }
-    [MaxLength(255)]
-    public string? Biography { get; set; }
-    public bool IsConfirmed { get; set; } = false;
     #endregion
 
 
     #region NavigationProperties
     public int CityId { get; set; }
-    public City? City { get; set; }
     public int UserId { get; set; }
     public User? User { get; set; }
     public List<Order> Orders { get; set; } = [];

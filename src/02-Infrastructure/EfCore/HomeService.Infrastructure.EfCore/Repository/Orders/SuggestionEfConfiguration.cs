@@ -42,12 +42,13 @@ public class SuggestionEfConfiguration(ApplicationDbContext dbContext) : ISugges
         try
         {
             var item = await _dbContext.Suggestions.AsNoTracking()
+                .Include(s => s.Expert)
                 .Where(s => s.OrderId == orderId && s.IsActive)
                 .Select(s => new SuggestionDto
                 {
                     Id = s.Id,
                     Description = s.Description,
-                    ExperLname = s.Expert.Lname,
+                    ExperLname = s.Expert!.Lname,
                     Price = s.Price,
                     ExpertId = s.ExpertId,
                     OrderId = s.OrderId,
@@ -117,11 +118,12 @@ public class SuggestionEfConfiguration(ApplicationDbContext dbContext) : ISugges
                 .Where(s => s.IsActive)
                 .Skip((pageNumber  - 1) * pageSize)
                 .Take(pageSize)
+                .Include(s => s.Expert)
                 .Select(s => new SuggestionDto
                 {
                     Id = s.Id,
                     Description = s.Description,
-                    ExperLname = s.Expert.Lname,
+                    ExperLname = s.Expert!.Lname,
                     ExpertId = s.ExpertId,
                     OrderId = s.OrderId,
                     Price = s.Price,

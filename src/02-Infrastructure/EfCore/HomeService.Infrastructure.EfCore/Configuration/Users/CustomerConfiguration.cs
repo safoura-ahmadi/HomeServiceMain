@@ -19,11 +19,9 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
             {
                 Id = 1,
                 UserId = 3,
-                Fname = "customer",
-                Lname = "customeri",
-                Balance = 100000,
                 CityId = 1,
-                IsConfirmed = true
+                Lname = "ahmadi"
+             
             });
 
 

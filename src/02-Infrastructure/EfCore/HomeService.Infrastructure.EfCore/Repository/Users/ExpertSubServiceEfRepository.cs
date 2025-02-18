@@ -16,7 +16,7 @@ public class ExpertSubServiceEfRepository(ApplicationDbContext dbContext) : IExp
             var subServices = await _dbContext.ExpertSubServices
                 .AsNoTracking()
                 .Where(e => e.ExpertId == expertId)
-                .Select(e => new { e.SubService.Id, e.SubService.Title })
+                .Select(e => new { e.SubService!.Id, e.SubService.Title })
                 .ToDictionaryAsync(e => e.Id, e => e.Title, cancellationToken);
 
             return subServices;

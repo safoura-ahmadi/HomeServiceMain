@@ -11,6 +11,11 @@ public class UserConfiguration
             new()
             {
                 Id = 1,
+                Fname = "Safoura",
+                Lname = "ahmadi",
+                Balance = 100000,
+                IsConfirmed = true,
+                CityId  = 1,
                 UserName = "Admin@gmail.com",
                 NormalizedUserName = "ADMIN@GMAIL.COM",
                 Email = "Admin@gmail.com",
@@ -25,6 +30,11 @@ public class UserConfiguration
             },new()
             {
                 Id = 2,
+                Fname = "Tahoura",
+                Lname = "ahmadi",
+                Balance = 100000,
+                IsConfirmed = true,
+                CityId  = 1,
                 UserName = "Expert@gmail.com",
                 NormalizedUserName = "EXPERT@GMAIL.COM",
                 Email = "Expert@gmail.com",
@@ -39,6 +49,11 @@ public class UserConfiguration
             new()
             {
                 Id = 3,
+                Fname = "Mahoura",
+                Lname = "ahmadi",
+                Balance = 100000,
+                IsConfirmed = true,
+                CityId  = 1,
                 UserName = "Customer@gmail.com",
                 NormalizedUserName = "CUSTOMER@GMAIL.COM",
                 Email = "Customer@gmail.com",

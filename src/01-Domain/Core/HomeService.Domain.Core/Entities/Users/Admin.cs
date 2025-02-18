@@ -8,16 +8,8 @@ public class Admin
     #region Properties
     [Key]
     public int Id { get; set; }
-    [MaxLength(100)]
-    public string? Fname { get; set; }
-    [MaxLength(100)]
-    public string? Lname { get; set; }
-    [MaxLength(100)]
-    public string? Address { get; set; }
-    [MaxLength(500)]
-    public string? ImagePath { get; set; }
-    [Column(TypeName = "decimal(18, 2)")]
-    public decimal Balance { get; set; }
+  
+ 
     #endregion
 
     #region NavigationProperties

@@ -44,7 +44,7 @@ public class OrderEfRepository(ApplicationDbContext dbContext) : IOrderRepositor
         try
         {
             var item = await _dbContext.Orders.AsNoTracking()
-                .Where(o => o.IsActive && o.Customer.CityId == cityId &&
+                .Where(o => o.IsActive && o.Customer!.CityId == cityId &&
                 o.SubServiceId == subserviceId &&
                 (o.Status == OrderStatusEnum.WaitingForExpertOffer ||
                 o.Status == OrderStatusEnum.WaitingForExpertSelection))
@@ -53,7 +53,7 @@ public class OrderEfRepository(ApplicationDbContext dbContext) : IOrderRepositor
                     Id = o.Id,
                     CreateAt = o.CreateAt,
                     CustomerId = o.CustomerId,
-                    CustomerLname = o.Customer.Lname,
+                    CustomerLname = o.Customer!.Lname,
                     Description = o.Description,
                     Price = o.Price,
                     TimeToDone = o.TimeToDone
@@ -162,7 +162,7 @@ public class OrderEfRepository(ApplicationDbContext dbContext) : IOrderRepositor
                     Id = o.Id,
                     CreateAt = o.CreateAt,
                     CustomerId = o.CustomerId,
-                    CustomerLname = o.Customer.Lname,
+                    CustomerLname = o.Customer!.Lname,
                     Description = o.Description,
                     Price = o.Price,
                     TimeToDone = o.TimeToDone,
@@ -251,7 +251,7 @@ public class OrderEfRepository(ApplicationDbContext dbContext) : IOrderRepositor
                 .Include(o => o.Customer)
                 .Include(o => o.Expert)
                 .Include(o => o.SubService)
-                .Where(o => o.IsActive && (!string.IsNullOrEmpty(o.Customer!.Lname) && o.Customer!.Lname.Contains(text)))
+                .Where(o => o.IsActive && (!string.IsNullOrEmpty(o.Customer!.Lname) && o.Customer.Lname.Contains(text)))
                 .Select(o => new GetOrderDto
                 {
                     Id = o.Id,

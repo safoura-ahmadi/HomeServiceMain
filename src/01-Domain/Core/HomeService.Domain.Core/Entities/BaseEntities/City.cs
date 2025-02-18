@@ -14,7 +14,6 @@ public class City
     #endregion
 
     #region NavigationProperties
-    public List<Customer> Customers { get; set; } = [];
-    public List<Expert> Experts { get; set; } = [];
+    public List<User> Users { get; set; } = [];
     #endregion
 }

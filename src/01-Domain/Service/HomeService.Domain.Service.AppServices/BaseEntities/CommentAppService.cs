@@ -32,4 +32,11 @@ public class CommentAppService(ICommentService commentService) : ICommentAppServ
     {
         return await _commentService.Search(text, cancellationToken);
     }
+
+    public async Task<float> GetExpertScore(int expertId, CancellationToken cancellationToken)
+    {
+        if (expertId <= 0)
+            return 0;
+        return await _commentService.GetExpertScore(expertId, cancellationToken);
+    }
 }
