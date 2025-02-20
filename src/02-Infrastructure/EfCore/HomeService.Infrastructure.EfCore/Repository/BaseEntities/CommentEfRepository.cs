@@ -2,6 +2,7 @@
 using HomeService.Domain.Core.Dtos.BaseEntities;
 using HomeService.Domain.Core.Entities;
 using HomeService.Domain.Core.Entities.BaseEntities;
+using HomeService.Domain.Core.Enums.BaseEntities;
 using HomeService.Infrastructure.EfCore.Common;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
@@ -11,7 +12,7 @@ namespace HomeService.Infrastructure.EfCore.Repository.BaseEntities;
 public class CommentEfRepository(ApplicationDbContext dbContext) : ICommentRepository
 {
     private readonly ApplicationDbContext _dbContext = dbContext;
-    public async Task<bool> Create(CreateCommentDto item, CancellationToken cancellationToken)
+    public async Task<Result> Create(CreateCommentDto item, CancellationToken cancellationToken)
     {
 
         try
@@ -20,18 +21,20 @@ public class CommentEfRepository(ApplicationDbContext dbContext) : ICommentRepos
             {
                 CustomerId = item.CustomerId,
                 ExpertId = item.ExpertId,
-                IsActive = false,
+                Status = CommentStatusEnum.Pending,
                 Score = item.Score,
-                Text = item.Text
+                Text = item.Text,
+                CreateAt = DateTime.Now,
+
             };
             await _dbContext.Comments.AddAsync(comment, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);
-            return
-                true;
+            return Result.Ok("کامنت با موفقیت ثبت شد");
+               
         }
         catch
         {
-            return false;
+            return Result.Fail("مشکلی در دیتا بیس وجود دارد");
 
         }
     }
@@ -40,16 +43,17 @@ public class CommentEfRepository(ApplicationDbContext dbContext) : ICommentRepos
         try
         {
             var item = await _dbContext.Comments.AsNoTracking().
-                Where(c => c.ExpertId == expertId && c.IsActive == true).
+                Include(c => c.Expert).
+                Where(c => c.ExpertId == expertId && c.Status != CommentStatusEnum.Rejected).
                 Select(c => new GetCommentDto
                 {
 
                     Id = c.Id,
                     Score = c.Score,
                     Text = c.Text,
-                    IsActive = false,
-                    ExpertId = c.ExpertId,
-                    CustomerId = c.CustomerId,
+                    Status = c.Status,
+                    CreateAt = c.CreateAt,
+                    ExpertLname = c.Expert!.Lname ?? "نامشخص"
                 }
 
                ).ToListAsync(cancellationToken);
@@ -86,16 +90,16 @@ public class CommentEfRepository(ApplicationDbContext dbContext) : ICommentRepos
                 .Include(c => c.Expert)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
+                .Where(c => c.Status != CommentStatusEnum.Rejected)
                 .Select(c => new GetCommentDto
                 {
 
                     Id = c.Id,
                     Score = c.Score,
                     Text = c.Text,
-                    IsActive = false,
-                    ExpertId = c.ExpertId,
-                    CustomerId = c.CustomerId,
-                    ExpertLname = c.Expert!.Lname
+                    Status = c.Status,
+                    ExpertLname = c.Expert!.Lname ?? "نامشخص",
+                    CreateAt = c.CreateAt
 
                 }
 
@@ -120,7 +124,7 @@ public class CommentEfRepository(ApplicationDbContext dbContext) : ICommentRepos
             return 0;
         }
     }
-    public async Task<Result> SetInActive(int id, CancellationToken cancellationToken)
+    public async Task<Result> ChangeStatusToRejected(int id, CancellationToken cancellationToken)
     {
 
 
@@ -129,7 +133,7 @@ public class CommentEfRepository(ApplicationDbContext dbContext) : ICommentRepos
             var item = await _dbContext.Comments.FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
             if (item is null)
                 return Result.Fail("کامنتی با این مشخصات یافت نشد");
-            item.IsActive = false;
+            item.Status = CommentStatusEnum.Rejected;
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("کامنت با موفقیت  غیرفعال شد");
         }
@@ -146,16 +150,16 @@ public class CommentEfRepository(ApplicationDbContext dbContext) : ICommentRepos
         {
             var items = await _dbContext.Comments.AsNoTracking()
                 .Include(c => c.Expert)
-                .Where(c => (!string.IsNullOrEmpty(c.Text) && c.Text.Contains(text)) ||string.IsNullOrEmpty(c.Expert!.Lname) && c.Expert.Lname.Contains(text))
+                .Where(c => (!string.IsNullOrEmpty(c.Text) && c.Text.Contains(text)) || (string.IsNullOrEmpty(c.Expert!.Lname) && c.Expert!.Lname!.Contains(text) )&& c.Status != CommentStatusEnum.Rejected)
                 .Select(c => new GetCommentDto
                 {
                     Id = c.Id,
                     Text = c.Text,
-                    CustomerId = c.CustomerId,
-                    ExpertId = c.ExpertId,
-                    ExpertLname = c.Expert!.Lname,
-                    IsActive = c.IsActive,
+                    ExpertLname = c.Expert!.Lname ?? "نامشخص",
+                    Status = c.Status,
                     Score = c.Score,
+                    CreateAt = c.CreateAt,
+                     
                 }).ToListAsync(cancellationToken);
             return items;
 
@@ -163,6 +167,23 @@ public class CommentEfRepository(ApplicationDbContext dbContext) : ICommentRepos
         catch
         {
             return [];
+        }
+    }
+
+    public async Task<Result> ChangeStatusToAccepted(int id, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var item = await _dbContext.Comments.FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+            if (item is null)
+                return Result.Fail("کامنتی با این مشخصات یافت نشد");
+            item.Status = CommentStatusEnum.Accepted;
+            await _dbContext.SaveChangesAsync(cancellationToken);
+            return Result.Ok("کامنت با موفقیت  غیرفعال شد");
+        }
+        catch
+        {
+            return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
 }

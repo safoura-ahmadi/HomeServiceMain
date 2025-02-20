@@ -1,0 +1,80 @@
+﻿@page
+@model HomeService.Endpoint.Razor.Areas.Admin.Pages.SubServices.UpdateModel
+@{
+    ViewData["Title"] = "پیشخوان > مدیریت هوم سرویس ها > آپدیت";
+}
+@if (Model.CreateModel is not null)
+{
+    <div class="col-lg-12">
+        <form method="post" asp-page="/SubServices/Update" enctype="multipart/form-data" class="form-horizontal" role="form">
+            @Html.AntiForgeryToken()
+            <input type="hidden" class="form-control ltr text-right" asp-for="CreateModel!.Id">
+            <div class="col-md-8 col-lg-6 m-auto m-b-10">
+                <div class="input-group round">
+                    <span class="input-group-addon">
+                        <i class="icon-home"></i>
+                    </span>
+                    <input type="text" class="form-control ltr text-right" asp-for="CreateModel!.Title" placeholder="نام هوم سرویس " required>
+                    <div class="text-danger small mt-1">
+                        <span asp-validation-for="CreateModel!.Title"></span>
+                    </div>
+                </div><!-- /.input-group -->
+                <div class="form-group m-b-10 m-auto mt-2 ">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="icon-options"></i>
+                        </span>
+                        <select asp-for="CreateModel!.SubCategoryId" class="form-select" required>
+                            @foreach (var item in @Model.SubCategories)
+                            {
+                                <option value="@item.Id">@item.Title</option>
+                            }
+                        </select>
+                    </div><!-- /.input-group -->
+                </div>
+
+                <div class="form-group m-b-10 m-auto mt-2 ">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+
+                            <i class=" fas fa-hand-holding-dollar"></i>
+                        </span>
+                        <input type="text" class="form-control ltr text-right" asp-for="CreateModel!.BasePrice" placeholder="قیمت پایه " required>
+                        <div class="text-danger small mt-1">
+                            <span asp-validation-for="CreateModel!.BasePrice"></span>
+                        </div>
+                    </div><!-- /.input-group -->
+                </div>
+            </div><!-- /.col-md-8 -->
+            <div class="col-md-8 col-lg-6 m-auto m-b-10">
+                <div class="input-group round">
+                    <span class="input-group-addon">
+                        <i class="icon-options"></i>
+                    </span>
+                    <input asp-for="CreateModel!.Description" type="text" style="width: 50px; height: 70px; font-size: 15px;" class="form-control ltr text-right" placeholder="توضیحات " required>
+                    <div class="text-danger small mt-1">
+                        <span asp-validation-for="CreateModel!.Description"></span>
+                    </div>>
+                </div>
+            </div><!-- /.col-md-8 -->
+            <div class="col-md-8 col-lg-6 m-auto m-b-10">
+                <div class="input-group round">
+                    <input asp-for="CreateModel!.ImageFile" type="file" class="form-control ltr text-right">
+
+                </div>
+            </div><!-- /.col-md-8 -->
+            <div class="col-md-8 col-lg-6 m-auto">
+                <button type="submit" class="btn btn-success btn-block mt-4 mb-2">
+                    <i class="icon-cursor"></i>
+                    ذخیره
+                    <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
+                </button>
+                <a class="btn btn-danger btn-block float-end mb-3" asp-area="Admin" asp-page="/SubServices/Index" asp-page-handler="SubServices" >
+                    بازگشت
+                </a>
+            </div><!-- /.col-md-8 -->
+        </form>
+    </div>
+
+    <!-- /col-lg-12 -->
+}

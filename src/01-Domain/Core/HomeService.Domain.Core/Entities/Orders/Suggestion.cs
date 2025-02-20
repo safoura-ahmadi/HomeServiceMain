@@ -12,6 +12,7 @@ public class Suggestion
     public string? Description { get; set; }
     public bool IsAccepted { get; set; } = false;
     public DateTime TimeToDone { get; set; }
+    public DateTime CreateAt { get; set; }
     public bool IsActive { get; set; } = true;
     [Required]
     public int Price { get; set; }

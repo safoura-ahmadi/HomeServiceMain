@@ -20,11 +20,11 @@ public class CommentAppService(ICommentService commentService) : ICommentAppServ
     {
         return await _commentService.GetTotalCount(cancellationToken);
     }
-    public async Task<Result> SetInActive(int id, CancellationToken cancellationToken)
+    public async Task<Result> ChangeStatusToRejected(int id, CancellationToken cancellationToken)
     {
         if (id <= 0)
             return Result.Fail("کامنتی با این مشخصات یافت نشد");
-            return await _commentService.SetInActive(id, cancellationToken);
+            return await _commentService.ChangeStatusToRejected(id, cancellationToken);
 
     }
 
@@ -38,5 +38,12 @@ public class CommentAppService(ICommentService commentService) : ICommentAppServ
         if (expertId <= 0)
             return 0;
         return await _commentService.GetExpertScore(expertId, cancellationToken);
+    }
+
+    public async Task<Result> ChangeStatusToAccepted(int id, CancellationToken cancellationToken)
+    {
+        if (id <= 0)
+            return Result.Fail("کامنتی با این مشخصات یافت نشد");
+        return await _commentService.ChangeStatusToAccepted(id, cancellationToken);
     }
 }

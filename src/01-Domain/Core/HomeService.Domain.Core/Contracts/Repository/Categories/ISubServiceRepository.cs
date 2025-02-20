@@ -9,9 +9,10 @@ public interface ISubServiceRepository
     Task<List<GetSubServiceDto>> GetBySubCategoryId(int subcategoryId, CancellationToken cancellationToken);
     Task<List<GetSubServiceDto>> Search(string text, CancellationToken cancellationToken);
     Task<int> GetBasePrice(int id, CancellationToken cancellationToken);
-    Task<Result> Update(CreateSubServiceDto model, CancellationToken cancellationToken);
+    Task<Result> Update(UpdateSubServiceDto model, CancellationToken cancellationToken);
     Task<Result> Delete(int id, CancellationToken cancellationToken);
     Task<List<GetSubServiceDto>> GetAll(int pageNumber, int pageSize, CancellationToken cancellationToken);
     Task<int> GetTotalCount(CancellationToken cancellationToken);
+    Task<UpdateSubServiceDto?> GetById(int id, CancellationToken cancellationToken);
 
 }

@@ -85,7 +85,7 @@ public class SubServiceEfRepository(ApplicationDbContext dbContext) : ISubServic
     }
 
     //admin
-    public async Task<Result> Update(CreateSubServiceDto model, CancellationToken cancellationToken)
+    public async Task<Result> Update(UpdateSubServiceDto model, CancellationToken cancellationToken)
 
     {
         try
@@ -95,7 +95,7 @@ public class SubServiceEfRepository(ApplicationDbContext dbContext) : ISubServic
                 return Result.Fail("هوم سرویسی با این مشخصات وجود ندارد");
             item.Title = model.Title;
             item.Description = model.Description;
-            item.ImagePath = model.ImagePath;
+            item.ImagePath = model.ImagePath??item.ImagePath;
             item.BasePrice = model.BasePrice;
             item.SubCategoryId = model.SubCategoryId;
             await _dbContext.SaveChangesAsync(cancellationToken);
@@ -115,7 +115,7 @@ public class SubServiceEfRepository(ApplicationDbContext dbContext) : ISubServic
                 return Result.Fail("هوم سرویسی با این مشخصات وجود ندارد");
             item.IsActive = false;
             await _dbContext.SaveChangesAsync(cancellationToken);
-            return Result.Ok("هوم سرویس با موفقیت اپدیت شد");
+            return Result.Ok("هوم سرویس با موفقیت حذف شد ");
         }
         catch
         {
@@ -160,5 +160,21 @@ public class SubServiceEfRepository(ApplicationDbContext dbContext) : ISubServic
         {
             return 0;
         }
+    }
+
+    public async Task<UpdateSubServiceDto?> GetById(int id, CancellationToken cancellationToken)
+    {
+        var item = await _dbContext.SubServices.AsNoTracking()
+            .Where(s => s.Id == id && s.IsActive)
+            .Select(s => new UpdateSubServiceDto
+            {
+                Id = s.Id,
+                BasePrice = s.BasePrice,
+                Description = s.Description,
+                SubCategoryId = s.SubCategoryId,
+                Title = s.Title
+            }).FirstOrDefaultAsync(cancellationToken);
+        return item;
+
     }
 }

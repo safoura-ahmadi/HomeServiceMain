@@ -7,8 +7,10 @@ public interface ICategoryService
 {
     Task<List<GetCategoryForMainPageDto>> GetAllForMainPage(CancellationToken cancellationToken);
     Task<Result> Delete(int id, CancellationToken cancellationToken);
-    Task<Result> Update(int id, string title, CancellationToken cancellationToken);
+    Task<Result> Update(int id, string title,string imagePath, CancellationToken cancellationToken);
     Task<List<GetCategoryForAdminPageDto>> GetAll(CancellationToken cancellationToken);
     Task<Result> Create(string title, string imagePath, CancellationToken cancellationToken);
+    Task<Result> Update(UpdateCategoryDto model, CancellationToken cancellationToken);
+    Task<UpdateCategoryDto?> GetById(int id, CancellationToken cancellationToken);
 
 }

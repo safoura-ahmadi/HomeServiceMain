@@ -16,11 +16,12 @@ public interface IOrderRepository
     Task<Result> SetFinalPrice(int id, int price, CancellationToken cancellationToken);
     Task<Result> SetFinalTimeToDone(int id, DateTime timeToDone, CancellationToken cancellationToken);
     Task<OrderStatusEnum> GetLastStatusOfOrder(int id, CancellationToken cancellationToken);
-    Task<List<GetOrderDto>> GetAll(int pageNumber, int pageSize, CancellationToken cancellationToken);
+    Task<List<GetAllOrderDto>> GetAll(int pageNumber, int pageSize, CancellationToken cancellationToken);
     Task<int> GetTotalConut(CancellationToken cancellationToken);
 
     Task<Result> Delete(int id, CancellationToken cancellationToken);
     Task<List<GetOrderDto>> Search(string text, CancellationToken cancellationToken);
-   
- 
+    //
+    Task<List<GetLastOrderDto>> GetLatestOrders(CancellationToken cancellationToken);
+
 }

@@ -32,7 +32,7 @@ public class Order
     public SubService? SubService { get; set; }
     public List<Suggestion> Suggestions { get; set; } = [];
     public List<Image> Images { get; set; } = [];
-    public List<Comment> Comments { get; set; } = [];
+
     #endregion
 
 }

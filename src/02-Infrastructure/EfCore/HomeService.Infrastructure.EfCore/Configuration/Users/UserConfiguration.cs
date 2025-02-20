@@ -14,7 +14,7 @@ public class UserConfiguration
                 Fname = "Safoura",
                 Lname = "ahmadi",
                 Balance = 100000,
-                IsConfirmed = true,
+               Status = HomeService.Domain.Core.Enums.Users.UserStatusEnum.Accepted,
                 CityId  = 1,
                 UserName = "Admin@gmail.com",
                 NormalizedUserName = "ADMIN@GMAIL.COM",
@@ -33,7 +33,7 @@ public class UserConfiguration
                 Fname = "Tahoura",
                 Lname = "ahmadi",
                 Balance = 100000,
-                IsConfirmed = true,
+                 Status = HomeService.Domain.Core.Enums.Users.UserStatusEnum.Accepted,
                 CityId  = 1,
                 UserName = "Expert@gmail.com",
                 NormalizedUserName = "EXPERT@GMAIL.COM",
@@ -43,7 +43,7 @@ public class UserConfiguration
                 SecurityStamp = "JK98SD2FYG75543TAIMC5DDNKCVV7B89",
                 ConcurrencyStamp = "a3d5f1c2-9b12-4e7a-a3c1-45edc91e36b7",
                 LockoutEnd = null,
-                LockoutEnabled = true,
+                LockoutEnabled = false,
             },
 
             new()
@@ -52,7 +52,7 @@ public class UserConfiguration
                 Fname = "Mahoura",
                 Lname = "ahmadi",
                 Balance = 100000,
-                IsConfirmed = true,
+                Status = HomeService.Domain.Core.Enums.Users.UserStatusEnum.Accepted,
                 CityId  = 1,
                 UserName = "Customer@gmail.com",
                 NormalizedUserName = "CUSTOMER@GMAIL.COM",
@@ -80,7 +80,9 @@ public class UserConfiguration
 
         //// Seed Role To Users
         builder.Entity<IdentityUserRole<int>>().HasData(
-             new IdentityUserRole<int>() { RoleId = 1, UserId = 1 }
+             new IdentityUserRole<int>() { RoleId = 1, UserId = 1 },
+                  new IdentityUserRole<int>() { RoleId = 2, UserId = 2 },
+                       new IdentityUserRole<int>() { RoleId = 3, UserId = 3 }
         );
     }
 }

@@ -29,11 +29,16 @@ public class SuggestionService(ISuggestionRepository repository) : ISuggestionSe
     {
         return await _repository.GetAll(pageNumber, pageSize, cancellationToken);
     }
-
+    
  
-    public async Task<List<SuggestionDto>> GetByOrderId(int orderId, CancellationToken cancellationToken)
+    public async Task<List<GetSuggestionForOrderDto>> GetByOrderId(int orderId, CancellationToken cancellationToken)
     {
         return await _repository.GetByOrderId(orderId, cancellationToken);
+    }
+
+    public async Task<List<GetlastSuggestionDto>> GetLatestSuggestions(CancellationToken cancellationToken)
+    {
+        return await _repository.GetLatestSuggestions(cancellationToken);
     }
 
     public async Task<int> GetTotalCount(CancellationToken cancellationToken)

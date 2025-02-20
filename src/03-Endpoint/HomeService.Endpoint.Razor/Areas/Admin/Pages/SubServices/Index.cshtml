@@ -1,0 +1,221 @@
+﻿@page
+@model HomeService.Endpoint.Razor.Areas.Admin.Pages.SubServices.IndexModel
+@{
+    ViewData["Title"] = "پیشخوان > مدیریت هوم سرویس ها";
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div id="successMessage" class="alert alert-success" role="alert">
+        @TempData["SuccessMessage"]
+    </div>
+    <hr />
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div id="errorMessage" class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+    <hr />
+}
+
+<div class="col-lg-12">
+    <div class="portlet box shadow">
+
+        <div class="buttons-box">
+            <a class="btn btn-sm btn-default btn-round btn-fullscreen" rel="tooltip" title="تمام صفحه" href="#">
+                <i class="icon-size-fullscreen"></i>
+            </a>
+            <a class="btn btn-sm btn-default btn-round btn-collapse" rel="tooltip" title="کوچک کردن" href="#">
+                <i class="icon-arrow-up"></i>
+            </a>
+        </div><!-- /.buttons-box -->
+
+        <div class="portlet-body">
+            <div class="top-buttons-box mb-2">
+                <button class="btn btn-success " data-bs-toggle="modal" data-bs-target="#form-modal">
+                    <i class="icon-plus"></i>
+                    افزودن
+                    <div class="paper-ripple"><div class="paper-ripple__background" style="opacity: 0;"></div><div class="paper-ripple__waves"></div></div>
+                </button>
+                <a class="btn btn-danger" href="#">
+                    <i class="icon-trash"></i>
+                    حذف جمعی
+                </a>
+
+            </div>
+            <div id="form-modal" class="modal fade" role="dialog" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-bs-dismiss="modal">×</button>
+                            <h4 class="modal-title">ثبت هوم سرویس</h4>
+                        </div><!-- /.modal-header -->
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <p class="text-center m-t-30 m-b-40">
+                                        <i class="icon-user-following border border-primary img-circle text-primary font-xxxlg p-20"></i>
+                                    </p>
+                                </div>
+                                <div class="col-lg-12">
+                                    <form method="post" asp-page="/SubServices/Index" enctype="multipart/form-data" class="form-horizontal" role="form">
+                                        @Html.AntiForgeryToken()
+                                        <div class="col-md-8 col-lg-6 m-auto m-b-10">
+                                            <div class="input-group round">
+                                                <span class="input-group-addon">
+                                                    <i class="icon-home"></i>
+                                                </span>
+                                                <input type="text" class="form-control ltr text-right" asp-for="CreateModel.Title" placeholder="نام هوم سرویس " required>
+                                                <span class="text-danger" asp-validation-for="CreateModel.Title"></span>
+                                            </div><!-- /.input-group -->
+                                            <div class="form-group m-b-10 m-auto mt-2 ">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <i class="icon-options"></i>
+                                                    </span>
+                                                    <select asp-for="CreateModel.SubCategoryId" class="form-select" required>
+                                                        @foreach (var item in @Model.SubCategories)
+                                                        {
+                                                            <option value="@item.Id">@item.Title</option>
+                                                        }
+                                                    </select>
+                                                </div><!-- /.input-group -->
+                                            </div>
+
+                                            <div class="form-group m-b-10 m-auto mt-2 ">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+
+                                                        <i class=" fas fa-hand-holding-dollar"></i>
+                                                    </span>
+                                                    <input type="text" class="form-control ltr text-right" asp-for="CreateModel.BasePrice" value="" placeholder="قیمت پایه " required>
+                                                    <span class="text-danger" asp-validation-for="CreateModel.BasePrice"></span>
+                                                </div><!-- /.input-group -->
+                                            </div>
+                                        </div><!-- /.col-md-8 -->
+                                        <div class="col-md-8 col-lg-6 m-auto m-b-10">
+                                            <div class="input-group round">
+                                                <span class="input-group-addon">
+                                                    <i class="icon-options"></i>
+                                                </span>
+                                                <input asp-for="CreateModel.Description" type="text" style="width: 50px; height: 70px; font-size: 15px;" class="form-control ltr text-right" placeholder="توضیحات " required>
+                                                <span class="text-danger" asp-validation-for="CreateModel.Description"></span>
+                                            </div>
+                                        </div><!-- /.col-md-8 -->
+                                        <div class="col-md-8 col-lg-6 m-auto m-b-10">
+                                            <div class="input-group round">
+                                                <input asp-for="CreateModel.ImageFile" type="file" class="form-control ltr text-right">
+                                                <span class="text-danger" asp-validation-for="CreateModel.ImageFile"></span>
+                                            </div>
+                                        </div><!-- /.col-md-8 -->
+                                        <div class="col-md-8 col-lg-6 m-auto">
+                                            <button type="submit" class="btn btn-success btn-block mt-4 mb-2">
+                                                <i class="icon-cursor"></i>
+                                                ذخیره
+                                                <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-block float-end mb-3" data-bs-dismiss="modal">بازگشت<div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div></button>
+                                        </div><!-- /.col-md-8 -->
+                                    </form>
+                                </div><!-- /col-lg-12 -->
+                            </div><!-- /.row -->
+                        </div><!-- /.modal-body -->
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        const form = document.querySelector("#form-modal form");
+                           var showModal = '@(ViewData["ShowModal"] ?? "false")';
+                        form.addEventListener("submit", function (event) {
+                            if (!form.checkValidity() ||  showModal === "True" || showModal === "true") {
+                                event.preventDefault(); // جلوگیری از ارسال فرم
+                                event.stopPropagation(); // جلوگیری از رویدادهای اضافی
+                              
+                            }
+                              if ( showModal === "True" || showModal === "true") {
+
+                               form.showModal();
+                            }
+                            form.classList.add("was-validated"); // نمایش استایل‌های بوت‌استرپ برای ورودی نامعتبر
+                        }, false);
+                    });
+                </script>
+            </div>
+      
+            <div class="table-responsive">
+                <div id="data-table_filter" class="dataTables_filter"><label>جستجو: <input type="search" class="" placeholder="" aria-controls="data-table"></label></div>
+                <br />
+                <table class="table table-bordered table-hover table-striped" id="data-table">
+                    <thead>
+                        <tr>
+                            <th>شناسه</th>
+                            <th>تصویر  </th>
+                            <th>نام </th>
+                            <th> دسته بندی</th>
+                            <th> قیمت پایه </th>
+                            <th>  توضیحات </th>
+                            <td>عملیات</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.SubServices)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td><div class="text-center"><img src="~/UserTemplate/images/icon/@item.ImagePath" width="110" height="80" class="" alt=""></div></td>
+                                <td>@item.Title</td>
+                                <td>@item.SubCategoryTitle</td>
+                                <td>@item.BasePrice</td>
+                                <td class="text-center">@item.Description</td>
+                               
+                                <td style="white-space: nowrap;">
+                                    <a asp-area="Admin" asp-page="/SubServices/Delete" asp-route-id="@item.Id" class="btn btn-danger" style="display: inline-block;">حذف</a>
+                                    <a asp-area="Admin" asp-page="/SubServices/Update" asp-route-id="@item.Id" class="btn btn-warning" style="display: inline-block;">ویرایش</a>
+                                </td>
+                            </tr>
+
+                        }
+
+                    </tbody>
+                </table>
+                <hr />
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" asp-page="Index" asp-page-handler="PreviousPage">Previous</a></li>
+                        @for (int i = Model.MyPage; i <= Model.MyPage + 9; i++)
+                        {
+                            @if (Model.MyPage == i)
+                            {
+                                <li class="page-item active"><a class="page-link" asp-route-pageNumber="@i">@i</a></li>
+                            }
+                            else
+                            {
+                                <li class=" page-item"><a class="page-link" asp-route-pageNumber="@i">@i</a></li>
+                            }
+                        }
+                        <li class="page-item"><a class="page-link" asp-page-handler="NextPage" asp-page="Index" asp>Next</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    setTimeout(function () {
+        var successMessage = document.getElementById("successMessage");
+        var errorMessage = document.getElementById("errorMessage");
+
+        if (successMessage) {
+            successMessage.style.transition = "opacity 0.5s";
+            successMessage.style.opacity = "0";
+            setTimeout(function () { successMessage.style.display = "none"; }, 500);
+        }
+
+        if (errorMessage) {
+            errorMessage.style.transition = "opacity 0.5s";
+            errorMessage.style.opacity = "0";
+            setTimeout(function () { errorMessage.style.display = "none"; }, 500);
+        }
+    }, 5000);
+</script>

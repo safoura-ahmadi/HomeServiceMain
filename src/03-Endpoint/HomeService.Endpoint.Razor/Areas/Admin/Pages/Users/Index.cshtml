@@ -1,0 +1,210 @@
+﻿@page
+@model HomeService.Endpoint.Razor.Areas.Admin.Pages.Users.IndexModel
+@{
+}
+@{
+    ViewData["Title"] = "پیشخوان > مدیریت کاربران";
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div id="successMessage" class="alert alert-success" role="alert">
+        @TempData["SuccessMessage"]
+    </div>
+    <hr />
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div id="errorMessage" class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+    <hr />
+}
+
+
+<div class="col-lg-12">
+    <div class="portlet box shadow">
+
+        <div class="portlet-body">
+            <div class="buttons-box">
+                <a class="btn btn-sm btn-default btn-round btn-fullscreen" rel="tooltip" title="تمام صفحه" href="#">
+                    <i class="icon-size-fullscreen"></i>
+                </a>
+                <a class="btn btn-sm btn-default btn-round btn-collapse" rel="tooltip" title="کوچک کردن" href="#">
+                    <i class="icon-arrow-up"></i>
+                </a>
+            </div><!-- /.buttons-box -->
+            <div class="top-buttons-box mb-2">
+                <button class="btn btn-success " data-bs-toggle="modal" data-bs-target="#form-modal">
+                    <i class="icon-plus"></i>
+                    افزودن
+                    <div class="paper-ripple"><div class="paper-ripple__background" style="opacity: 0;"></div><div class="paper-ripple__waves"></div></div>
+                </button>
+                <a class="btn btn-danger" href="#">
+                    <i class="icon-trash"></i>
+                    حذف جمعی
+                </a>
+
+            </div><!-- /.top-buttons-box -->
+            <div id="form-modal" class="modal fade" role="dialog" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-bs-dismiss="modal">×</button>
+                            <h4 class="modal-title">فرم ورود اطلاعات  </h4>
+                        </div><!-- /.modal-header -->
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <p class="text-center m-t-30 m-b-40">
+                                        <i class="icon-user-following border border-primary img-circle text-primary font-xxxlg p-20"></i>
+                                    </p>
+                                </div>
+                                <div class="col-lg-12">
+                                    <form method="post" asp-page="/Users/Index" class="form-horizontal" role="form">
+                                        <div asp-validation-summary="All" class="text-danger"></div>
+                                        <br />
+                                        <div class="col-md-8 col-lg-6 m-auto m-b-10">
+                                            <div class="input-group round">
+                                                <span class="input-group-addon">
+                                                    <i class="icon-user"></i>
+                                                </span>
+                                                <input type="text" asp-for="CreateModel.Email" class="form-control ltr text-left" placeholder="ایمیل" required>
+                                                <div class="text-danger small mt-1">
+                                                    <span asp-validation-for="CreateModel.Email"></span>
+                                                </div>
+                                            </div><!-- /.input-group -->
+                                            <div class="form-group m-b-10 m-auto mt-2 ">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <i class="icon-options"></i>
+                                                    </span>
+                                                    <select asp-for="CreateModel.Role" class="form-select">
+                                                        <option value="1"> مشتری</option>
+                                                        <option value="2"> کارشناس</option>
+
+                                                    </select>
+                                                </div><!-- /.input-group -->
+                                            </div>
+                                            <div class="form-group m-b-10 m-auto mt-2 ">
+
+                                                <div class="input-group">
+                                                    <select asp-for="CreateModel.CityId" class="form-select">
+                                                        @foreach (var city in @Model.Cities)
+                                                        {
+                                                            <option value="@city.Id">@city.Title</option>
+                                                        }
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                        </div><!-- /.col-md-8 -->
+                                        <div class="col-md-8 col-lg-6 m-auto m-b-10">
+                                            <div class="input-group round">
+                                                <span class="input-group-addon">
+                                                    <i class="icon-key"></i>
+                                                </span>
+                                                <input type="password" asp-for="CreateModel.Password" class="form-control ltr text-left" placeholder="کلمه عبور" required>
+                                                <div class="text-danger small mt-1">
+                                                    <span asp-validation-for="CreateModel.Password"></span>
+                                                </div>
+                                            </div>
+                                        </div><!-- /.col-md-8 -->
+                                        <div class="col-md-8 col-lg-6 m-auto">
+                                            <button type="submit" class="btn btn-success btn-block mt-4 mb-2">
+                                                <i class="icon-cursor"></i>
+                                                ثبت نام
+                                                <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-block float-end mb-3" data-bs-dismiss="modal">بازگشت<div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div></button>
+                                        </div><!-- /.col-md-8 -->
+                                    </form>
+                                </div><!-- /col-lg-12 -->
+                            </div><!-- /.row -->
+                        </div><!-- /.modal-body -->
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+            <div class="row">
+                <div class="table-responsive">
+                    <div id="data-table_filter" class="dataTables_filter"><label>جستجو: <input type="search" class="" placeholder="" aria-controls="data-table"></label></div>
+                    <br />
+                    <table class="table table-bordered table-hover table-striped" id="data-table">
+                        <thead>
+                            <tr>
+                                <th class="p-low"><input type="checkbox" id="btn-check-all-toggle"></th>
+                                <th>#</th>
+                                <th>پروفایل</th>
+                                <th>ایمیل</th>
+                                <th>نام خانوادگی</th>
+                                <th>نقش</th>
+                                <th>وضعیت</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var user in @Model.Users)
+                            {
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>@user.Id</td>
+
+                                    @if (string.IsNullOrEmpty(user.ImagePath))
+                                    {
+                                        <td><img style="border-radius : 50%" src="~/AdminTemplate/assets/images/user/placeholder.jpg" width="80" height="80" /></td>
+                                    }
+                                    else
+                                    {
+                                        <td><img style="border-radius : 50%" src="@user.ImagePath" width="80" height="80" /></td>
+                                    }
+
+                                    <td>@user.Email</td>
+                                    <td>@user.Lname</td>
+                                    <td>@user.RoleName</td>
+                                    @if (user.Status == Domain.Core.Enums.Users.UserStatusEnum.Accepted)
+                                    {
+                                        <td>تایید شده</td>
+                                    }
+                                    
+                                    else
+                                    {
+                                        <td>
+                                            <div class="d-flex justify-content-center gap-2">
+                                                <a asp-area="Admin" asp-page="/Users/Confirm" asp-route-id="@user.Id" class="btn btn-success w-25  fw-bold">تایید</a>
+                                                <a onclick="return confirm('آیا از رد کردن این کاربر اطمینان دارید؟')" asp-area="Admin" asp-page="/Users/UnConfirm" asp-route-id="@user.Id" class="btn btn-danger w-25  fw-bold">رد</a>
+                                            </div>
+
+
+
+
+                                        </td>
+                                    }
+
+                                  
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <hr />
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" asp-page="Index" asp-page-handler="PreviousPage">Previous</a></li>
+                            @for (int i = Model.MyPage; i <= Model.MyPage + 9; i++)
+                            {
+                                @if (Model.MyPage == i)
+                                {
+                                    <li class="page-item active"><a class="page-link" asp-route-pageNumber="@i">@i</a></li>
+                                }
+                                else
+                                {
+                                    <li class=" page-item"><a class="page-link" asp-route-pageNumber="@i">@i</a></li>
+                                }
+                            }
+                            <li class="page-item"><a class="page-link" asp-page-handler="NextPage" asp-page="Index" asp>Next</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div><!-- /.portlet-body -->
+    </div><!-- /.portlet -->
+</div><!-- /.col-lg-12 -->

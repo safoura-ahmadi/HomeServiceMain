@@ -56,7 +56,7 @@ public class OrderAppService(IOrderService orderService, ISuggestionService sugg
         return await _orderService.ChangeStateToWorkCompletedAndPaid(id, cancellationToken);
     }
 
-    public async Task<List<GetOrderDto>> GetAll(int pageNumber,CancellationToken cancellationToken)
+    public async Task<List<GetAllOrderDto>> GetAll(int pageNumber,CancellationToken cancellationToken)
     {
         if (pageNumber <= 0)
             pageNumber = 1;
@@ -71,6 +71,18 @@ public class OrderAppService(IOrderService orderService, ISuggestionService sugg
     public async Task<List<GetOrderDto>> Search(string text, CancellationToken cancellationToken)
     {
         return await _orderService.Search(text, cancellationToken);
+    }
+    //
+    public async Task<List<GetLastOrderDto>> GetLatestOrders(CancellationToken cancellationToken)
+    {
+       return await _orderService.GetLatestOrders(cancellationToken);
+    }
+
+    public async Task<Result> Delete(int id, CancellationToken cancellationToken)
+    {
+        if (id <= 0)
+            return Result.Fail("سفارشی با این مشخصات وجود ندارد");
+        return await _orderService.Delete(id, cancellationToken);
     }
 }
 

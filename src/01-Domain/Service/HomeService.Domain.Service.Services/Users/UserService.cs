@@ -2,6 +2,7 @@
 using HomeService.Domain.Core.Contracts.Service.Users;
 using HomeService.Domain.Core.Dtos.Users;
 using HomeService.Domain.Core.Entities;
+using HomeService.Domain.Core.Enums.Users;
 
 namespace HomeService.Domain.Service.Services.Users;
 
@@ -19,12 +20,12 @@ public class UserService(IUserRepository repository) : IUserService
         return await _repository.ConfirmById(id, cancellationToken);
     }
 
-    public async Task<List<UsertDto>> GetAll(int pageNumber, int pageSize, CancellationToken cancellationToken)
+    public async Task<List<GetAllUserDto>> GetAll(int pageNumber, int pageSize, CancellationToken cancellationToken)
     {
         return await _repository.GetAll(pageNumber, pageSize, cancellationToken);
     }
 
-    public async Task<bool> IsConfirmedByAdmin(int id, CancellationToken cancellationToken)
+    public async Task<UserStatusEnum> IsConfirmedByAdmin(int id, CancellationToken cancellationToken)
     {
         return await _repository.IsConfirmedByAdmin(id, cancellationToken);
     }
@@ -34,7 +35,7 @@ public class UserService(IUserRepository repository) : IUserService
         return await _repository.UnConfirmById(id, cancellationToken);
     }
 
-    public async Task<Result> Update(UsertDto model, CancellationToken cancellationToken)
+    public async Task<Result> Update(UpdateUsertDto model, CancellationToken cancellationToken)
     {
        return await _repository.Update(model, cancellationToken);
     }

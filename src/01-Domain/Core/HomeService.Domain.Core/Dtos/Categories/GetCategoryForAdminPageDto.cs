@@ -5,5 +5,5 @@ public class GetCategoryForAdminPageDto
     public int Id { get; set; }
     public string Title { get; set; } = null!;
     public int SubServiceCount { get; set; }
-
+    public string ImagePath { get; set; } = null!;
 }

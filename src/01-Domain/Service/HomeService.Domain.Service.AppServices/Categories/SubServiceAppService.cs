@@ -1,17 +1,29 @@
 ﻿using HomeService.Domain.Core.Contracts.AppService.Categories;
+using HomeService.Domain.Core.Contracts.Service.BaseEntities;
 using HomeService.Domain.Core.Contracts.Service.Categories;
 using HomeService.Domain.Core.Dtos.Categories;
 using HomeService.Domain.Core.Entities;
 
 namespace HomeService.Domain.Service.AppServices.Categories;
 
-public class SubServiceAppService(ISubServiceService subService) : ISubServiceAppService
+public class SubServiceAppService(ISubServiceService subService, IImageService imageService) : ISubServiceAppService
 {
     private readonly ISubServiceService _subService = subService;
+    private readonly IImageService _imageService = imageService;
 
-    public  async Task<Result> Create(CreateSubServiceDto model, CancellationToken cancellationToken)
+    public async Task<Result> Create(CreateSubServiceDto model, CancellationToken cancellationToken)
     {
-        return await _subService.Create(model, cancellationToken);
+
+        var result = await _subService.Create(model, cancellationToken);
+        if (result.Success)
+        {
+            if (model.ImageFile is not null)
+                model.ImagePath = await _imageService.UploadImage(model.ImageFile!, "icon", cancellationToken);
+
+        }
+        return result;
+
+
     }
 
     public async Task<Result> Delete(int id, CancellationToken cancellationToken)
@@ -28,6 +40,13 @@ public class SubServiceAppService(ISubServiceService subService) : ISubServiceAp
         return await _subService.GetAll(pageNumber, 10, cancellationToken);
     }
 
+    public async Task<UpdateSubServiceDto?> GetById(int id, CancellationToken cancellationToken)
+    {
+        if (id <= 0)
+            return null;
+         return await _subService.GetById(id, cancellationToken);
+    }
+
     public async Task<int> GetTotalConut(CancellationToken cancellationToken)
     {
         return await _subService.GetTotalCount(cancellationToken);
@@ -35,10 +54,10 @@ public class SubServiceAppService(ISubServiceService subService) : ISubServiceAp
 
     public async Task<List<GetSubServiceDto>> Search(string text, CancellationToken cancellationToken)
     {
-       return await _subService.Search(text, cancellationToken);
+        return await _subService.Search(text, cancellationToken);
     }
 
-    public async Task<Result> Update(CreateSubServiceDto model, CancellationToken cancellationToken)
+    public async Task<Result> Update(UpdateSubServiceDto model, CancellationToken cancellationToken)
     {
         if (model.Id <= 0)
             return Result.Fail("هوم سرویسی با این ایدی موجود نیست");

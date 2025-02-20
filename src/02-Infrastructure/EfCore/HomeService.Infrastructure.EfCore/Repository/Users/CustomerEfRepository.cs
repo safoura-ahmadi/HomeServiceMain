@@ -17,7 +17,7 @@ public class CustomerEfRepository(ApplicationDbContext dbContext) : ICustomerRep
         {
             var item = await _dbContext.Customers.AsNoTracking()
                 .Include(c => c.User)
-                .Where(c => c.User!.IsConfirmed)
+                .Where(c => c.User!.Status != Domain.Core.Enums.Users.UserStatusEnum.Rejected)
                 .CountAsync(cancellationToken);
             return item;
         }

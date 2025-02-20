@@ -147,26 +147,25 @@ public class OrderEfRepository(ApplicationDbContext dbContext) : IOrderRepositor
         }
     }
     //admin
-    public async Task<List<GetOrderDto>> GetAll(int pageNumber, int pageSize, CancellationToken cancellationToken)
+    public async Task<List<GetAllOrderDto>> GetAll(int pageNumber, int pageSize, CancellationToken cancellationToken)
     {
         try
         {
             var item = await _dbContext.Orders.AsNoTracking()
                 .Where(o => o.IsActive)
-                .Include(o => o.Images)
-                .Include(o => o.Customer)
+                 .Include(o => o.Customer)
+                 .Include(o => o.SubService)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
-                .Select(o => new GetOrderDto
+                .Select(o => new GetAllOrderDto
                 {
                     Id = o.Id,
                     CreateAt = o.CreateAt,
-                    CustomerId = o.CustomerId,
-                    CustomerLname = o.Customer!.Lname,
-                    Description = o.Description,
-                    Price = o.Price,
+                    Status = o.Status,
+                    SubServiceName = o.SubService!.Title,
+                    CustomerLname = o.Customer!.Lname ?? "نامشخص",
                     TimeToDone = o.TimeToDone,
-                    Images = o.Images,
+
 
                 }).ToListAsync(cancellationToken);
             return item;
@@ -199,7 +198,7 @@ public class OrderEfRepository(ApplicationDbContext dbContext) : IOrderRepositor
                 return Result.Fail("سفارشی با این مشخص یافت نشد");
             item.IsActive = false;
             await _dbContext.SaveChangesAsync(cancellationToken);
-            return Result.Ok(" سفارش با موفقیت حذف شذ");
+            return Result.Ok("سفارش با موفقیت حذف شد");
         }
         catch
         {
@@ -270,6 +269,33 @@ public class OrderEfRepository(ApplicationDbContext dbContext) : IOrderRepositor
                 .ToListAsync(cancellationToken);
 
             return item;
+        }
+        catch
+        {
+            return [];
+        }
+    }
+    //
+    public async Task<List<GetLastOrderDto>> GetLatestOrders(CancellationToken cancellationToken)
+    {
+        try
+        {
+            var items = await _dbContext.Orders.AsNoTracking()
+                 .Include(o => o.Customer)
+                 .Include(o => o.SubService)
+                .OrderByDescending(o => o.CreateAt)
+                .Take(10)
+                .Select(o => new GetLastOrderDto
+                {
+                    Id = o.Id,
+                    CreateAt = o.CreateAt,
+                    CustomerLname = o.Expert!.Lname ?? "نامشخص",
+                    SubServiceName = o.SubService!.Title,
+
+                }
+                ).ToListAsync(cancellationToken);
+            return items;
+
         }
         catch
         {

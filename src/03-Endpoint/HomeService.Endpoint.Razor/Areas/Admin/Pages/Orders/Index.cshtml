@@ -1,0 +1,153 @@
+﻿@page
+@using Framework
+@using HomeService.Domain.Core.Enums.Orders
+@model HomeService.Endpoint.Razor.Areas.Admin.Pages.Orders.IndexModel
+@{
+    ViewData["Title"] = "پیشخوان > مدیریت سفارش ها";
+}
+@{
+
+
+    var orderStatusList = Enum.GetValues(typeof(OrderStatusEnum))
+       .Cast<OrderStatusEnum>()
+       .Select(e => new SelectListItem
+               {
+                   Value = ((int)e).ToString(),
+                   Text = e.GetEnumDisplayName(),
+
+               }).ToList();
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div id="successMessage" class="alert alert-success" role="alert">
+        @TempData["SuccessMessage"]
+    </div>
+    <hr />
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div id="errorMessage" class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+    <hr />
+}
+
+
+
+
+<div class="col-lg-12">
+    <div class="portlet box shadow">
+       
+            <div class="buttons-box">
+                <a class="btn btn-sm btn-default btn-round btn-fullscreen" rel="tooltip" title="تمام صفحه" href="#">
+                    <i class="icon-size-fullscreen"></i>
+                </a>
+                <a class="btn btn-sm btn-default btn-round btn-collapse" rel="tooltip" title="کوچک کردن" href="#">
+                    <i class="icon-arrow-up"></i>
+                </a>
+            </div><!-- /.buttons-box -->
+  
+        <div class="portlet-body">
+            <div class="table-responsive">
+                <div id="data-table_filter" class="dataTables_filter"><label>جستجو: <input type="search" class="" placeholder="" aria-controls="data-table"></label></div>
+                <br />
+                <table class="table table-bordered table-hover table-striped" id="data-table">
+                    <thead>
+                        <tr>
+                            <th>شناسه سفارش</th>
+                            <th>سفارش دهنده </th>
+                            <th> هوم سرویس</th>
+                            <th>تاریخ ثبت درخواست</th>
+                            <th> تاریخ اجرا</th>
+                            <th> وضعیت </th>
+                            <th> پیشنهاد </th>
+                            <th> عملیات </th>
+
+                            <th> جزییات </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.Orders)
+                        {
+
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.CustomerLname</td>
+                                <td>@item.SubServiceName</td>
+                                <td>@item.CreateAt.ToPersianString("yyyy/MM/dd")</td>
+                                <td>@item.TimeToDone.ToPersianString("yyyy/MM/dd")</td>
+
+                                <td>
+                                    <form method="post" asp-page-handler="ChangeOrderStatus">
+                                        <input type="hidden" name="orderId" value="@item.Id" />
+                                        <select class="form-control" name="status" onchange="this.form.submit()">
+                                            @foreach (var state in orderStatusList)
+                                            {
+                                                <option value="@state.Value" selected="@(state.Value == ((int)item.Status).ToString())">
+                                                    @state.Text
+                                                </option>
+                                            }
+                                        </select>
+                                    </form>
+                                </td>
+
+
+                                <td>
+                                    <a asp-area="Admin" asp-page="/Suggestions/Index" asp-route-id="@item.Id" class="btn btn-info round">پیشنهادها</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-danger round" asp-area="Admin" asp-page="/Orders/Delete" asp-route-id="@item.Id">
+                                        <i class="icon-size-fullscreen"></i>
+                                        حذف
+                                        <div class="paper-ripple"><div class="paper-ripple__background" style="opacity: 0.00024;"></div><div class="paper-ripple__waves"></div></div>
+                                    </a>
+
+                                </td>
+                                <td><button class="btn btn-secondary">نمایش</button></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <hr />
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" asp-page="Index" asp-page-handler="PreviousPage">Previous</a></li>
+                        @for (int i = Model.MyPage; i <= Model.MyPage + 9; i++)
+                        {
+                            @if (Model.MyPage == i)
+                            {
+                                <li class="page-item active"><a class="page-link" asp-route-pageNumber="@i">@i</a></li>
+                            }
+                            else
+                            {
+                                <li class=" page-item"><a class="page-link" asp-route-pageNumber="@i">@i</a></li>
+                            }
+                        }
+                        <li class="page-item"><a class="page-link" asp-page-handler="NextPage" asp-page="Index" asp>Next</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div><!-- /.row -->
+    </div>
+</div>
+<script>
+
+    setTimeout(function () {
+        var successMessage = document.getElementById("successMessage");
+        var errorMessage = document.getElementById("errorMessage");
+
+        if (successMessage) {
+            successMessage.style.transition = "opacity 0.5s";
+            successMessage.style.opacity = "0";
+            setTimeout(function () { successMessage.style.display = "none"; }, 500);
+        }
+
+        if (errorMessage) {
+            errorMessage.style.transition = "opacity 0.5s";
+            errorMessage.style.opacity = "0";
+            setTimeout(function () { errorMessage.style.display = "none"; }, 500);
+        }
+    }, 5000);
+</script>

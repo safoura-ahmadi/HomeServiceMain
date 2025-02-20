@@ -8,7 +8,8 @@ public interface ISubServiceAppService
     Task<Result> Create(CreateSubServiceDto model, CancellationToken cancellationToken);
     Task<List<GetSubServiceDto>> GetAll(int pageNumber, CancellationToken cancellationToken);
     Task<int> GetTotalConut(CancellationToken cancellationToken);
-    Task<Result> Update(CreateSubServiceDto model, CancellationToken cancellationToken);
+    Task<Result> Update(UpdateSubServiceDto model, CancellationToken cancellationToken);
     Task<Result> Delete(int id, CancellationToken cancellationToken);
     Task<List<GetSubServiceDto>> Search(string text, CancellationToken cancellationToken);
+    Task<UpdateSubServiceDto?> GetById(int id, CancellationToken cancellationToken);
 }

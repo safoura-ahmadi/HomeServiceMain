@@ -1,0 +1,183 @@
+﻿@page
+@using Framework
+@model HomeService.Endpoint.Razor.Areas.Admin.IndexModel
+@{
+    ViewData["Title"] = "پیشخوان";
+}
+<div class="row">
+    <div class="col-lg-3 col-6">
+        <div class="stat-box use-cyan shadow">
+            <a href="#">
+                <div class="stat">
+                    <div class="num" style="font-size:large; font-weight:bold;">@Model.StaticData.CustomerCount</div>
+                    <div class="h3">تعداد مشتری ها</div>
+                </div><!-- /.stat -->
+                <div class="visual">
+                    <i class="icon-eye"></i>
+                </div><!-- /.visual -->
+            </a>
+        </div><!-- /.stat-box -->
+    </div><!-- /.col-lg-3 -->
+    <div class="col-lg-3 col-6">
+        <div class="stat-box use-blue shadow">
+            <a href="#">
+                <div class="stat">
+                    <div class="num" style="font-size:large; font-weight:bold;">@Model.StaticData.ExpertCount</div>
+                    <div class="h3"> تعداد کارشناس ها</div>
+                </div><!-- /.stat -->
+                <div class="visual">
+                    <i class="icon-calculator"></i>
+                </div><!-- /.visual -->
+            </a>
+        </div><!-- /.stat-box -->
+    </div><!-- /.col-lg-3 -->
+    <div class="col-lg-3 col-6">
+        <div class="stat-box use-green shadow">
+            <a href="#">
+                <div class="stat">
+                    <div class="num" style="font-size:large; font-weight:bold;">@Model.StaticData.OrderCount</div>
+                    <div class="h3"> تعداد سفارش ها</div>
+                </div><!-- /.stat -->
+                <div class="visual">
+                    <i class="icon-wallet"></i>
+                </div><!-- /.visual -->
+            </a>
+        </div><!-- /.stat-box -->
+    </div><!-- /.col-lg-3 -->
+    <div class="col-lg-3 col-6">
+        <div class="stat-box use-lime shadow">
+            <a href="#">
+                <div class="stat">
+                    <div class="num" style="font-size:large; font-weight:bold;">@Model.StaticData.SuggestionCount</div>
+                    <div class="h3">تعداد پیشنهادها</div>
+                </div><!-- /.stat -->
+                <div class="visual">
+                    <i class="icon-heart"></i>
+                </div><!-- /.visual -->
+            </a>
+        </div><!-- /.stat-box -->
+    </div><!-- /.col-lg-3 -->
+</div><!-- /.row -->
+<div class="row">
+
+    <div class="col-xl-6 col-12">
+        <div class="portlet box shadow">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h3 class="title">
+                        <i class="icon-speech"></i>
+                        آخرین سفارش ها
+                    </h3>
+                </div><!-- /.portlet-title -->
+                <div class="buttons-box">
+                    <a class="btn btn-sm btn-default btn-round btn-collapse" rel="tooltip" title="کوچک کردن" href="#">
+                        <i class="icon-arrow-up"></i>
+                    </a>
+                    <a class="btn btn-sm btn-default btn-round btn-close" rel="tooltip" title="بستن" href="#">
+                        <i class="icon-trash"></i>
+                    </a>
+                </div><!-- /.buttons-box -->
+            </div><!-- /.portlet-heading -->
+            <div class="portlet-body ">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th><i class="icon-energy"></i></th>
+                                <th>سفارش دهنده </th>
+                                <th>تاریخ</th>
+                                <th>هوم سرویس</th>
+                                <th>جزییات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.LastOrders)
+                            {
+                                <tr>
+                                    <td>
+                                        <i class="fas fa-arrow-down text-danger"></i>
+                                    </td>
+                                    <td>
+                                        @item.CustomerLname
+                                    </td>
+                                    <td>@item.CreateAt.ToPersianString("yyyy/MM/dd")</td>
+                                    <td>@item.SubServiceName</td>
+                                    <td class="text-center">
+                                        <label class="label-warning round">نمایش جزییات</label>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div><!-- /.table-responsive -->
+              
+            </div><!-- /.portlet-body -->
+        </div><!-- /.portlet -->
+    </div><!-- /.col-xl-6 -->
+    <div class="col-xl-6 col-12">
+        <div class="portlet box shadow">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h3 class="title">
+                        <i class="icon-speech"></i>
+                        آخرین پیشنهادها
+                    </h3>
+                </div><!-- /.portlet-title -->
+                <div class="buttons-box">
+                    <a class="btn btn-sm btn-default btn-round btn-collapse" rel="tooltip" title="کوچک کردن" href="#">
+                        <i class="icon-arrow-up"></i>
+                    </a>
+                    <a class="btn btn-sm btn-default btn-round btn-close" rel="tooltip" title="بستن" href="#">
+                        <i class="icon-trash"></i>
+                    </a>
+                </div><!-- /.buttons-box -->
+            </div><!-- /.portlet-heading -->
+            <div class="portlet-body ">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th><i class="icon-energy"></i></th>
+                                <th>هوم سرویس </th>
+                                <th>تاریخ</th>
+                                <th>کارشناس</th>
+                                <th>قیمت پیشنهادی</th>
+                                <th>جزییات </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in @Model.LastSuggestions)
+                            {
+                                <tr>
+                                    <td>
+                                        <i class="fas fa-arrow-down text-danger"></i>
+                                    </td>
+                                    <td>
+                                        @item.SubServiceName
+                                    </td>
+                                    <td> @item.CreateAt.ToPersianString("yyyy/MM/dd")</td>
+                                    <td>@item.ExperLname </td>
+                                    <td>@item.Price</td>
+                                    <td class="text-center">
+                                        <label class="label-warning round">نمایش جزییات</label>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div><!-- /.table-responsive -->
+            
+            </div><!-- /.portlet-body -->
+        </div><!-- /.col-xl-6 -->
+    </div><!-- /.buttons-box -->
+</div><!-- /.portlet-heading -->
+@section Scripts
+{
+    <script src="~/AdminTemplate/assets/plugins/chart.js/dist/Chart.bundle.min.js"></script>
+    <script src="~/AdminTemplate/assets/plugins/jquery-incremental-counter/jquery.incremental-counter.min.js"></script>
+    <script src="~/AdminTemplate/assets/plugins/ammap3/ammap/ammap.js"></script>
+    <script src="~/AdminTemplate/assets/plugins/ammap3/ammap/maps/js/iranHighFa.js"></script>
+    <script src="~/AdminTemplate/assets/js/pages/dashboard2.js"></script>
+}

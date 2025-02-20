@@ -1,4 +1,5 @@
 ﻿using HomeService.Domain.Core.Entities.ValidationAtrribute;
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
 namespace HomeService.Domain.Core.Dtos.Categories;
@@ -10,9 +11,8 @@ public class CreateSubServiceDto
     [Display(Name = "عنوان")]
     [Required(ErrorMessage = "وارد کردن عنوان الزامی است")]
     public string Title { get; set; } = null!;
-    [MaxLength(500)]
+
     public string? ImagePath { get; set; }
-    [Display(Name = "قیمت پایه")]
     [PriceValidation(ErrorMessage = "قیمت وارد شده نا معتبر است")]
     [Required(ErrorMessage = "وارد کردن قیمت پایه الزامی است")]
     public int BasePrice { get; set; }
@@ -21,4 +21,6 @@ public class CreateSubServiceDto
     [MaxLength(255, ErrorMessage = "متن توضیحات نمیتواند از 255 کاراکتر بیشتر باشد")]
     public string Description { get; set; } = null!;
     public int SubCategoryId { get; set; }
+    [Required(ErrorMessage = "آپلود کردن عکس الزامی است")]
+    public IFormFile ImageFile { get; set; } = null!;
 }

@@ -30,8 +30,20 @@ public class CategoryService(ICategoryRepository repository) : ICategoryService
        return await _repository.GetAllForMainPage(cancellationToken);
     }
 
-    public async Task<Result> Update(int id, string title, CancellationToken cancellationToken)
+    public async Task<UpdateCategoryDto?> GetById(int id, CancellationToken cancellationToken)
     {
-        return await _repository.Update(id, title, cancellationToken);
+        return await _repository.GetById(id, cancellationToken);
+    }
+
+    public async Task<Result> Update(int id, string title, string imagePath, CancellationToken cancellationToken)
+    {
+        return await _repository.Update(id, title,imagePath, cancellationToken);
+    }
+
+    public async Task<Result> Update(UpdateCategoryDto model, CancellationToken cancellationToken)
+    {
+        
+        return await _repository.Update(model,cancellationToken);
+
     }
 }

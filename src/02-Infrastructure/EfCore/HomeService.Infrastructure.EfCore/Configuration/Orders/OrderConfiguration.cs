@@ -45,6 +45,7 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
                 CustomerId = 1,
                 Status = Domain.Core.Enums.Orders.OrderStatusEnum.WorkCompletedAndPaid,
                 SubServiceId = 1,
+                ExpertId = 1
 
             }
 

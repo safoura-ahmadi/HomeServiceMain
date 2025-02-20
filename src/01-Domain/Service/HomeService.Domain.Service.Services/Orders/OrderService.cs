@@ -12,7 +12,7 @@ public class OrderService(IOrderRepository repository) : IOrderService
 
     public async Task<Result> ChangeStateToExpertArrivedAtLocation(int id, CancellationToken cancellationToken)
     {
-        return await _repository.ChangeStateToExpertArrivedAtLocation(id,cancellationToken);
+        return await _repository.ChangeStateToExpertArrivedAtLocation(id, cancellationToken);
     }
 
     public async Task<Result> ChangeStateToWaitingForExpertOffer(int id, CancellationToken cancellationToken)
@@ -40,7 +40,7 @@ public class OrderService(IOrderRepository repository) : IOrderService
         return await _repository.Delete(id, cancellationToken);
     }
 
-    public async Task<List<GetOrderDto>> GetAll(int pageNumber, int pageSize, CancellationToken cancellationToken)
+    public async Task<List<GetAllOrderDto>> GetAll(int pageNumber, int pageSize, CancellationToken cancellationToken)
     {
         return await _repository.GetAll(pageNumber, pageSize, cancellationToken);
     }
@@ -54,6 +54,7 @@ public class OrderService(IOrderRepository repository) : IOrderService
     {
         return await _repository.GetLastStatusOfOrder(id, cancellationToken);
     }
+
 
     public async Task<int> GetTotalConut(CancellationToken cancellationToken)
     {
@@ -72,6 +73,11 @@ public class OrderService(IOrderRepository repository) : IOrderService
 
     public async Task<Result> SetFinalTimeToDone(int id, DateTime timeToDone, CancellationToken cancellationToken)
     {
-       return await _repository.SetFinalTimeToDone(id, timeToDone, cancellationToken);
+        return await _repository.SetFinalTimeToDone(id, timeToDone, cancellationToken);
+    }
+    //
+    public async Task<List<GetLastOrderDto>> GetLatestOrders(CancellationToken cancellationToken)
+    {
+        return await _repository.GetLatestOrders(cancellationToken);
     }
 }

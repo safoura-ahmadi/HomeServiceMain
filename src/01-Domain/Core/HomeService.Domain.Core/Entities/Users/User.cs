@@ -1,4 +1,5 @@
 ﻿using HomeService.Domain.Core.Entities.BaseEntities;
+using HomeService.Domain.Core.Enums.Users;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -18,7 +19,7 @@ public class User : IdentityUser<int>
     public string? ImagePath { get; set; }
     [Column(TypeName = "decimal(18, 2)")]
     public decimal Balance { get; set; }
-    public bool IsConfirmed { get; set; }
+    public UserStatusEnum Status { get; set; } = UserStatusEnum.Pending;
     [MaxLength(255)]
     public string? Biography { get; set; }
     //navigation

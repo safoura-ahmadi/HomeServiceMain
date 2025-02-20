@@ -1,5 +1,6 @@
 ﻿using HomeService.Domain.Core.Contracts.Repository.Categories;
 using HomeService.Domain.Core.Dtos.Categories;
+using HomeService.Domain.Core.Entities;
 using HomeService.Domain.Core.Entities.Categories;
 using HomeService.Infrastructure.EfCore.Common;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +21,7 @@ public class SubCategoryEfRepository(ApplicationDbContext dbContext) : ISubCateg
                 {
 
                     Id = sc.Id,
-                    Tilte = sc.Title
+                    Title = sc.Title
                 }).ToListAsync(cancellationToken);
             return item;
         }
@@ -36,11 +37,14 @@ public class SubCategoryEfRepository(ApplicationDbContext dbContext) : ISubCateg
         {
             var item = await _dbContext.SubCategories.AsNoTracking()
                 .Where(sc => sc.IsActive)
+                .Include(sc => sc.Category)
                 .Select(sc => new GetSubCategoryDto
                 {
 
                     Id = sc.Id,
-                    Tilte = sc.Title
+                    Title = sc.Title,
+                    CategoryName = sc.Category!.Title
+                  
                 }).ToListAsync(cancellationToken);
             return item;
         }
@@ -49,7 +53,7 @@ public class SubCategoryEfRepository(ApplicationDbContext dbContext) : ISubCateg
             return [];
         }
     }
-    public async Task<bool> Create(string title, int CategoryId, CancellationToken cancellationToken)
+    public async Task<Result> Create(string title, int CategoryId, CancellationToken cancellationToken)
     {
         try
         {
@@ -61,45 +65,60 @@ public class SubCategoryEfRepository(ApplicationDbContext dbContext) : ISubCateg
             };
             await _dbContext.AddAsync(item, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);
-            return true;
+            return Result.Ok("سابکتگوری با موفقیت ایحاد شد");
         }
         catch
         {
-            return false;
+            return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
-    public async Task<bool> Delete(int id, CancellationToken cancellationToken)
+    public async Task<Result> Delete(int id, CancellationToken cancellationToken)
     {
         try
         {
-            var item = await _dbContext.SubCategories.FirstAsync(c => c.Id == id, cancellationToken);
+            var item = await _dbContext.SubCategories.FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+            if (item is null)
+                return Result.Fail("سابکتگوری با این مشخصات وجود ندارد");
             item.IsActive = false;
             await _dbContext.SaveChangesAsync(cancellationToken);
-            return true;
+            return Result.Ok("سابکتگوری با موفقیت حذف شد");
         }
         catch
         {
-            return false;
+            return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
 
     }
-    public async Task<bool> Update(UpdateSubCategoryDto model, CancellationToken cancellationToken)
+    public async Task<Result> Update(UpdateSubCategoryDto model, CancellationToken cancellationToken)
     {
 
         try
         {
-            var item = await _dbContext.SubCategories.FirstAsync(sc => sc.Id == model.Id && sc.IsActive, cancellationToken);
-
-            item.Title = model.Tilte;
+            var item = await _dbContext.SubCategories.FirstOrDefaultAsync(sc => sc.Id == model.Id && sc.IsActive, cancellationToken);
+            if (item is null)
+                return Result.Fail("سابکتگوری با این مشخصات وجود ندارد");
+            item.Title = model.Title;
             item.CategoryId = model.CategoryId;
             await _dbContext.SaveChangesAsync(cancellationToken);
-            return true;
+            return Result.Ok("سلبکتگوری با موفقیت ویرایش شد");
         }
         catch
         {
-            return false;
+            return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
 
     }
 
+    public async Task<UpdateSubCategoryDto?> GetById(int id, CancellationToken cancellationToken)
+    {
+        var item = await _dbContext.SubCategories.AsNoTracking()
+            .Where(sc => sc.Id == id && sc.IsActive)
+            .Select(sc => new UpdateSubCategoryDto
+            {
+                Id = sc.Id,
+                Title = sc.Title,
+                CategoryId = sc.CategoryId
+            }).FirstOrDefaultAsync(cancellationToken);
+        return item;
+    }
 }

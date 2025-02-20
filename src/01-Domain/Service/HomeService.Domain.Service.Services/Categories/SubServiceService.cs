@@ -11,6 +11,7 @@ public class SubServiceService(ISubServiceRepository repository) : ISubServiceSe
 
     public async Task<Result> Create(CreateSubServiceDto model, CancellationToken cancellationToken)
     {
+
         return await _repository.Create(model, cancellationToken);
     }
 
@@ -21,12 +22,18 @@ public class SubServiceService(ISubServiceRepository repository) : ISubServiceSe
 
     public async Task<List<GetSubServiceDto>> GetAll(int pageNumber, int pageSize, CancellationToken cancellationToken)
     {
-       return await _repository.GetAll(pageNumber, pageSize, cancellationToken);
+        return await _repository.GetAll(pageNumber, pageSize, cancellationToken);
     }
 
     public async Task<int> GetBasePrice(int id, CancellationToken cancellationToken)
     {
         return await _repository.GetBasePrice(id, cancellationToken);
+    }
+
+    public async Task<UpdateSubServiceDto?> GetById(int id, CancellationToken cancellationToken)
+    {
+
+        return await _repository.GetById(id, cancellationToken);
     }
 
     public async Task<List<GetSubServiceDto>> GetBySubCategoryId(int subcategoryId, CancellationToken cancellationToken)
@@ -44,7 +51,7 @@ public class SubServiceService(ISubServiceRepository repository) : ISubServiceSe
         return await _repository.Search(text, cancellationToken);
     }
 
-    public async Task<Result> Update(CreateSubServiceDto model, CancellationToken cancellationToken)
+    public async Task<Result> Update(UpdateSubServiceDto model, CancellationToken cancellationToken)
     {
         return await _repository.Update(model, cancellationToken);
     }

@@ -5,7 +5,7 @@ namespace HomeService.Domain.Service.Services.Users;
 
 public class ExpertSubServiceService(IExpertSubServiceRepository repository) : IExpertSubServiceService
 {
-    private readonly IExpertSubServiceRepository _repository;
+    private readonly IExpertSubServiceRepository _repository = repository;
     public async Task<bool> Create(int expertId, int subServiceId, CancellationToken cancellationToken)
     {
         return await _repository.Create(expertId, subServiceId, cancellationToken);

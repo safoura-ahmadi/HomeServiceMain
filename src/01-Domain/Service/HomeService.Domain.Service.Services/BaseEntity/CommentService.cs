@@ -9,14 +9,14 @@ public class CommentService(ICommentRepository repository) : ICommentService
 {
     private readonly ICommentRepository _repository = repository;
 
-    public async Task<bool> Create(CreateCommentDto item, CancellationToken cancellationToken)
+    public async Task<Result> Create(CreateCommentDto item, CancellationToken cancellationToken)
     {
         return await _repository.Create(item, cancellationToken);
     }
 
-    public async Task<Result> SetInActive(int id, CancellationToken cancellationToken)
+    public async Task<Result> ChangeStatusToRejected(int id, CancellationToken cancellationToken)
     {
-        return await _repository.SetInActive(id, cancellationToken);
+        return await _repository.ChangeStatusToRejected(id, cancellationToken);
     }
 
     public async Task<List<GetCommentDto>> GetAll(int pageNumber, int pageSize, CancellationToken cancellationToken)
@@ -42,5 +42,10 @@ public class CommentService(ICommentRepository repository) : ICommentService
     public async Task<List<GetCommentDto>> Search(string text, CancellationToken cancellationToken)
     {
         return await _repository.Search(text, cancellationToken);
+    }
+
+    public async Task<Result> ChangeStatusToAccepted(int id, CancellationToken cancellationToken)
+    {
+        return await _repository.ChangeStatusToAccepted(id, cancellationToken);
     }
 }

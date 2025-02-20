@@ -36,7 +36,7 @@ public class ExpertEfRepository(ApplicationDbContext dbContext) : IExpertReposit
         {
             var item = await _dbContext.Experts.AsNoTracking()
                 .Include(e => e.User)
-                .Where(e => e.User!.IsConfirmed)
+                .Where(e => e.User!.Status != Domain.Core.Enums.Users.UserStatusEnum.Rejected)
                 .CountAsync(cancellationToken);
             return item;
         }

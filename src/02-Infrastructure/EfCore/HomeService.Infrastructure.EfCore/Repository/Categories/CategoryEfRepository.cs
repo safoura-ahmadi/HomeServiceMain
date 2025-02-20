@@ -25,7 +25,7 @@ public class CategoryEfRepository(ApplicationDbContext dbContext) : ICategoryRep
                     SubCategories = c.SubCategories.Select(sc => new GetSubCategoryDto
                     {
                         Id = sc.Id,
-                        Tilte = sc.Title
+                        Title = sc.Title
                     }
                     ).ToList()
                 }).ToListAsync(cancellationToken);
@@ -55,7 +55,7 @@ public class CategoryEfRepository(ApplicationDbContext dbContext) : ICategoryRep
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
-    public async Task<Result> Update(int id, string title, CancellationToken cancellationToken)
+    public async Task<Result> Update(int id, string title, string imagePath, CancellationToken cancellationToken)
     {
         try
         {
@@ -63,6 +63,7 @@ public class CategoryEfRepository(ApplicationDbContext dbContext) : ICategoryRep
             if (item is null)
                 return Result.Fail("دسته بندی با این مشخصات وجود ندارد");
             item.Title = title;
+            item.ImagePath = imagePath;
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("مشخصات دسته بندی با موفقیت ویرایش شد");
         }
@@ -84,6 +85,7 @@ public class CategoryEfRepository(ApplicationDbContext dbContext) : ICategoryRep
                        {
                            Id = c.Id,
                            Title = c.Title,
+                           ImagePath = c.ImagePath,
                            SubServiceCount = c.SubCategories
                                          .SelectMany(sc => sc.SubServices)
                                          .Count(ss => ss.IsActive)
@@ -116,6 +118,38 @@ public class CategoryEfRepository(ApplicationDbContext dbContext) : ICategoryRep
         {
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
+    }
+
+    public async Task<Result> Update(UpdateCategoryDto model, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var item = await _dbContext.Categories.FirstOrDefaultAsync(c => c.Id == model.Id && c.IsActive, cancellationToken);
+            if (item is null)
+                return Result.Fail("کتگوری با این مشخصات وجود ندارد");
+            item.Title = model.Title;
+            item.ImagePath = model.ImagePath ?? item.ImagePath;
+            await _dbContext.SaveChangesAsync(cancellationToken);
+            return Result.Ok("کتگوری با موفقیت ویرایش شد");
+        }
+        catch
+        {
+            return Result.Fail("مشکلی در دیتا بیس وجود دارد");
+        }
+
+    }
+
+    public async Task<UpdateCategoryDto?> GetById(int id, CancellationToken cancellationToken)
+    {
+        var item = await _dbContext.Categories.AsNoTracking()
+            .Where(c => c.Id == id && c.IsActive)
+            .Select(c => new UpdateCategoryDto
+            {
+                Id = c.Id,
+                ImagePath = c.ImagePath,
+                Title = c.Title
+            }).FirstOrDefaultAsync(cancellationToken);
+        return item;
     }
 }
 

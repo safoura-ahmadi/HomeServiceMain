@@ -1,0 +1,91 @@
+﻿@page
+@using Framework
+@model HomeService.Endpoint.Razor.Areas.Admin.Pages.Suggestions.IndexModel
+@{
+}
+<div class="col-12">
+    <div class="portlet box shadow">
+        <div class="portlet-heading">
+            <div class="portlet-title">
+                <h3 class="title">
+                    <i class="icon-speech"></i>
+                    پیشنهاد های مربوط به سفارش @Model.Id
+                </h3>
+            </div><!-- /.portlet-title -->
+            <div class="buttons-box">
+                <a class="btn btn-sm btn-default btn-round btn-collapse" rel="tooltip" title="کوچک کردن" href="#">
+                    <i class="icon-arrow-up"></i>
+                </a>
+                <a class="btn btn-sm btn-default btn-round btn-close" rel="tooltip" title="بستن" href="#">
+                    <i class="icon-trash"></i>
+                </a>
+            </div><!-- /.buttons-box -->
+        </div><!-- /.portlet-heading -->
+        <div class="portlet-body ">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th><i class="icon-energy"></i></th>
+                            <th>کارشناس</th>
+                            <th>تاریخ پیشنهادی</th>
+                            <th>قیمت پیشنهادی</th>
+                            <th>تاریخ ثبت</th>
+                            <th>وضعیت پذیرش</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in @Model.Suggestions)
+                        {
+                            <tr>
+                                <td>
+                                    <i class="fas fa-arrow-down text-danger"></i>
+                                </td>
+                                <td>
+                                    @item.ExperLname
+                                </td>
+                                <td> @item.TimeToDone.ToPersianString("yyyy/MM/dd")</td>
+                                <td>@item.Price </td>
+                                <td>@item.CreateAt.ToPersianString("yyyy/MM/dd")</td>
+                                @if (item.IsAccepted)
+                                {
+                                    <td class="text-center">
+                                        <label class="label-success round">تایید شده</label>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td class="text-center">
+                                        <label class="label-danger round">در انتظار تایید</label>
+                                    </td>
+                                }
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div><!-- /.table-responsive -->
+
+        </div><!-- /.portlet-body -->
+    </div><!-- /.col-xl-6 -->
+</div><!-- /.buttons-box -->
+<script>
+
+    setTimeout(function () {
+        var successMessage = document.getElementById("successMessage");
+        var errorMessage = document.getElementById("errorMessage");
+
+        if (successMessage) {
+            successMessage.style.transition = "opacity 0.5s";
+            successMessage.style.opacity = "0";
+            setTimeout(function () { successMessage.style.display = "none"; }, 500);
+        }
+
+        if (errorMessage) {
+            errorMessage.style.transition = "opacity 0.5s";
+            errorMessage.style.opacity = "0";
+            setTimeout(function () { errorMessage.style.display = "none"; }, 500);
+        }
+    }, 5000);
+</script>

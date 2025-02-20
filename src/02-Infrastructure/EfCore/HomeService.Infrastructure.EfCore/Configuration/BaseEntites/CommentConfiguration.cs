@@ -1,5 +1,6 @@
 ﻿
 using HomeService.Domain.Core.Entities.BaseEntities;
+using HomeService.Domain.Core.Enums.BaseEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -20,19 +21,14 @@ public class CommentConfiguration : IEntityTypeConfiguration<Comment>
                 .HasForeignKey(c => c.CustomerId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-        builder.HasOne(c => c.Order)
-           .WithMany(o => o.Comments)
-           .HasForeignKey(c => c.OrderId)
-           .OnDelete(DeleteBehavior.NoAction);
 
         builder.HasData(
             new Comment()
             {
                 Id = 1,
-                OrderId = 1,
                 ExpertId = 1,
                 CustomerId = 1,
-                IsActive = false,
+               Status = CommentStatusEnum.Pending,
                 Text = "کارشون عالیه",
                 Score = 8
             }

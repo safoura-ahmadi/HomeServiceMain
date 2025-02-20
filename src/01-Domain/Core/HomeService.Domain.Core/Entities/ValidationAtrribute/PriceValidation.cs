@@ -11,10 +11,10 @@ public class PriceValidation : ValidationAttribute
     {
         if (value == null)
         {
-            return true;
+            return false;
         }
 
-        if (value is decimal price)
+        if (value is int price)
         {
             return price > 0;
         }
