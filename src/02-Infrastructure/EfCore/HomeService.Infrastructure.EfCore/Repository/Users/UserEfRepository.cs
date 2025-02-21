@@ -4,12 +4,15 @@ using HomeService.Domain.Core.Entities;
 using HomeService.Domain.Core.Enums.Users;
 using HomeService.Infrastructure.EfCore.Common;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.Identity.Client;
 
 namespace HomeService.Infrastructure.EfCore.Repository.Users;
 
-public class UserEfRepository(ApplicationDbContext dbContext) : IUserRepository
+public class UserEfRepository(ApplicationDbContext dbContext, ILogger<UserEfRepository> logger) : IUserRepository
 {
     private readonly ApplicationDbContext _dbContext = dbContext;
+    private readonly ILogger<UserEfRepository> _logger = logger;
 
     public async Task<List<GetAllUserDto>> GetAll(int pageNumber, int pageSize, CancellationToken cancellationToken)
     {
@@ -23,10 +26,10 @@ public class UserEfRepository(ApplicationDbContext dbContext) : IUserRepository
                 .Select(u => new GetAllUserDto
                 {
                     Id = u.Id,
-                    Status = u.Status ,
+                    Status = u.Status,
                     ImagePath = u.ImagePath,
                     Email = u.Email,
-                    Lname = u.Lname??"نامشخص",
+                    Lname = u.Lname ?? "نامشخص",
                     RoleName = _dbContext.Roles
                     .Where(r => _dbContext.UserRoles
                      .Any(ur => ur.UserId == u.Id && ur.RoleId == r.Id))
@@ -37,8 +40,9 @@ public class UserEfRepository(ApplicationDbContext dbContext) : IUserRepository
                 }).ToListAsync(cancellationToken);
             return item;
         }
-        catch
+        catch (Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "UserEfRepository", ex.Message);
             return [];
         }
 
@@ -54,8 +58,9 @@ public class UserEfRepository(ApplicationDbContext dbContext) : IUserRepository
                             .FirstAsync(cancellationToken);
             return result;
         }
-        catch
+        catch (Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "UserEfRepository", ex.Message);
             return UserStatusEnum.Pending;
         }
     }
@@ -74,8 +79,9 @@ public class UserEfRepository(ApplicationDbContext dbContext) : IUserRepository
 
 
         }
-        catch
+        catch (Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "UserEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
@@ -94,8 +100,9 @@ public class UserEfRepository(ApplicationDbContext dbContext) : IUserRepository
 
 
         }
-        catch
+        catch (Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "UserEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
@@ -117,8 +124,9 @@ public class UserEfRepository(ApplicationDbContext dbContext) : IUserRepository
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("پروفایل کاربر با موفقیت اپدیت شد");
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "UserEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
 
@@ -130,11 +138,13 @@ public class UserEfRepository(ApplicationDbContext dbContext) : IUserRepository
             var item = await _dbContext.Users.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
             if (item is null)
                 return Result.Fail("کاربری با این مشخصات یافت نشد");
+            item.Status = UserStatusEnum.Accepted;
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("کاربر تایید شد");
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "UserEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
 
@@ -150,8 +160,9 @@ public class UserEfRepository(ApplicationDbContext dbContext) : IUserRepository
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("کاربر غیرفعال شد");
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "UserEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
 

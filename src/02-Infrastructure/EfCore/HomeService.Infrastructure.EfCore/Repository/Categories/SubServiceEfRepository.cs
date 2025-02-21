@@ -4,13 +4,16 @@ using HomeService.Domain.Core.Entities;
 using HomeService.Domain.Core.Entities.Categories;
 using HomeService.Infrastructure.EfCore.Common;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.ComponentModel.DataAnnotations;
 
 namespace HomeService.Infrastructure.EfCore.Repository.Categories;
 
-public class SubServiceEfRepository(ApplicationDbContext dbContext) : ISubServiceRepository
+public class SubServiceEfRepository(ApplicationDbContext dbContext, ILogger<SubServiceEfRepository> logger) : ISubServiceRepository
 {
     private readonly ApplicationDbContext _dbContext = dbContext;
+    private readonly ILogger<SubServiceEfRepository> _logger = logger;
+
     public async Task<Result> Create(CreateSubServiceDto model, CancellationToken cancellationToken)
     {
         try
@@ -29,44 +32,61 @@ public class SubServiceEfRepository(ApplicationDbContext dbContext) : ISubServic
             return Result.Ok("سرویس جدید با موفقیت ایجاد شد");
 
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SubServiceEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
     public async Task<List<GetSubServiceDto>> GetBySubCategoryId(int subcategoryId, CancellationToken cancellationToken)
     {
-        var item = await _dbContext.SubServices.AsNoTracking()
-             .Where(s => s.IsActive && s.SubCategoryId == subcategoryId)
-             .Select(s => new GetSubServiceDto
-             {
-                 Id = s.Id,
-                 Title = s.Title,
-                 Description = s.Description,
-                 BasePrice = s.BasePrice,
-                 ImagePath = s.ImagePath,
+        try
+        {
+            var item = await _dbContext.SubServices.AsNoTracking()
+                 .Where(s => s.IsActive && s.SubCategoryId == subcategoryId)
+                 .Select(s => new GetSubServiceDto
+                 {
+                     Id = s.Id,
+                     Title = s.Title,
+                     Description = s.Description,
+                     BasePrice = s.BasePrice,
+                     ImagePath = s.ImagePath,
 
-             }
-             ).ToListAsync(cancellationToken);
-        return item;
+                 }
+                 ).ToListAsync(cancellationToken);
+            return item;
+        }
+        catch(Exception ex)
+        {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SubServiceEfRepository", ex.Message);
+            return [];
+        }
     }
     public async Task<List<GetSubServiceDto>> Search(string text, CancellationToken cancellationToken
         )
     {
-        var item = await _dbContext.SubServices.AsNoTracking()
-            .Where(s => s.IsActive && s.Title.Contains(text) || s.Description.Contains(text))
-            .Include(s => s.SubCategory)
-            .Select(s => new GetSubServiceDto
-            {
-                Id = s.Id,
-                Title = s.Title,
-                BasePrice = s.BasePrice,
-                Description = s.Description,
-                ImagePath = s.ImagePath,
-                SubCategoryTitle = s.SubCategory!.Title
+        try
+        {
+            var item = await _dbContext.SubServices.AsNoTracking()
+                .Where(s => s.IsActive && s.Title.Contains(text) || s.Description.Contains(text))
+                .Include(s => s.SubCategory)
+                .Select(s => new GetSubServiceDto
+                {
+                    Id = s.Id,
+                    Title = s.Title,
+                    BasePrice = s.BasePrice,
+                    Description = s.Description,
+                    ImagePath = s.ImagePath,
+                    SubCategoryTitle = s.SubCategory!.Title
 
-            }).ToListAsync(cancellationToken);
-        return item;
+                }).ToListAsync(cancellationToken);
+            return item;
+        }
+        catch(Exception ex)
+        {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SubServiceEfRepository", ex.Message);
+            return [];
+        }
     }
     public async Task<int> GetBasePrice(int id, CancellationToken cancellationToken)
     {
@@ -78,8 +98,9 @@ public class SubServiceEfRepository(ApplicationDbContext dbContext) : ISubServic
                 .FirstAsync(cancellationToken);
             return item;
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SubServiceEfRepository", ex.Message);
             return 0;
         }
     }
@@ -101,8 +122,9 @@ public class SubServiceEfRepository(ApplicationDbContext dbContext) : ISubServic
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("ویرایش هوم سرویس با موفقیت انجام شد");
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SubServiceEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
@@ -117,8 +139,9 @@ public class SubServiceEfRepository(ApplicationDbContext dbContext) : ISubServic
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("هوم سرویس با موفقیت حذف شد ");
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SubServiceEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
@@ -143,8 +166,9 @@ public class SubServiceEfRepository(ApplicationDbContext dbContext) : ISubServic
                  ).ToListAsync(cancellationToken);
             return item;
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SubServiceEfRepository", ex.Message);
             return [];
         }
     }
@@ -156,25 +180,33 @@ public class SubServiceEfRepository(ApplicationDbContext dbContext) : ISubServic
                 .CountAsync(cancellationToken);
             return item;
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SubServiceEfRepository", ex.Message);
             return 0;
         }
     }
 
     public async Task<UpdateSubServiceDto?> GetById(int id, CancellationToken cancellationToken)
     {
-        var item = await _dbContext.SubServices.AsNoTracking()
-            .Where(s => s.Id == id && s.IsActive)
-            .Select(s => new UpdateSubServiceDto
-            {
-                Id = s.Id,
-                BasePrice = s.BasePrice,
-                Description = s.Description,
-                SubCategoryId = s.SubCategoryId,
-                Title = s.Title
-            }).FirstOrDefaultAsync(cancellationToken);
-        return item;
-
+        try
+        {
+            var item = await _dbContext.SubServices.AsNoTracking()
+                .Where(s => s.Id == id && s.IsActive)
+                .Select(s => new UpdateSubServiceDto
+                {
+                    Id = s.Id,
+                    BasePrice = s.BasePrice,
+                    Description = s.Description,
+                    SubCategoryId = s.SubCategoryId,
+                    Title = s.Title
+                }).FirstOrDefaultAsync(cancellationToken);
+            return item;
+        }
+        catch(Exception ex)
+        {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SubServiceEfRepository", ex.Message);
+            return null;
+        }
     }
 }

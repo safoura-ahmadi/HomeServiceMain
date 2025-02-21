@@ -7,13 +7,16 @@ using HomeService.Domain.Core.Entities.Orders;
 using HomeService.Domain.Core.Enums.Orders;
 using HomeService.Infrastructure.EfCore.Common;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 
 namespace HomeService.Infrastructure.EfCore.Repository.Orders;
 
-public class OrderEfRepository(ApplicationDbContext dbContext) : IOrderRepository
+public class OrderEfRepository(ApplicationDbContext dbContext, ILogger<OrderEfRepository> logger) : IOrderRepository
 {
     private readonly ApplicationDbContext _dbContext = dbContext;
+    private readonly ILogger<OrderEfRepository> _logger = logger;
+
     public async Task<int> Create(CreateOrderDto order, CancellationToken cancellationToken)
     {
         try
@@ -34,8 +37,9 @@ public class OrderEfRepository(ApplicationDbContext dbContext) : IOrderRepositor
             return item.Id;
 
         }
-        catch
+        catch(Exception ex) 
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
             return 0;
         }
     }
@@ -60,8 +64,9 @@ public class OrderEfRepository(ApplicationDbContext dbContext) : IOrderRepositor
                 }).ToListAsync(cancellationToken);
             return item;
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
             return [];
         }
 
@@ -78,8 +83,9 @@ public class OrderEfRepository(ApplicationDbContext dbContext) : IOrderRepositor
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("وضعیت سفارش با موفقیت تغییر یافت");
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
@@ -94,8 +100,9 @@ public class OrderEfRepository(ApplicationDbContext dbContext) : IOrderRepositor
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("وضعیت سفارش با موفقیت تغییر یافت");
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
@@ -110,8 +117,9 @@ public class OrderEfRepository(ApplicationDbContext dbContext) : IOrderRepositor
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("وضعیت سفارش با موفقیت تغییر یافت");
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
@@ -126,8 +134,9 @@ public class OrderEfRepository(ApplicationDbContext dbContext) : IOrderRepositor
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("وضعیت سفارش با موفقیت تغییر یافت");
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
@@ -141,8 +150,9 @@ public class OrderEfRepository(ApplicationDbContext dbContext) : IOrderRepositor
                 return OrderStatusEnum.UnDefined;
             return item.Status;
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
             return OrderStatusEnum.UnDefined;
         }
     }
@@ -170,8 +180,9 @@ public class OrderEfRepository(ApplicationDbContext dbContext) : IOrderRepositor
                 }).ToListAsync(cancellationToken);
             return item;
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
             return [];
         }
     }
@@ -184,8 +195,9 @@ public class OrderEfRepository(ApplicationDbContext dbContext) : IOrderRepositor
                 .CountAsync(cancellationToken);
             return item;
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
             return 0;
         }
     }
@@ -200,8 +212,9 @@ public class OrderEfRepository(ApplicationDbContext dbContext) : IOrderRepositor
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("سفارش با موفقیت حذف شد");
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
@@ -218,8 +231,9 @@ public class OrderEfRepository(ApplicationDbContext dbContext) : IOrderRepositor
             return Result.Ok("قیمت نهایی سفارش با موفقیت تغییر کرد");
 
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
@@ -236,8 +250,9 @@ public class OrderEfRepository(ApplicationDbContext dbContext) : IOrderRepositor
             return Result.Ok("تاریخ نهایی سفارش با موفقیت تغییر کرد");
 
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
@@ -270,8 +285,9 @@ public class OrderEfRepository(ApplicationDbContext dbContext) : IOrderRepositor
 
             return item;
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
             return [];
         }
     }
@@ -297,8 +313,9 @@ public class OrderEfRepository(ApplicationDbContext dbContext) : IOrderRepositor
             return items;
 
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
             return [];
         }
     }

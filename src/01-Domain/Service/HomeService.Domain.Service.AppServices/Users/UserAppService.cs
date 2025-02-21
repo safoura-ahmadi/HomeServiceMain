@@ -5,11 +5,12 @@ using HomeService.Domain.Core.Entities;
 using HomeService.Domain.Core.Entities.Users;
 using HomeService.Domain.Core.Enums.Users;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 using System.Security.Claims;
 
 namespace HomeService.Domain.Service.AppServices.Users;
 
-public class UserAppService(IUserService userService, ICustomerAppService customerAppService, IExpertAppService expertAppService, UserManager<User> userManager, SignInManager<User> signInManager, IPasswordHasher<User> passwordHasher) : IUserAppService
+public class UserAppService(IUserService userService, ICustomerAppService customerAppService, IExpertAppService expertAppService, UserManager<User> userManager, SignInManager<User> signInManager, IPasswordHasher<User> passwordHasher, ILogger<UserAppService> logger) : IUserAppService
 {
     private readonly IUserService _userService = userService;
     private readonly ICustomerAppService _customerAppService = customerAppService;
@@ -17,6 +18,7 @@ public class UserAppService(IUserService userService, ICustomerAppService custom
     private readonly UserManager<User> _userManager = userManager;
     private readonly SignInManager<User> _signInManager = signInManager;
     private readonly IPasswordHasher<User> _passwordHasher = passwordHasher;
+    private readonly ILogger<UserAppService> _logger = logger;
 
     public async Task<Result> ChargeBalance(int id, decimal money, CancellationToken cancellationToken)
     {
@@ -30,7 +32,7 @@ public class UserAppService(IUserService userService, ICustomerAppService custom
     public async Task<Result> ConfirmById(int id, CancellationToken cancellationToken)
     {
         if (id <= 0)
-            return Result.Fail("کابری با این مشخصات وجود ندارد");
+            return Result.Fail("کاربری با این مشخصات وجود ندارد");
         return await _userService.ConfirmById(id, cancellationToken);
     }
 
@@ -45,6 +47,7 @@ public class UserAppService(IUserService userService, ICustomerAppService custom
     {
         if (id <= 0)
             return UserStatusEnum.Pending;
+        _logger.LogInformation("have request to confirm user by {id}", id.ToString());
         return await _userService.IsConfirmedByAdmin(id, cancellationToken);
     }
 
@@ -52,6 +55,7 @@ public class UserAppService(IUserService userService, ICustomerAppService custom
     {
         if (id <= 0)
             return Result.Fail("کاربری با این مشخصات یافت نشد");
+        _logger.LogInformation("have request to unconfirm user by {id}", id.ToString());
         return await _userService.UnConfirmById(id, cancellationToken);
     }
 
@@ -75,13 +79,14 @@ public class UserAppService(IUserService userService, ICustomerAppService custom
     {
         string role = string.Empty;
 
-
+       
         var user = new User
         {
            UserName = model.Email,
            CityId = model.CityId,
            Status = UserStatusEnum.Pending,
-           LockoutEnabled = false
+           LockoutEnabled = false,
+           Email = model.Email
            
         };
 
@@ -107,8 +112,8 @@ public class UserAppService(IUserService userService, ICustomerAppService custom
 
         if (result.Succeeded)
         {
-            
 
+            _logger.LogInformation("new user Register by {role}",role);
             await _userManager.AddToRoleAsync(user, role);
 
 
@@ -122,7 +127,7 @@ public class UserAppService(IUserService userService, ICustomerAppService custom
                 await _userManager.AddClaimAsync(user, new Claim("ExpertId", user.Expert!.Id.ToString()));
             }
 
-            await _signInManager.PasswordSignInAsync(user.UserName, model.Password, true, false);
+            //await _signInManager.PasswordSignInAsync(user.UserName, model.Password, true, false);
 
         }
 
@@ -131,6 +136,10 @@ public class UserAppService(IUserService userService, ICustomerAppService custom
     public async Task<IdentityResult> Login(string username, string password, CancellationToken cancellationToken)
     {
         var result = await signInManager.PasswordSignInAsync(username, password, true, false);
+        if (result.Succeeded)
+            _logger.LogInformation("{username} have successful login", username.ToString());
+        else
+            _logger.LogWarning("{username} login proccess failed", username.ToString());
         return result.Succeeded ? IdentityResult.Success : IdentityResult.Failed();
 
     }

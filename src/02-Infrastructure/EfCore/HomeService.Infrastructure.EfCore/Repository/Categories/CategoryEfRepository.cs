@@ -4,13 +4,16 @@ using HomeService.Domain.Core.Entities;
 using HomeService.Domain.Core.Entities.Categories;
 using HomeService.Infrastructure.EfCore.Common;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 
 namespace HomeService.Infrastructure.EfCore.Repository.Categories;
 
-public class CategoryEfRepository(ApplicationDbContext dbContext) : ICategoryRepository
+public class CategoryEfRepository(ApplicationDbContext dbContext, ILogger<CategoryEfRepository> logger) : ICategoryRepository
 {
     private readonly ApplicationDbContext _dbContext = dbContext;
+    private readonly ILogger<CategoryEfRepository> _logger = logger;
+
     public async Task<List<GetCategoryForMainPageDto>> GetAllForMainPage(CancellationToken cancellationToken)
     {
         try
@@ -31,8 +34,9 @@ public class CategoryEfRepository(ApplicationDbContext dbContext) : ICategoryRep
                 }).ToListAsync(cancellationToken);
             return item;
         }
-        catch
+        catch (Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "CategoryEfRepository", ex.Message);
             return [];
         }
         ;
@@ -50,8 +54,9 @@ public class CategoryEfRepository(ApplicationDbContext dbContext) : ICategoryRep
             return Result.Ok("دسته بندی با موفقیت حذف شد");
 
         }
-        catch
+        catch (Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "CategoryEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
@@ -67,8 +72,9 @@ public class CategoryEfRepository(ApplicationDbContext dbContext) : ICategoryRep
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("مشخصات دسته بندی با موفقیت ویرایش شد");
         }
-        catch
+        catch (Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "CategoryEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
 
@@ -92,8 +98,9 @@ public class CategoryEfRepository(ApplicationDbContext dbContext) : ICategoryRep
                        }).ToListAsync(cancellationToken);
             return item;
         }
-        catch
+        catch (Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "CategoryEfRepository", ex.Message);
             return [];
         }
 
@@ -114,8 +121,9 @@ public class CategoryEfRepository(ApplicationDbContext dbContext) : ICategoryRep
             return Result.Ok(" دسته بندی جدید با موفقیت ایجاد شد");
 
         }
-        catch
+        catch (Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "CategoryEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
@@ -132,8 +140,9 @@ public class CategoryEfRepository(ApplicationDbContext dbContext) : ICategoryRep
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("کتگوری با موفقیت ویرایش شد");
         }
-        catch
+        catch (Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "CategoryEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
 
@@ -141,15 +150,23 @@ public class CategoryEfRepository(ApplicationDbContext dbContext) : ICategoryRep
 
     public async Task<UpdateCategoryDto?> GetById(int id, CancellationToken cancellationToken)
     {
-        var item = await _dbContext.Categories.AsNoTracking()
-            .Where(c => c.Id == id && c.IsActive)
-            .Select(c => new UpdateCategoryDto
-            {
-                Id = c.Id,
-                ImagePath = c.ImagePath,
-                Title = c.Title
-            }).FirstOrDefaultAsync(cancellationToken);
-        return item;
+        try
+        {
+            var item = await _dbContext.Categories.AsNoTracking()
+                .Where(c => c.Id == id && c.IsActive)
+                .Select(c => new UpdateCategoryDto
+                {
+                    Id = c.Id,
+                    ImagePath = c.ImagePath,
+                    Title = c.Title
+                }).FirstOrDefaultAsync(cancellationToken);
+            return item;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "CategoryEfRepository", ex.Message);
+            return null;
+        }
     }
 }
 

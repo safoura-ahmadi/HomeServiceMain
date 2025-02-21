@@ -2,13 +2,16 @@
 using HomeService.Domain.Core.Entities.BaseEntities;
 using HomeService.Infrastructure.EfCore.Common;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 
 namespace HomeService.Infrastructure.EfCore.Repository.BaseEntities;
 
-public class CityEfRepository(ApplicationDbContext dbContext) : ICityRepository
+public class CityEfRepository(ApplicationDbContext dbContext, ILogger<CityEfRepository> logger) : ICityRepository
 {
     private readonly ApplicationDbContext _dbContext = dbContext;
+    private readonly ILogger<CityEfRepository> _logger = logger;
+
     public async Task<List<City>> GetAll(CancellationToken cancellationToken)
     {
         try
@@ -19,8 +22,9 @@ public class CityEfRepository(ApplicationDbContext dbContext) : ICityRepository
                 .ToListAsync(cancellationToken);
             return items;
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "CityEfRepository", ex.Message);
             return [];
         }
         

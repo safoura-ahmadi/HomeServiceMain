@@ -4,12 +4,14 @@ using HomeService.Domain.Core.Entities;
 using HomeService.Domain.Core.Entities.Users;
 using HomeService.Infrastructure.EfCore.Common;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace HomeService.Infrastructure.EfCore.Repository.Users;
 
-public class CustomerEfRepository(ApplicationDbContext dbContext) : ICustomerRepository
+public class CustomerEfRepository(ApplicationDbContext dbContext, ILogger<CustomerEfRepository> logger) : ICustomerRepository
 {
     private readonly ApplicationDbContext _dbContext = dbContext;
+    private readonly ILogger<CustomerEfRepository> _logger = logger;
 
     public async Task<int> GetTotalCount(CancellationToken cancellationToken)
     {
@@ -21,8 +23,9 @@ public class CustomerEfRepository(ApplicationDbContext dbContext) : ICustomerRep
                 .CountAsync(cancellationToken);
             return item;
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "CustomerEfRepository", ex.Message);
             return 0;
         }
     }
@@ -43,8 +46,9 @@ public class CustomerEfRepository(ApplicationDbContext dbContext) : ICustomerRep
             return Result.Ok("مشتری جدید با موفقیت ایجاد شد");
 
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "CustomerEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }

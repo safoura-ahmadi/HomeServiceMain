@@ -3,12 +3,15 @@ using HomeService.Domain.Core.Contracts.Service.Users;
 using HomeService.Domain.Core.Entities.Users;
 using HomeService.Infrastructure.EfCore.Common;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace HomeService.Infrastructure.EfCore.Repository.Users;
 
-public class ExpertSubServiceEfRepository(ApplicationDbContext dbContext) : IExpertSubServiceRepository
+public class ExpertSubServiceEfRepository(ApplicationDbContext dbContext, ILogger<ExpertEfRepository> logger) : IExpertSubServiceRepository
 {
     private readonly ApplicationDbContext _dbContext = dbContext;
+    private readonly ILogger<ExpertEfRepository> _logger = logger;
+
     public async Task<Dictionary<int, string>> GetSubServicesForExpert(int expertId, CancellationToken cancellationToken)
     {
         try
@@ -21,8 +24,9 @@ public class ExpertSubServiceEfRepository(ApplicationDbContext dbContext) : IExp
 
             return subServices;
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "ExpertSubServiceEfRepository", ex.Message);
             return [];
         }
         
@@ -40,8 +44,9 @@ public class ExpertSubServiceEfRepository(ApplicationDbContext dbContext) : IExp
             await _dbContext.SaveChangesAsync(cancellationToken);
             return true;
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "ExpertSubServiceEfRepository", ex.Message);
             return false;
         }
     }

@@ -5,13 +5,14 @@ using HomeService.Domain.Core.Entities.Orders;
 using HomeService.Domain.Core.Enums.Orders;
 using HomeService.Infrastructure.EfCore.Common;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace HomeService.Infrastructure.EfCore.Repository.Orders;
 
-public class SuggestionEfRepository(ApplicationDbContext dbContext) : ISuggestionRepository
+public class SuggestionEfRepository(ApplicationDbContext dbContext, ILogger<SuggestionEfRepository> logger) : ISuggestionRepository
 {
     private readonly ApplicationDbContext _dbContext = dbContext;
-
+    private readonly ILogger<SuggestionEfRepository> _logger = logger;
 
     public async Task<Result> Create(SuggestionDto suggestion, CancellationToken cancellationToken)
     {
@@ -32,8 +33,9 @@ public class SuggestionEfRepository(ApplicationDbContext dbContext) : ISuggestio
             return Result.Ok("پیشنهاد با موفقیت ایجاد شد");
 
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SuggestionEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
@@ -56,8 +58,9 @@ public class SuggestionEfRepository(ApplicationDbContext dbContext) : ISuggestio
                 }).ToListAsync(cancellationToken);
             return item;
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SuggestionEfRepository", ex.Message);
             return [];
         }
     }
@@ -71,8 +74,9 @@ public class SuggestionEfRepository(ApplicationDbContext dbContext) : ISuggestio
             return Result.Ok("وضعیت پیشنهاد در حالت تایید شده قرار گرفت");
         }
 
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SuggestionEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
@@ -87,8 +91,9 @@ public class SuggestionEfRepository(ApplicationDbContext dbContext) : ISuggestio
             else
                 return Result.Fail("پیشنهاد فعالی برای این سفارش وجود ندارد");
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SuggestionEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
@@ -103,8 +108,9 @@ public class SuggestionEfRepository(ApplicationDbContext dbContext) : ISuggestio
             else
                 return Result.Fail("پیشنهاد تایید شده ای برای این سفارش وجود ندارد");
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SuggestionEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
@@ -131,8 +137,9 @@ public class SuggestionEfRepository(ApplicationDbContext dbContext) : ISuggestio
                 }).ToListAsync(cancellationToken);
             return item;
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SuggestionEfRepository", ex.Message);
             return [];
         }
     }
@@ -144,8 +151,9 @@ public class SuggestionEfRepository(ApplicationDbContext dbContext) : ISuggestio
                 .CountAsync(cancellationToken);
             return item;
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SuggestionEfRepository", ex.Message);
             return 0;
         }
     }
@@ -160,8 +168,9 @@ public class SuggestionEfRepository(ApplicationDbContext dbContext) : ISuggestio
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("سفارش با موفقیت حذف شد");
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SuggestionEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
@@ -188,8 +197,9 @@ public class SuggestionEfRepository(ApplicationDbContext dbContext) : ISuggestio
             return items;
 
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SuggestionEfRepository", ex.Message);
             return [];
         }
     }

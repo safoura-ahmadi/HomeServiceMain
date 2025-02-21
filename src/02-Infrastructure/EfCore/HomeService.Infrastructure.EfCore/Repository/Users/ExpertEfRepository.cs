@@ -4,12 +4,15 @@ using HomeService.Domain.Core.Entities;
 using HomeService.Domain.Core.Entities.Users;
 using HomeService.Infrastructure.EfCore.Common;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace HomeService.Infrastructure.EfCore.Repository.Users;
 
-public class ExpertEfRepository(ApplicationDbContext dbContext) : IExpertRepository
+public class ExpertEfRepository(ApplicationDbContext dbContext, ILogger<ExpertEfRepository> logger) : IExpertRepository
 {
     private readonly ApplicationDbContext _dbContext = dbContext;
+    private readonly ILogger<ExpertEfRepository> _logger = logger;
+
     public async Task<Result> Create(int userId, string lName, CancellationToken cancellationToken)
     {
         try
@@ -25,8 +28,9 @@ public class ExpertEfRepository(ApplicationDbContext dbContext) : IExpertReposit
             return Result.Ok("کارشناس جدید با موفقیت ایجاد شد");
 
         }
-        catch
+        catch(Exception ex) 
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "ExpertEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
@@ -40,8 +44,9 @@ public class ExpertEfRepository(ApplicationDbContext dbContext) : IExpertReposit
                 .CountAsync(cancellationToken);
             return item;
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "ExpertEfRepository", ex.Message);
             return 0;
         }
     }

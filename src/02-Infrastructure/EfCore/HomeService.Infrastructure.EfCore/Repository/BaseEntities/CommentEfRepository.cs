@@ -5,13 +5,16 @@ using HomeService.Domain.Core.Entities.BaseEntities;
 using HomeService.Domain.Core.Enums.BaseEntities;
 using HomeService.Infrastructure.EfCore.Common;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Threading;
 
 namespace HomeService.Infrastructure.EfCore.Repository.BaseEntities;
 
-public class CommentEfRepository(ApplicationDbContext dbContext) : ICommentRepository
+public class CommentEfRepository(ApplicationDbContext dbContext, ILogger<CommentEfRepository> logger) : ICommentRepository
 {
     private readonly ApplicationDbContext _dbContext = dbContext;
+    private readonly ILogger<CommentEfRepository> _logger = logger;
+
     public async Task<Result> Create(CreateCommentDto item, CancellationToken cancellationToken)
     {
 
@@ -32,8 +35,9 @@ public class CommentEfRepository(ApplicationDbContext dbContext) : ICommentRepos
             return Result.Ok("کامنت با موفقیت ثبت شد");
                
         }
-        catch
+        catch(Exception ex) 
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "CommentEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
 
         }
@@ -59,8 +63,9 @@ public class CommentEfRepository(ApplicationDbContext dbContext) : ICommentRepos
                ).ToListAsync(cancellationToken);
             return item;
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "CommentEfRepository", ex.Message);
             return [];
         }
     }
@@ -73,8 +78,9 @@ public class CommentEfRepository(ApplicationDbContext dbContext) : ICommentRepos
                 .Select(c => (float?)c.Score).AverageAsync(cancellationToken);
             return averageScore ?? 0f;
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "CommentEfRepository", ex.Message);
             return 0;
         }
 
@@ -106,8 +112,9 @@ public class CommentEfRepository(ApplicationDbContext dbContext) : ICommentRepos
                 ).ToListAsync(cancellationToken);
             return item;
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "CommentEfRepository", ex.Message);
             return [];
         }
     }
@@ -119,8 +126,9 @@ public class CommentEfRepository(ApplicationDbContext dbContext) : ICommentRepos
                 .CountAsync(cancellationToken);
             return item;
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "CommentEfRepository", ex.Message);
             return 0;
         }
     }
@@ -137,8 +145,9 @@ public class CommentEfRepository(ApplicationDbContext dbContext) : ICommentRepos
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("کامنت با موفقیت  غیرفعال شد");
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "CommentEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
 
@@ -164,8 +173,9 @@ public class CommentEfRepository(ApplicationDbContext dbContext) : ICommentRepos
             return items;
 
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "CommentEfRepository", ex.Message);
             return [];
         }
     }
@@ -181,8 +191,9 @@ public class CommentEfRepository(ApplicationDbContext dbContext) : ICommentRepos
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("کامنت با موفقیت  غیرفعال شد");
         }
-        catch
+        catch(Exception ex)
         {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "CommentEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
