@@ -11,6 +11,8 @@ namespace HomeService.Endpoint.Razor.Areas.Admin.Pages
         public string UserName { get; set; } = null!;
         [BindProperty]
         public string Password { get; set; } = null!;
+        [BindProperty]
+        public int MyProperty { get; set; }
         public void OnGet()
         {
 

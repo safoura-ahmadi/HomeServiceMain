@@ -1135,7 +1135,7 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                             EmailConfirmed = false,
                             Fname = "Tahoura",
                             Lname = "ahmadi",
-                            LockoutEnabled = true,
+                            LockoutEnabled = false,
                             NormalizedEmail = "EXPERT@GMAIL.COM",
                             NormalizedUserName = "EXPERT@GMAIL.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAEJkglU8KXnLbrWvBHwkr+KZQSIYjReSWOd2FzOAPi3sm+ZxaBpA9F+fqwsJ3soaSA==",
@@ -1264,6 +1264,64 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("AspNetUserClaims", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+                            ClaimValue = "Admin",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress",
+                            ClaimValue = "Admin@gmail.com",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+                            ClaimValue = "Expert",
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress",
+                            ClaimValue = "Expert@gmail.com",
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ClaimType = "ExpertId",
+                            ClaimValue = "1",
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+                            ClaimValue = "Customer",
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress",
+                            ClaimValue = "Customer@gmail.com",
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ClaimType = "CustomerId",
+                            ClaimValue = "1",
+                            UserId = 3
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>

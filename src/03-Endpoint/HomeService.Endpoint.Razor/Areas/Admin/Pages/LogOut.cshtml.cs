@@ -9,13 +9,13 @@ namespace HomeService.Endpoint.Razor.Areas.Admin.Pages
     {
         private readonly SignInManager<User> _signInManager = signInManager;
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnGet()
         {
             await _signInManager.SignOutAsync();
             
            
         
-                return RedirectToPage("Login");
+                return RedirectToPage("./Login");
             
         }
     }

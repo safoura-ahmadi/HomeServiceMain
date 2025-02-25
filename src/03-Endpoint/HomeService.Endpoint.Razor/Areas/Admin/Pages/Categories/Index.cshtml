@@ -9,6 +9,7 @@
         @TempData["SuccessMessage"]
     </div>
     <hr />
+    TempData["SuccessMessage"] = null;
 }
 @if (TempData["ErrorMessage"] != null)
 {
@@ -16,6 +17,7 @@
         @TempData["ErrorMessage"]
     </div>
     <hr />
+    TempData["ErrorMessage"] = null;
 }
 
 <div class="col-lg-12">
@@ -37,13 +39,13 @@
                     افزودن
                     <div class="paper-ripple"><div class="paper-ripple__background" style="opacity: 0;"></div><div class="paper-ripple__waves"></div></div>
                 </button>
-                <a class="btn btn-danger" href="#">
+                @*  <a class="btn btn-danger" href="#">
                     <i class="icon-trash"></i>
                     حذف جمعی
-                </a>
+                </a> *@
 
             </div>
-            <div id="form-modal" class="modal fade" role="dialog" tabindex="-1">
+            <div id="form-modal" class="modal fade" role="dialog" aria-hidden="false" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -58,22 +60,23 @@
                                     </p>
                                 </div>
                                 <div class="col-lg-12">
-                                    <form method="post" asp-page="/Categories/Index" enctype="multipart/form-data" class="form-horizontal" role="form">
+                                    <form method="post" asp-page="/Categories/Index" enctype="multipart/form-data" class="form-horizontal" role="form" id="category-form">
                                         @Html.AntiForgeryToken()
                                         <div class="col-md-8 col-lg-6 m-auto m-b-10">
                                             <div class="input-group round">
                                                 <span class="input-group-addon">
                                                     <i class="icon-home"></i>
                                                 </span>
-                                                <input type="text" class="form-control ltr text-right" asp-for="Title" placeholder="نام هوم سرویس " required>
+                                                <input type="text" class="form-control ltr text-right" name="Title" placeholder="نام کتگوری" id="title-input">
                                             </div><!-- /.input-group -->
-
+                                            <div id="title-error" class="error-message text-danger mt-1"></div>
                                         </div><!-- /.col-md-8 -->
 
                                         <div class="col-md-8 col-lg-6 m-auto m-b-10">
                                             <div class="input-group round">
-                                                <input asp-for="ImageFile" type="file" class="form-control ltr text-right" required>
+                                                <input name="ImageFile" type="file" class="form-control ltr text-right" id="image-input">
                                             </div>
+                                            <div id="image-error" class="error-message text-danger mt-1  "></div>
                                         </div><!-- /.col-md-8 -->
                                         <div class="col-md-8 col-lg-6 m-auto">
                                             <button type="submit" class="btn btn-success btn-block mt-4 mb-2">
@@ -90,29 +93,72 @@
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
                 <script>
-
                     document.addEventListener("DOMContentLoaded", function () {
-                        const form = document.querySelector("#form-modal form");
+                        const form = document.getElementById("category-form");
+                        const titleInput = document.getElementById("title-input");
+                        const imageInput = document.getElementById("image-input");
+                        const titleError = document.getElementById("title-error");
+                        const imageError = document.getElementById("image-error");
 
                         form.addEventListener("submit", function (event) {
-                            if (!form.checkValidity()) {
-                                event.preventDefault(); // جلوگیری از ارسال فرم
-                                event.stopPropagation(); // جلوگیری از رویدادهای اضافی
+                            let isValid = true;
 
+                            // Reset errors and styles
+                            titleError.textContent = "";
+                            imageError.textContent = "";
+                            titleInput.classList.remove("is-invalid", "is-valid");
+                            imageInput.classList.remove("is-invalid", "is-valid");
+
+                            // Validate Title
+                            if (titleInput.value.trim() === "") {
+                                titleError.textContent = "لطفاً نام هوم سرویس را وارد کنید.";
+                                titleInput.classList.add("is-invalid");
+                                isValid = false;
+                            } else if (titleInput.value.trim().length < 2) {
+                                titleError.textContent = "نام باید حداقل 2 کاراکتر باشد.";
+                                titleInput.classList.add("is-invalid");
+                                isValid = false;
+                            } else {
+                                titleInput.classList.add("is-valid");
                             }
 
-                            form.classList.add("was-validated"); // نمایش استایل‌های بوت‌استرپ برای ورودی نامعتبر
-                        }, false);
+                            // Validate Image
+                            if (imageInput.files.length === 0) {
+                                imageError.textContent = "لطفاً یک تصویر انتخاب کنید.";
+                                imageInput.classList.add("is-invalid");
+                                isValid = false;
+                            } else {
+                                const allowedExtensions = ["jpg", "jpeg", "png"];
+                                const fileExtension = imageInput.files[0].name.split('.').pop().toLowerCase();
+                                if (!allowedExtensions.includes(fileExtension)) {
+                                    imageError.textContent = "فرمت فایل نامعتبر است. فقط jpg، jpeg و png مجاز هستند.";
+                                    imageInput.classList.add("is-invalid");
+                                    isValid = false;
+                                } else {
+                                    imageInput.classList.add("is-valid");
+                                }
+                            }
+
+                            // Prevent form submission if validation fails
+                            if (!isValid) {
+                                event.preventDefault();
+                                event.stopPropagation();
+                            }
+                        });
                     });
                 </script>
             </div>
+
+          
+        
+
             <div class="table-responsive">
-                <div id="data-table_filter" class="dataTables_filter"><label>جستجو: <input type="search" class="" placeholder="" aria-controls="data-table"></label></div>
-                <br />
+                @*   <div id="data-table_filter" class="dataTables_filter"><label>جستجو: <input type="search" class="" placeholder="" aria-controls="data-table"></label></div>
+                <br /> *@
                 <table class="table table-bordered table-hover table-striped" id="data-table">
                     <thead>
                         <tr>
-                            <th>شناسه</th>
+                            <th>#</th>
                             <th>تصویر  </th>
                             <th>نام </th>
                             <th>تعداد سابکتگوری</th>
@@ -120,20 +166,22 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @{int j = 1;}
                         @foreach (var item in Model.Categories)
                         {
                             <tr>
-                                <td>@item.Id</td>
+                                <td>@j</td>
                                 <td><div class="text-center"><img src="~/UserTemplate/images/icon/@item.ImagePath" width="50" height="50" class="" alt=""></div></td>
                                 <td>@item.Title</td>
                                 <td>@item.SubServiceCount</td>
 
 
                                 <td style="white-space: nowrap;">
-                                    <a asp-area="Admin" asp-page="/Categories/Delete" asp-route-id="@item.Id" class="btn btn-danger" style="display: inline-block;">حذف</a>
+                                    <a onclick="return confirm('آیا از حذف این کتگوری اطمینان دارید؟')" asp-area="Admin" asp-page="/Categories/Delete" asp-route-id="@item.Id" class="btn btn-danger" style="display: inline-block;">حذف</a>
                                     <a asp-area="Admin" asp-page="/Categories/Update" asp-route-id="@item.Id" class="btn btn-warning" style="display: inline-block;">ویرایش</a>
                                 </td>
                             </tr>
+                            j++;
 
                         }
 

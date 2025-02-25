@@ -37,7 +37,7 @@ public class OrderEfRepository(ApplicationDbContext dbContext, ILogger<OrderEfRe
             return item.Id;
 
         }
-        catch(Exception ex) 
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
             return 0;
@@ -64,7 +64,7 @@ public class OrderEfRepository(ApplicationDbContext dbContext, ILogger<OrderEfRe
                 }).ToListAsync(cancellationToken);
             return item;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
             return [];
@@ -83,7 +83,7 @@ public class OrderEfRepository(ApplicationDbContext dbContext, ILogger<OrderEfRe
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("وضعیت سفارش با موفقیت تغییر یافت");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
@@ -100,7 +100,7 @@ public class OrderEfRepository(ApplicationDbContext dbContext, ILogger<OrderEfRe
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("وضعیت سفارش با موفقیت تغییر یافت");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
@@ -117,7 +117,7 @@ public class OrderEfRepository(ApplicationDbContext dbContext, ILogger<OrderEfRe
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("وضعیت سفارش با موفقیت تغییر یافت");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
@@ -134,7 +134,7 @@ public class OrderEfRepository(ApplicationDbContext dbContext, ILogger<OrderEfRe
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("وضعیت سفارش با موفقیت تغییر یافت");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
@@ -150,7 +150,7 @@ public class OrderEfRepository(ApplicationDbContext dbContext, ILogger<OrderEfRe
                 return OrderStatusEnum.UnDefined;
             return item.Status;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
             return OrderStatusEnum.UnDefined;
@@ -180,7 +180,7 @@ public class OrderEfRepository(ApplicationDbContext dbContext, ILogger<OrderEfRe
                 }).ToListAsync(cancellationToken);
             return item;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
             return [];
@@ -195,7 +195,7 @@ public class OrderEfRepository(ApplicationDbContext dbContext, ILogger<OrderEfRe
                 .CountAsync(cancellationToken);
             return item;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
             return 0;
@@ -212,7 +212,7 @@ public class OrderEfRepository(ApplicationDbContext dbContext, ILogger<OrderEfRe
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("سفارش با موفقیت حذف شد");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
@@ -231,7 +231,7 @@ public class OrderEfRepository(ApplicationDbContext dbContext, ILogger<OrderEfRe
             return Result.Ok("قیمت نهایی سفارش با موفقیت تغییر کرد");
 
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
@@ -250,7 +250,7 @@ public class OrderEfRepository(ApplicationDbContext dbContext, ILogger<OrderEfRe
             return Result.Ok("تاریخ نهایی سفارش با موفقیت تغییر کرد");
 
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
@@ -265,19 +265,14 @@ public class OrderEfRepository(ApplicationDbContext dbContext, ILogger<OrderEfRe
                 .Include(o => o.Customer)
                 .Include(o => o.Expert)
                 .Include(o => o.SubService)
-                .Where(o => o.IsActive && (!string.IsNullOrEmpty(o.Customer!.Lname) && o.Customer.Lname.Contains(text)))
+                .Where(o => o.IsActive && (!string.IsNullOrEmpty(o.Customer!.Lname) && o.Customer.Lname.Contains(text) || o.SubService!.Title.Contains(text)))
                 .Select(o => new GetOrderDto
                 {
                     Id = o.Id,
                     CreateAt = o.CreateAt,
-                    CustomerId = o.CustomerId,
-                    CustomerLname = o.Customer!.Lname,
-                    Description = o.Description,
-                    Images = o.Images,
-                    Price = o.Price,
-                    Status = o.Status,
+                    CustomerLname = o.Customer!.Lname ?? "نامشخص",
                     SubServiceName = o.SubService!.Title,
-                    TimeToDone = o.TimeToDone,
+
 
 
                 })
@@ -285,7 +280,7 @@ public class OrderEfRepository(ApplicationDbContext dbContext, ILogger<OrderEfRe
 
             return item;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
             return [];
@@ -301,6 +296,7 @@ public class OrderEfRepository(ApplicationDbContext dbContext, ILogger<OrderEfRe
                  .Include(o => o.SubService)
                 .OrderByDescending(o => o.CreateAt)
                 .Take(10)
+                .Where(o => o.IsActive)
                 .Select(o => new GetLastOrderDto
                 {
                     Id = o.Id,
@@ -313,10 +309,12 @@ public class OrderEfRepository(ApplicationDbContext dbContext, ILogger<OrderEfRe
             return items;
 
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
             return [];
         }
     }
+
+
 }

@@ -1,7 +1,6 @@
 ﻿@page
 @model HomeService.Endpoint.Razor.Areas.Admin.Pages.SubCategories.IndexModel
-@{
-}
+
 @{
     ViewData["Title"] = "پیشخوان > مدیریت سابکتگوری ها";
 }
@@ -11,6 +10,7 @@
         @TempData["SuccessMessage"]
     </div>
     <hr />
+    TempData["SuccessMessage"] = null;
 }
 @if (TempData["ErrorMessage"] != null)
 {
@@ -18,6 +18,7 @@
         @TempData["ErrorMessage"]
     </div>
     <hr />
+    TempData["ErrorMessage"] = null;
 }
 
 <div class="col-lg-12">
@@ -39,19 +40,19 @@
                     افزودن
                     <div class="paper-ripple"><div class="paper-ripple__background" style="opacity: 0;"></div><div class="paper-ripple__waves"></div></div>
                 </button>
-                <a class="btn btn-danger" href="#">
+                @*  <a class="btn btn-danger" href="#">
                     <i class="icon-trash"></i>
                     حذف جمعی
-                </a>
+                </a> *@
 
             </div>
-            <div id="form-modal" class="modal fade" role="dialog" tabindex="-1">
+            <div id="form-modal" class="modal fade" role="dialog" aria-hidden="false" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-bs-dismiss="modal">×</button>
                             <h4 class="modal-title">ثبت سابکتگوری</h4>
-                        </div><!-- /.modal-header -->
+                        </div>
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-lg-12">
@@ -60,29 +61,33 @@
                                     </p>
                                 </div>
                                 <div class="col-lg-12">
-                                    <form method="post" asp-page="/SubCategories/Index" enctype="multipart/form-data" class="form-horizontal" role="form">
+                                    <form method="post" asp-page="/SubCategories/Index" enctype="multipart/form-data" class="form-horizontal" role="form" id="subcategory-form">
                                         @Html.AntiForgeryToken()
                                         <div class="col-md-8 col-lg-6 m-auto m-b-10">
                                             <div class="input-group round">
                                                 <span class="input-group-addon">
                                                     <i class="icon-home"></i>
                                                 </span>
-                                                <input type="text" class="form-control ltr text-right" asp-for="CreateModel. Title" placeholder="نام سابکتگوری  " required>
-                                            </div><!-- /.input-group -->
+                                                <input type="text" class="form-control ltr text-right" asp-for="CreateModel.Title" placeholder="نام سابکتگوری" id="title-input">
+                                                <span class="input-group-addon validation-icon"></span>
+                                            </div>
+                                            <div id="title-error" class="error-message text-danger mt-2"></div>
+                                        </div>
 
-                                        </div><!-- /.col-md-8 -->
-                                        <div class="form-group m-b-10 m-auto mt-2 ">
+                                        <div class="form-group m-b-10 m-auto mt-2">
                                             <div class="input-group">
                                                 <span class="input-group-addon">
                                                     <i class="icon-options"></i>
                                                 </span>
-                                                <select asp-for="CreateModel.CategoryId" class="form-select" required>
+                                                <select asp-for="CreateModel.CategoryId" class="form-select" id="category-input">
                                                     @foreach (var item in @Model.Categories)
                                                     {
                                                         <option value="@item.Id">@item.Title</option>
                                                     }
                                                 </select>
-                                            </div><!-- /.input-group -->
+                                                <span class="input-group-addon validation-icon"></span>
+                                            </div>
+                                            <div id="category-error" class="error-message text-danger mt-2"></div>
                                         </div>
 
                                         <div class="col-md-8 col-lg-6 m-auto">
@@ -92,46 +97,89 @@
                                                 <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
                                             </button>
                                             <button type="button" class="btn btn-danger btn-block float-end mb-3" data-bs-dismiss="modal">بازگشت<div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div></button>
-                                        </div><!-- /.col-md-8 -->
+                                        </div>
                                     </form>
-                                </div><!-- /col-lg-12 -->
-                            </div><!-- /.row -->
-                        </div><!-- /.modal-body -->
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
-                <script>
-                                       document.addEventListener("DOMContentLoaded", function () {
-                        const form = document.querySelector("#form-modal form");
-
-                        form.addEventListener("submit", function (event) {
-                            if (!form.checkValidity()) {
-                                event.preventDefault(); // جلوگیری از ارسال فرم
-                                event.stopPropagation(); // جلوگیری از رویدادهای اضافی
-
-                            }
-
-                            form.classList.add("was-validated"); // نمایش استایل‌های بوت‌استرپ برای ورودی نامعتبر
-                        }, false);
-                    });
-                </script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const form = document.getElementById("subcategory-form");
+                    const titleInput = document.getElementById("title-input");
+                    const categoryInput = document.getElementById("category-input");
+                    const titleError = document.getElementById("title-error");
+                    const categoryError = document.getElementById("category-error");
+
+                    form.addEventListener("submit", function (event) {
+                        let isValid = true;
+
+                        // Reset errors and styles
+                        titleError.textContent = "";
+                        categoryError.textContent = "";
+                        titleInput.classList.remove("is-invalid", "is-valid");
+                        categoryInput.classList.remove("is-invalid", "is-valid");
+
+                        // Validate Title
+                        if (titleInput.value.trim() === "") {
+                            titleError.textContent = "عنوان را وارد کنید.";
+                            titleInput.classList.add("is-invalid");
+                            isValid = false;
+                        } else if (titleInput.value.trim().length > 100) {
+                            titleError.textContent = "حداکثر کاراکتر مجاز برای عنوان، ۱۰۰ کاراکتر می‌باشد.";
+                            titleInput.classList.add("is-invalid");
+                            isValid = false;
+                        } 
+                         else if (titleInput.value.trim().length < 2) {
+                            titleError.textContent = "حداقل کاراکتر مجاز برای عنوان، 2 کاراکتر می‌باشد.";
+                            titleInput.classList.add("is-invalid");
+                            isValid = false;
+                        }else {
+                            titleInput.classList.add("is-valid");
+                        }
+
+                        // Validate Category
+                        if (categoryInput.value === "") {
+                            categoryError.textContent = "لطفاً یک دسته‌بندی انتخاب کنید.";
+                            categoryInput.classList.add("is-invalid");
+                            isValid = false;
+                        } else {
+                            categoryInput.classList.add("is-valid");
+                        }
+
+                        // Prevent form submission if validation fails
+                        if (!isValid) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                    });
+                });
+            </script>
+
             <div class="table-responsive">
-                <div id="data-table_filter" class="dataTables_filter"><label>جستجو: <input type="search" class="" placeholder="" aria-controls="data-table"></label></div>
-                <br />
+                @*  <div id="data-table_filter" class="dataTables_filter"><label>جستجو: <input type="search" class="" placeholder="" aria-controls="data-table"></label></div>
+                <br /> *@
                 <table class="table table-bordered table-hover table-striped" id="data-table">
                     <thead>
                         <tr>
-                            <th>شناسه</th>
+                            <th>#</th>
                             <th>عنوان</th>
                             <th>نام کتگوری</th>
                             <td>عملیات</td>
                         </tr>
                     </thead>
                     <tbody>
+                        @{
+                            int j = 1;
+                        }
+
                         @foreach (var item in Model.SubCategories)
                         {
                             <tr>
-                                <td>@item.Id</td>
+                                <td>@j</td>
 
                                 <td>@item.Title</td>
 
@@ -142,7 +190,7 @@
                                     <a asp-area="Admin" asp-page="/SubCategories/Update" asp-route-id="@item.Id" class="btn btn-warning" style="display: inline-block;">ویرایش</a>
                                 </td>
                             </tr>
-
+                            j++;
                         }
 
                     </tbody>

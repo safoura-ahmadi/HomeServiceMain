@@ -115,6 +115,9 @@ public class UserAppService(IUserService userService, ICustomerAppService custom
 
             _logger.LogInformation("new user Register by {role}",role);
             await _userManager.AddToRoleAsync(user, role);
+            await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, role));
+            await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Email, user.Email));
+
 
 
             if (model.Role == RoleEnum.Customer)
@@ -127,7 +130,7 @@ public class UserAppService(IUserService userService, ICustomerAppService custom
                 await _userManager.AddClaimAsync(user, new Claim("ExpertId", user.Expert!.Id.ToString()));
             }
 
-            //await _signInManager.PasswordSignInAsync(user.UserName, model.Password, true, false);
+            
 
         }
 

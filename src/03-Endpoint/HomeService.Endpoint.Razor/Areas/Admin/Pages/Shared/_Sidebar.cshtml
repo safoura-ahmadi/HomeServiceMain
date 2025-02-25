@@ -1,101 +1,88 @@
 ﻿<!-- BEGIN SIDEBAR -->
+@{
+    string pishkhan = "";
+    string users = "";
+    string orders = "";
+    string comments = "";
+    string categories = "";
+    string subcategories = "";
+    string subservices = "";
+
+
+
+    switch (ViewData["Title"])
+    {
+        case "پیشخوان":
+            pishkhan = "current";
+            break;
+        case "پیشخوان > مدیریت کتگوری ها":
+            categories = "current";
+            break;
+        case "پیشخوان > مدیریت کامنت ها":
+            comments = "current";
+            break;
+        case "پیشخوان > مدیریت سفارش ها":
+            orders = "current";
+            break;
+        case "پیشخوان > مدیریت سابکتگوری ها":
+            subcategories = "current";
+            break;
+        case "پیشخوان > مدیریت هوم سرویس ها":
+            subservices = "current";
+            break;
+        case "پیشخوان > مدیریت کاربران":
+            users = "current";
+            break;
+        default:
+            pishkhan = "current";
+            break;
+
+    }
+}
 <div id="sidebar">
     <div class="sidebar-top">
-        <div class="search-box">
-            <form class="search-form" action="#" method="GET">
-                <div class="input-group">
-                    <input type="text" class="form-control placeholder-light" placeholder="جستجو..." name="key">
-                    <span class="input-group-btn">
-                        <button type="submit" class="btn btn-round submit">
-                            <i class="icon-magnifier"></i>
-                        </button>
-                    </span>
-                </div>
-            </form>
-        </div><!-- /.search-box -->
-        <div class="user-box">
-            <a href="#">
-                <img src="~/AdminTemplate/assets/images/user/128.png" alt="عکس پروفایل" class="img-circle img-responsive">
-            </a>
-            <div class="user-details">
-                <h4>حمید آفرینش فر</h4>
-                <p class="role">مدیر فنی</p>
-                <div class="dropdown user-login">
-                    <button class="btn btn-xs btn-status dropdown-toggle btn-round" type="button" data-bs-toggle="dropdown" data-hover="dropdown">
-                        <i class="fas fa-circle text-success"></i>
-                        <span>دردسترس</span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-status">
-                        <li>
-                            <a href="#" class="busy">
-                                <i class="fas fa-circle text-success"></i>
-                                <span>دردسترس</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="busy">
-                                <i class="fas fa-circle text-danger"></i>
-                                <span>مشغول</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fas fa-circle text-gray"></i>
-                                <span>مخفی</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fas fa-circle text-warning"></i>
-                                <span>سایر</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div><!-- /dropdown -->
-            </div><!-- /.user-details -->
-        </div><!-- /.user-box -->
     </div><!-- /.sidebar-top -->
     <div class="side-menu-container">
         <ul class="metismenu" id="side-menu">
             <li class="open active conditional-bg">
-                <a asp-page="Index" class="current">
+                <a asp-area="Admin" asp-page="../Index" class=@pishkhan>
                     <i class="icon-home"></i>
                     <span>پنل کاربری</span>
                 </a>
             </li>
             <li>
-                <a asp-area="Admin" asp-page="/Orders/Index" asp-page-handler="Orders"  class="">
+                <a asp-area="Admin" asp-page="/Orders/Index" asp-page-handler="Orders" class=@orders>
                     <i class="icon-frame"></i>
                     <span> سفارش ها</span>
                 </a>
             </li>
             <li>
-                <a asp-area="Admin" asp-page="/Users/Index" asp-page-handler="Users" class="">
+                <a asp-area="Admin" asp-page="/Users/Index" asp-page-handler="Users" class=@users>
                     <i class="icon-eye"></i>
                     <span> مدیریت کاربران</span>
                 </a>
             </li>
             <li>
-                <a asp-area="Admin" asp-page="/Comments/Index" asp-page-handler="Comments" class="">
+                <a asp-area="Admin" asp-page="/Comments/Index" asp-page-handler="Comments" class=@comments>
                     <i class="icon-pie-chart"></i>
                     <span>مدیریت کامنت ها</span>
                 </a>
             </li>
             <li>
-                <a asp-area="Admin" asp-page="/Categories/Index" asp-page-handler="Categories" class="">
+                <a asp-area="Admin" asp-page="/Categories/Index" asp-page-handler="Categories" class=@categories>
                     <i class="fas fa-folder"></i> <!-- آیکون برای مدیریت کتگوری‌ها -->
                     <span>مدیریت کتگوری‌ها</span>
                 </a>
             </li>
             <li>
-                <a asp-area="Admin" asp-page="/SubCategories/Index" asp-page-handler="SubCategories" class="">
+                <a asp-area="Admin" asp-page="/SubCategories/Index" asp-page-handler="SubCategories" class=@subcategories>
                     <i class="fas fa-folder-open"></i> <!-- آیکون برای مدیریت سابکتگوری‌ها -->
                     <span>مدیریت سابکتگوری‌ها</span>
                 </a>
             </li>
             <li>
             <li>
-                <a asp-area="Admin" asp-page="/SubServices/Index" asp-page-handler="SubService" class="">
+                <a asp-area="Admin" asp-page="/SubServices/Index" asp-page-handler="SubService" class=@subservices>
                     <i class="icon-layers"></i>
                     <span>مدیریت هوم سرویس</span>
                 </a>

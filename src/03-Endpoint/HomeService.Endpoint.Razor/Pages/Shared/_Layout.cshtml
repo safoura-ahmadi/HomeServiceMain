@@ -1,52 +1,105 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - HomeService.Endpoint.Razor</title>
-    <script type="importmap"></script>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/HomeService.Endpoint.Razor.styles.css" asp-append-version="true" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Theme Region" />
+    <meta name="description" content="" />
+    <title>سرویسچه | خدمات رسانی آنلاین</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="@Url.Content("~/UserTemplate/css/bootstrap.min.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/UserTemplate/css/font-awesome.min.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/UserTemplate/css/main.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/UserTemplate/css/responsive.css")" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,500,700,300" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Signika+Negative:400,300,600,700" rel="stylesheet" />
+
+    <!-- Icons -->
+    <link rel="icon" href="@Url.Content("~/UserTemplate/images/ico/favicon.ico")" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="@Url.Content("~/UserTemplate/images/ico/apple-touch-icon-144-precomposed.png")" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="@Url.Content("~/UserTemplate/images/ico/apple-touch-icon-114-precomposed.png")" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="@Url.Content("~/UserTemplate/images/ico/apple-touch-icon-72-precomposed.png")" />
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="@Url.Content("~/UserTemplate/images/ico/apple-touch-icon-57-precomposed.png")" />
+
+    <style>
+        .collapse-table {
+            overflow: hidden;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .collapse.show {
+            max-height: 500px;
+        }
+
+        .btn-toggle {
+            transition: transform 0.3s ease-in-out;
+        }
+
+            .btn-toggle.collapsed {
+                transform: rotate(180deg);
+            }
+    </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+
+    <!-- Header -->
+    <header id="header" class="clearfix">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">HomeService.Endpoint.Razor</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#tr-mainmenu" aria-controls="tr-mainmenu" aria-expanded="false">
+                    <span class="navbar-toggler-icon"><i class="fa fa-align-justify"></i></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                <a class="navbar-brand" href="index.html">
+                    <img class="img-fluid" src="@Url.Content("~/UserTemplate/images/logo.png")" alt="Logo" />
+                </a>
+
+                <div class="collapse navbar-collapse" id="tr-mainmenu">
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">خانه</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="index.html">خانه اصلی</a></li>
+                            </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                        <li class="nav-item dropdown active">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">صفحات</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="about-us.html">درباره ما</a></li>
+                                <li><a href="contact-us.html">ارتباط با ما</a></li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 1403 - HomeService.Endpoint.Razor - <a asp-area="" asp-page="/Privacy">Privacy</a>
+    <!-- Main Content -->
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer" class="clearfix">
+        <div class="footer-bottom text-center">
+            <div class="container">
+                <p>
+                    &copy; 1399. تمامی حقوق محفوظ است ارایه از
+                    <a href="https://www.rtl-theme.com/user-profile/afaridteam/">AfaridTeam</a>
+                </p>
+            </div>
         </div>
     </footer>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-
+    <!-- JS -->
+    <script src="@Url.Content("~/UserTemplate/js/jquery.min.js")"></script>
+    <script src="@Url.Content("~/UserTemplate/js/bootstrap.bundle.min.js")"></script>
+    <script src="@Url.Content("~/UserTemplate/js/custom.js")"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

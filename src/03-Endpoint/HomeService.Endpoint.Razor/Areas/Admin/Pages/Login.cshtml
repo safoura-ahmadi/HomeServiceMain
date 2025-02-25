@@ -38,6 +38,16 @@
     <a href="#" class="btn btn-primary btn-icon btn-round btn-lg" id="toggle-dark-mode">
         <i class="icon-bulb"></i>
     </a>
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div id="errorMessage" class="alert alert-danger" role="alert">
+            @TempData["ErrorMessage"]
+        </div>
+
+        TempData["ErrorMessage"] = null;
+    }
+
     <div class="modal-page shadow">
         <div class="container-fluid">
             <div class="row">
@@ -48,9 +58,9 @@
                         <img src="~/AdminTemplate/assets/images/logo.png" class="light-logo center-block img-responsive" alt="logo">
                     </div><!-- /.logo-con -->
 
-                    <h2 class="text-center m-b-20">وارد شوید</h2>
+                    <h2 class="text-center m-b-20">ورود ادمین</h2>
                     <hr>
-                    <form id="form" asp-page="Login" class="m-t-30 m-b-30"  method="POST" role="form">
+                    <form id="form" asp-page="Login" class="m-t-30 m-b-30" method="POST" role="form">
                         <div class="form-group">
                             <label for="email" class="sr-only">رایانامه</label>
                             <div class="input-group">
@@ -66,7 +76,7 @@
                                 <span class="input-group-addon">
                                     <i class="icon-key"></i>
                                 </span>
-                                <input asp-for="Password" id="password" class="form-control ltr text-left" type="password"  minlength="5" required>
+                                <input asp-for="Password" id="password" class="form-control ltr text-left" type="password" minlength="5" required>
                                 <span class="btn-toggle-pass">
                                     <i class="icon-eye"></i>
                                 </span>
@@ -79,7 +89,7 @@
                             </button>
                         </p>
                     </form>
-                    <hr class="m-b-30">
+                    @*  <hr class="m-b-30">
                     <a href="forget.html" class="btn btn-default btn-block m-b-10">
                         <i class="icon-refresh font-lg"></i>
                         بازیابی رمز  عبور
@@ -87,7 +97,7 @@
                     <a href="register.html" class="btn btn-default btn-block">
                         <i class="icon-user-follow font-lg"></i>
                         حساب ندارید، ثبت نام کنید!
-                    </a>
+                    </a> *@
                 </div><!-- /.col-md-12 -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -105,7 +115,26 @@
     <script src="~/AdminTemplate/assets/js/core.js"></script>
 
     <!-- BEGIN PAGE JAVASCRIPT -->
-    <script src="assets/js/pages/login.js"></script>
+    <script src="~/AdminTemplate/assets/js/pages/login.js"></script>
+    <script>
+
+        setTimeout(function () {
+            var successMessage = document.getElementById("successMessage");
+            var errorMessage = document.getElementById("errorMessage");
+
+            if (successMessage) {
+                successMessage.style.transition = "opacity 0.5s";
+                successMessage.style.opacity = "0";
+                setTimeout(function () { successMessage.style.display = "none"; }, 500);
+            }
+
+            if (errorMessage) {
+                errorMessage.style.transition = "opacity 0.5s";
+                errorMessage.style.opacity = "0";
+                setTimeout(function () { errorMessage.style.display = "none"; }, 500);
+            }
+        }, 5000);
+    </script>
     <!-- END PAGE JAVASCRIPT -->
 
 </body>

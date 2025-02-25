@@ -23,6 +23,7 @@
         @TempData["SuccessMessage"]
     </div>
     <hr />
+    TempData["SuccessMessage"] = null;
 }
 @if (TempData["ErrorMessage"] != null)
 {
@@ -30,6 +31,7 @@
         @TempData["ErrorMessage"]
     </div>
     <hr />
+    TempData["ErrorMessage"] = null;
 }
 
 
@@ -37,24 +39,24 @@
 
 <div class="col-lg-12">
     <div class="portlet box shadow">
-       
-            <div class="buttons-box">
-                <a class="btn btn-sm btn-default btn-round btn-fullscreen" rel="tooltip" title="تمام صفحه" href="#">
-                    <i class="icon-size-fullscreen"></i>
-                </a>
-                <a class="btn btn-sm btn-default btn-round btn-collapse" rel="tooltip" title="کوچک کردن" href="#">
-                    <i class="icon-arrow-up"></i>
-                </a>
-            </div><!-- /.buttons-box -->
-  
+
+        <div class="buttons-box">
+            <a class="btn btn-sm btn-default btn-round btn-fullscreen" rel="tooltip" title="تمام صفحه" href="#">
+                <i class="icon-size-fullscreen"></i>
+            </a>
+            <a class="btn btn-sm btn-default btn-round btn-collapse" rel="tooltip" title="کوچک کردن" href="#">
+                <i class="icon-arrow-up"></i>
+            </a>
+        </div><!-- /.buttons-box -->
+
         <div class="portlet-body">
             <div class="table-responsive">
-                <div id="data-table_filter" class="dataTables_filter"><label>جستجو: <input type="search" class="" placeholder="" aria-controls="data-table"></label></div>
-                <br />
+                @* <div id="data-table_filter" class="dataTables_filter"><label>جستجو: <input type="search" class="" placeholder="" aria-controls="data-table"></label></div>
+                <br /> *@
                 <table class="table table-bordered table-hover table-striped" id="data-table">
                     <thead>
                         <tr>
-                            <th>شناسه سفارش</th>
+                            <th>#</th>
                             <th>سفارش دهنده </th>
                             <th> هوم سرویس</th>
                             <th>تاریخ ثبت درخواست</th>
@@ -68,12 +70,12 @@
                         </tr>
                     </thead>
                     <tbody>
-
+                        @{int j = 1;}
                         @foreach (var item in Model.Orders)
                         {
 
                             <tr>
-                                <td>@item.Id</td>
+                                <td>@j</td>
                                 <td>@item.CustomerLname</td>
                                 <td>@item.SubServiceName</td>
                                 <td>@item.CreateAt.ToPersianString("yyyy/MM/dd")</td>
@@ -98,7 +100,7 @@
                                     <a asp-area="Admin" asp-page="/Suggestions/Index" asp-route-id="@item.Id" class="btn btn-info round">پیشنهادها</a>
                                 </td>
                                 <td>
-                                    <a class="btn btn-danger round" asp-area="Admin" asp-page="/Orders/Delete" asp-route-id="@item.Id">
+                                    <a onclick="return confirm('آیا از حذف این سفارش اطمینان دارید؟')" class="btn btn-danger round" asp-area="Admin" asp-page="/Orders/Delete" asp-route-id="@item.Id">
                                         <i class="icon-size-fullscreen"></i>
                                         حذف
                                         <div class="paper-ripple"><div class="paper-ripple__background" style="opacity: 0.00024;"></div><div class="paper-ripple__waves"></div></div>
@@ -107,6 +109,7 @@
                                 </td>
                                 <td><button class="btn btn-secondary">نمایش</button></td>
                             </tr>
+                            j++;
                         }
                     </tbody>
                 </table>

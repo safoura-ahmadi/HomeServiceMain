@@ -33,7 +33,7 @@ public class SuggestionEfRepository(ApplicationDbContext dbContext, ILogger<Sugg
             return Result.Ok("پیشنهاد با موفقیت ایجاد شد");
 
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SuggestionEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
@@ -58,7 +58,7 @@ public class SuggestionEfRepository(ApplicationDbContext dbContext, ILogger<Sugg
                 }).ToListAsync(cancellationToken);
             return item;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SuggestionEfRepository", ex.Message);
             return [];
@@ -74,7 +74,7 @@ public class SuggestionEfRepository(ApplicationDbContext dbContext, ILogger<Sugg
             return Result.Ok("وضعیت پیشنهاد در حالت تایید شده قرار گرفت");
         }
 
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SuggestionEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
@@ -91,7 +91,7 @@ public class SuggestionEfRepository(ApplicationDbContext dbContext, ILogger<Sugg
             else
                 return Result.Fail("پیشنهاد فعالی برای این سفارش وجود ندارد");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SuggestionEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
@@ -108,7 +108,7 @@ public class SuggestionEfRepository(ApplicationDbContext dbContext, ILogger<Sugg
             else
                 return Result.Fail("پیشنهاد تایید شده ای برای این سفارش وجود ندارد");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SuggestionEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
@@ -137,7 +137,7 @@ public class SuggestionEfRepository(ApplicationDbContext dbContext, ILogger<Sugg
                 }).ToListAsync(cancellationToken);
             return item;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SuggestionEfRepository", ex.Message);
             return [];
@@ -151,7 +151,7 @@ public class SuggestionEfRepository(ApplicationDbContext dbContext, ILogger<Sugg
                 .CountAsync(cancellationToken);
             return item;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SuggestionEfRepository", ex.Message);
             return 0;
@@ -168,7 +168,7 @@ public class SuggestionEfRepository(ApplicationDbContext dbContext, ILogger<Sugg
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("سفارش با موفقیت حذف شد");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SuggestionEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
@@ -183,6 +183,7 @@ public class SuggestionEfRepository(ApplicationDbContext dbContext, ILogger<Sugg
                 .Include(s => s.Order)
                 .ThenInclude(o => o!.SubService)
                 .Include(s => s.Expert)
+                 .Where(o => o.Order!.IsActive)
                 .OrderByDescending(s => s.CreateAt)
                 .Take(10)
                 .Select(s => new GetlastSuggestionDto
@@ -197,7 +198,7 @@ public class SuggestionEfRepository(ApplicationDbContext dbContext, ILogger<Sugg
             return items;
 
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SuggestionEfRepository", ex.Message);
             return [];

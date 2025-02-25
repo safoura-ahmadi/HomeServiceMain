@@ -11,6 +11,7 @@
         @TempData["SuccessMessage"]
     </div>
     <hr />
+    TempData["SuccessMessage"] = null;
 }
 @if (TempData["ErrorMessage"] != null)
 {
@@ -18,6 +19,7 @@
         @TempData["ErrorMessage"]
     </div>
     <hr />
+    TempData["ErrorMessage"] = null;
 }
 
 
@@ -39,10 +41,10 @@
                     افزودن
                     <div class="paper-ripple"><div class="paper-ripple__background" style="opacity: 0;"></div><div class="paper-ripple__waves"></div></div>
                 </button>
-                <a class="btn btn-danger" href="#">
+                @*  <a class="btn btn-danger" href="#">
                     <i class="icon-trash"></i>
                     حذف جمعی
-                </a>
+                </a> *@
 
             </div><!-- /.top-buttons-box -->
             <div id="form-modal" class="modal fade" role="dialog" tabindex="-1">
@@ -50,8 +52,8 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-bs-dismiss="modal">×</button>
-                            <h4 class="modal-title">فرم ورود اطلاعات  </h4>
-                        </div><!-- /.modal-header -->
+                            <h4 class="modal-title">فرم ورود اطلاعات</h4>
+                        </div>
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-lg-12">
@@ -60,55 +62,50 @@
                                     </p>
                                 </div>
                                 <div class="col-lg-12">
-                                    <form method="post" asp-page="/Users/Index" class="form-horizontal" role="form">
-                                        <div asp-validation-summary="All" class="text-danger"></div>
+                                    <form method="post" asp-page="/Users/Index" class="form-horizontal" role="form" id="registration-form">
                                         <br />
                                         <div class="col-md-8 col-lg-6 m-auto m-b-10">
                                             <div class="input-group round">
                                                 <span class="input-group-addon">
                                                     <i class="icon-user"></i>
                                                 </span>
-                                                <input type="text" asp-for="CreateModel.Email" class="form-control ltr text-left" placeholder="ایمیل" required>
-                                                <div class="text-danger small mt-1">
-                                                    <span asp-validation-for="CreateModel.Email"></span>
-                                                </div>
-                                            </div><!-- /.input-group -->
-                                            <div class="form-group m-b-10 m-auto mt-2 ">
+                                                <input type="text" asp-for="CreateModel.Email" class="form-control ltr text-left" placeholder="ایمیل" >
+                                               
+                                            </div>
+                                            <div class="text-danger small mt-1" id="email-error"></div>
+                                         
+                                            <div class="form-group m-b-10 m-auto mt-2">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">
                                                         <i class="icon-options"></i>
                                                     </span>
                                                     <select asp-for="CreateModel.Role" class="form-select">
-                                                        <option value="1"> مشتری</option>
-                                                        <option value="2"> کارشناس</option>
-
+                                                        <option value="1">مشتری</option>
+                                                        <option value="2">کارشناس</option>
                                                     </select>
-                                                </div><!-- /.input-group -->
+                                                </div>
                                             </div>
-                                            <div class="form-group m-b-10 m-auto mt-2 ">
-
+                                            <div class="form-group m-b-10 m-auto mt-2">
                                                 <div class="input-group">
                                                     <select asp-for="CreateModel.CityId" class="form-select">
-                                                        @foreach (var city in @Model.Cities)
+                                                        @foreach (var city in Model.Cities)
                                                         {
                                                             <option value="@city.Id">@city.Title</option>
                                                         }
                                                     </select>
-
                                                 </div>
                                             </div>
-                                        </div><!-- /.col-md-8 -->
+                                        </div>
                                         <div class="col-md-8 col-lg-6 m-auto m-b-10">
                                             <div class="input-group round">
                                                 <span class="input-group-addon">
                                                     <i class="icon-key"></i>
                                                 </span>
-                                                <input type="password" asp-for="CreateModel.Password" class="form-control ltr text-left" placeholder="کلمه عبور" required>
-                                                <div class="text-danger small mt-1">
-                                                    <span asp-validation-for="CreateModel.Password"></span>
-                                                </div>
+                                                <input type="password" asp-for="CreateModel.Password" class="form-control ltr text-left" placeholder="کلمه عبور" >
+                                              
                                             </div>
-                                        </div><!-- /.col-md-8 -->
+                                            <div class="text-danger small mt-1" id="password-error"></div> <!-- تگ برای نمایش خطای پسورد -->
+                                        </div>
                                         <div class="col-md-8 col-lg-6 m-auto">
                                             <button type="submit" class="btn btn-success btn-block mt-4 mb-2">
                                                 <i class="icon-cursor"></i>
@@ -116,23 +113,64 @@
                                                 <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
                                             </button>
                                             <button type="button" class="btn btn-danger btn-block float-end mb-3" data-bs-dismiss="modal">بازگشت<div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div></button>
-                                        </div><!-- /.col-md-8 -->
+                                        </div>
                                     </form>
-                                </div><!-- /col-lg-12 -->
-                            </div><!-- /.row -->
-                        </div><!-- /.modal-body -->
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                $(document).ready(function() {
+                    $('#registration-form').on('submit', function(event) {
+                        event.preventDefault(); // جلوگیری از ارسال فرم تا زمانی که اعتبارسنجی انجام شود
+
+                        let isValid = true;
+
+                        // اعتبارسنجی ایمیل
+                        const emailInput = $('input[name="CreateModel.Email"]');
+                        const emailValue = emailInput.val().trim();
+                        const emailPattern = @Html.Raw("/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/"); // الگوی regex برای ایمیل
+                        const emailError = $('#email-error'); // انتخاب تگ خطا برای ایمیل
+
+                        if (!emailPattern.test(emailValue)) {
+                            isValid = false;
+                            emailError.text('لطفاً یک ایمیل معتبر وارد کنید.'); // نمایش خطا
+                        } else {
+                            emailError.text(''); // پاک کردن خطا
+                        }
+
+                        // اعتبارسنجی پسورد
+                        const passwordInput = $('input[name="CreateModel.Password"]');
+                        const passwordValue = passwordInput.val().trim();
+                        const passwordError = $('#password-error'); // انتخاب تگ خطا برای پسورد
+
+                        if (passwordValue.length < 6) {
+                            isValid = false;
+                            passwordError.text('پسورد باید حداقل شش رقم باشد.'); // نمایش خطا
+                        } else {
+                            passwordError.text(''); // پاک کردن خطا
+                        }
+
+                        // اگر فرم معتبر باشد، ارسال شود
+                        if (isValid) {
+                            this.submit();
+                        }
+                    });
+                });
+            </script>
             <div class="row">
                 <div class="table-responsive">
-                    <div id="data-table_filter" class="dataTables_filter"><label>جستجو: <input type="search" class="" placeholder="" aria-controls="data-table"></label></div>
-                    <br />
+                    @* <div id="data-table_filter" class="dataTables_filter"><label>جستجو: <input type="search" class="" placeholder="" aria-controls="data-table"></label></div>
+                    <br /> *@
                     <table class="table table-bordered table-hover table-striped" id="data-table">
                         <thead>
                             <tr>
-                                <th class="p-low"><input type="checkbox" id="btn-check-all-toggle"></th>
-                                <th>#</th>
+                                @*                                 <th class="p-low"><input type="checkbox" id="btn-check-all-toggle"></th>
+ *@                                <th>#</th>
                                 <th>پروفایل</th>
                                 <th>ایمیل</th>
                                 <th>نام خانوادگی</th>
@@ -143,11 +181,14 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @{
+                                int j = 1;
+                            }
                             @foreach (var user in @Model.Users)
                             {
                                 <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td>@user.Id</td>
+                                    @*  <td><input type="checkbox"></td> *@
+                                    <td>@j</td>
 
                                     @if (string.IsNullOrEmpty(user.ImagePath))
                                     {
@@ -165,7 +206,7 @@
                                     {
                                         <td>تایید شده</td>
                                     }
-                                    
+
                                     else
                                     {
                                         <td>
@@ -180,8 +221,9 @@
                                         </td>
                                     }
 
-                                  
+
                                 </tr>
+                                j++;
                             }
                         </tbody>
                     </table>
@@ -208,3 +250,27 @@
         </div><!-- /.portlet-body -->
     </div><!-- /.portlet -->
 </div><!-- /.col-lg-12 -->
+<script>
+
+    setTimeout(function () {
+        var successMessage = document.getElementById("successMessage");
+        var errorMessage = document.getElementById("errorMessage");
+
+        if (successMessage) {
+            successMessage.style.transition = "opacity 0.5s";
+            successMessage.style.opacity = "0";
+            setTimeout(function () { successMessage.style.display = "none"; }, 500);
+        }
+
+        if (errorMessage) {
+            errorMessage.style.transition = "opacity 0.5s";
+            errorMessage.style.opacity = "0";
+            setTimeout(function () { errorMessage.style.display = "none"; }, 500);
+        }
+    }, 5000);
+</script>
+@section Scripts
+{
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+}

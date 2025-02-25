@@ -1,0 +1,156 @@
+﻿@page
+@model HomeService.Endpoint.Razor.Pages.Users.OrdersModel
+@{
+}
+<style>
+    .collapse-table {
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 0.4s ease-in-out;
+    }
+
+    .collapse.show {
+        max-height: 500px;
+    }
+
+    .btn-toggle {
+        transition: transform 0.3s ease-in-out;
+    }
+
+        .btn-toggle.collapsed {
+            transform: rotate(180deg);
+        }
+</style>
+
+<section id="main" class="clearfix myads-page">
+    <div class="container">
+
+        <div class="breadcrumb-section">
+            <ol class="breadcrumb">
+                <li><a href="index.html">خانه</a></li>
+                <li>کارتابل شخصی</li>
+            </ol>
+            <h2 class="title">سفارشات من</h2>
+        </div>
+
+        <div class="ad-profile section">
+            <div class="user-profile">
+                <div class="user-images">
+                    <img src="~/UserTemplate/images/user.jpg" alt="User Images" class="img-fluid">
+                </div>
+                <div class="user">
+                    <h2>سلام, <a href="#">ایمان عزیز</a></h2>
+                    <h5>آخرین ورود شما سه‌شنبه، 21 اردیبهشت 1399</h5>
+                </div>
+                <div class="favorites-user">
+                    <div class="my-ads">
+                        <a href="my-ads.html">23<small>‌سفارش های من</small></a>
+                    </div>
+                    <div class="favorites">
+                        <a href="#">18<small>پیشنهاد های من</small></a>
+                    </div>
+                </div>
+            </div>
+            <ul class="user-menu">
+                <li><a href="my-profile.html">پروفایل</a></li>
+                <li class="active"><a href="my-ads.html">سفارشات من</a></li>
+                <li><a href="pending-ads.html">پرداخت ها</a></li>
+                <li><a href="delete-account.html">خروج از حساب</a></li>
+            </ul>
+        </div>
+
+        <div class="ads-info">
+            <div class="row">
+                <div class="col">
+                    <div class="my-ads section">
+                        <h2>سفارش ها</h2>
+                        <div class="container mt-4">
+                            <table class="table table-bordered table-hover text-center">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>ردیف</th>
+                                        <th>شناسه سفارش</th>
+                                        <th>هوم سرویس</th>
+                                        <th>تاریخ ثبت</th>
+                                        <th>وضعیت</th>
+                                        <th>جزییات</th>
+                                        <th>پیشنهادات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>1001</td>
+                                        <td>آفرینش فر</td>
+                                        <td>1402/11/01</td>
+                                        <td><span class="badge p-2 bg-success">تایید</span></td>
+                                        <td><a href="SefareshDetails.html" class="btn btn-info">نمایش</a></td>
+                                        <td>
+                                            <button class="btn btn-outline-primary btn-sm btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#suggestions1">
+                                                <i class="fa-solid fa-chevron-down"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="7" class="p-0">
+                                            <div id="suggestions1" class="collapse collapse-table">
+                                                <table class="table table-bordered table-striped table-hover m-0">
+                                                    <thead class="table-secondary">
+                                                        <tr>
+                                                            <th>شناسه</th>
+                                                            <th>کارشناس</th>
+                                                            <th>قیمت پیشنهادی</th>
+                                                            <th>تاریخ پیشنهاد</th>
+                                                            <th>تاریخ اتمام کار</th>
+                                                            <th>عملیات</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>1</td>
+                                                            <td>حمید</td>
+                                                            <td>200,000 تومان</td>
+                                                            <td>1402/10/30</td>
+                                                            <td>1402/11/05</td>
+                                                            <td><button class="btn btn-warning">جزییات پیشنهاد</button></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts
+{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".btn-toggle").forEach(button => {
+                button.addEventListener("click", function () {
+                    this.classList.toggle("collapsed");
+                    let icon = this.querySelector("i");
+                    icon.classList.toggle("fa-chevron-down");
+                    icon.classList.toggle("fa-chevron-up");
+                });
+            });
+        });
+    </script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-73239902-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'UA-73239902-1');
+    </script>
+
+    <script src="~/UserTemplate/js/jquery-3.7.1.slim.min.js"></script>
+    <script src="~/UserTemplate/js/bootstrap.bundle.min.js"></script>
+}

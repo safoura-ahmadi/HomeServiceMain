@@ -9,6 +9,7 @@
         @TempData["SuccessMessage"]
     </div>
     <hr />
+    TempData["SuccessMessage"] = null;
 }
 @if (TempData["ErrorMessage"] != null)
 {
@@ -16,6 +17,7 @@
         @TempData["ErrorMessage"]
     </div>
     <hr />
+    TempData["ErrorMessage"] = null;
 }
 
 <div class="col-lg-12">
@@ -37,19 +39,19 @@
                     افزودن
                     <div class="paper-ripple"><div class="paper-ripple__background" style="opacity: 0;"></div><div class="paper-ripple__waves"></div></div>
                 </button>
-                <a class="btn btn-danger" href="#">
+                @*   <a class="btn btn-danger" href="#">
                     <i class="icon-trash"></i>
                     حذف جمعی
-                </a>
+                </a> *@
 
             </div>
-            <div id="form-modal" class="modal fade" role="dialog" tabindex="-1">
+            <div id="form-modal" class="modal fade" role="dialog" aria-hidden="false" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-bs-dismiss="modal">×</button>
                             <h4 class="modal-title">ثبت هوم سرویس</h4>
-                        </div><!-- /.modal-header -->
+                        </div>
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-lg-12">
@@ -58,56 +60,65 @@
                                     </p>
                                 </div>
                                 <div class="col-lg-12">
-                                    <form method="post" asp-page="/SubServices/Index" enctype="multipart/form-data" class="form-horizontal" role="form">
+                                    <form method="post" asp-page="/SubServices/Index" enctype="multipart/form-data" class="form-horizontal" role="form" id="subservice-form">
                                         @Html.AntiForgeryToken()
                                         <div class="col-md-8 col-lg-6 m-auto m-b-10">
                                             <div class="input-group round">
                                                 <span class="input-group-addon">
                                                     <i class="icon-home"></i>
                                                 </span>
-                                                <input type="text" class="form-control ltr text-right" asp-for="CreateModel.Title" placeholder="نام هوم سرویس " required>
-                                                <span class="text-danger" asp-validation-for="CreateModel.Title"></span>
-                                            </div><!-- /.input-group -->
-                                            <div class="form-group m-b-10 m-auto mt-2 ">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">
-                                                        <i class="icon-options"></i>
-                                                    </span>
-                                                    <select asp-for="CreateModel.SubCategoryId" class="form-select" required>
-                                                        @foreach (var item in @Model.SubCategories)
-                                                        {
-                                                            <option value="@item.Id">@item.Title</option>
-                                                        }
-                                                    </select>
-                                                </div><!-- /.input-group -->
+                                                <input type="text" class="form-control ltr text-right" asp-for="CreateModel.Title" placeholder="نام هوم سرویس" id="title-input">
+                                                <span class="input-group-addon validation-icon"></span>
                                             </div>
+                                            <div id="title-error" class="error-message text-danger mt-2"></div>
+                                        </div>
 
-                                            <div class="form-group m-b-10 m-auto mt-2 ">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">
-
-                                                        <i class=" fas fa-hand-holding-dollar"></i>
-                                                    </span>
-                                                    <input type="text" class="form-control ltr text-right" asp-for="CreateModel.BasePrice" value="" placeholder="قیمت پایه " required>
-                                                    <span class="text-danger" asp-validation-for="CreateModel.BasePrice"></span>
-                                                </div><!-- /.input-group -->
+                                        <div class="form-group m-b-10 m-auto mt-2">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="icon-options"></i>
+                                                </span>
+                                                <select asp-for="CreateModel.SubCategoryId" class="form-select" id="subcategory-input">
+                                                    @foreach (var item in @Model.SubCategories)
+                                                    {
+                                                        <option value="@item.Id">@item.Title</option>
+                                                    }
+                                                </select>
+                                                <span class="input-group-addon validation-icon"></span>
                                             </div>
-                                        </div><!-- /.col-md-8 -->
+                                            <div id="subcategory-error" class="error-message text-danger mt-2"></div>
+                                        </div>
+
+                                        <div class="form-group m-b-10 m-auto mt-2">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="fas fa-hand-holding-dollar"></i>
+                                                </span>
+                                                <input type="text" class="form-control ltr text-right" asp-for="CreateModel.BasePrice" placeholder="قیمت پایه" id="baseprice-input">
+                                                <span class="input-group-addon validation-icon"></span>
+                                            </div>
+                                            <div id="baseprice-error" class="error-message text-danger mt-2"></div>
+                                        </div>
+
                                         <div class="col-md-8 col-lg-6 m-auto m-b-10">
                                             <div class="input-group round">
                                                 <span class="input-group-addon">
                                                     <i class="icon-options"></i>
                                                 </span>
-                                                <input asp-for="CreateModel.Description" type="text" style="width: 50px; height: 70px; font-size: 15px;" class="form-control ltr text-right" placeholder="توضیحات " required>
-                                                <span class="text-danger" asp-validation-for="CreateModel.Description"></span>
+                                                <textarea asp-for="CreateModel.Description" class="form-control ltr text-right" placeholder="توضیحات" id="description-input" style="height: 70px;"></textarea>
+                                                <span class="input-group-addon validation-icon"></span>
                                             </div>
-                                        </div><!-- /.col-md-8 -->
+                                            <div id="description-error" class="error-message text-danger mt-2"></div>
+                                        </div>
+
                                         <div class="col-md-8 col-lg-6 m-auto m-b-10">
                                             <div class="input-group round">
-                                                <input asp-for="CreateModel.ImageFile" type="file" class="form-control ltr text-right">
-                                                <span class="text-danger" asp-validation-for="CreateModel.ImageFile"></span>
+                                                <input asp-for="CreateModel.ImageFile" type="file" class="form-control ltr text-right" id="image-input">
+                                                <span class="input-group-addon validation-icon"></span>
                                             </div>
-                                        </div><!-- /.col-md-8 -->
+                                            <div id="image-error" class="error-message text-danger mt-2"></div>
+                                        </div>
+
                                         <div class="col-md-8 col-lg-6 m-auto">
                                             <button type="submit" class="btn btn-success btn-block mt-4 mb-2">
                                                 <i class="icon-cursor"></i>
@@ -115,40 +126,132 @@
                                                 <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
                                             </button>
                                             <button type="button" class="btn btn-danger btn-block float-end mb-3" data-bs-dismiss="modal">بازگشت<div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div></button>
-                                        </div><!-- /.col-md-8 -->
+                                        </div>
                                     </form>
-                                </div><!-- /col-lg-12 -->
-                            </div><!-- /.row -->
-                        </div><!-- /.modal-body -->
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
-                <script>
-                    document.addEventListener("DOMContentLoaded", function () {
-                        const form = document.querySelector("#form-modal form");
-                           var showModal = '@(ViewData["ShowModal"] ?? "false")';
-                        form.addEventListener("submit", function (event) {
-                            if (!form.checkValidity() ||  showModal === "True" || showModal === "true") {
-                                event.preventDefault(); // جلوگیری از ارسال فرم
-                                event.stopPropagation(); // جلوگیری از رویدادهای اضافی
-                              
-                            }
-                              if ( showModal === "True" || showModal === "true") {
-
-                               form.showModal();
-                            }
-                            form.classList.add("was-validated"); // نمایش استایل‌های بوت‌استرپ برای ورودی نامعتبر
-                        }, false);
-                    });
-                </script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-      
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const form = document.getElementById("subservice-form");
+                    const titleInput = document.getElementById("title-input");
+                    const subcategoryInput = document.getElementById("subcategory-input");
+                    const basepriceInput = document.getElementById("baseprice-input");
+                    const descriptionInput = document.getElementById("description-input");
+                    const imageInput = document.getElementById("image-input");
+
+                    const titleError = document.getElementById("title-error");
+                    const subcategoryError = document.getElementById("subcategory-error");
+                    const basepriceError = document.getElementById("baseprice-error");
+                    const descriptionError = document.getElementById("description-error");
+                    const imageError = document.getElementById("image-error");
+
+                    form.addEventListener("submit", function (event) {
+                        let isValid = true;
+
+                        // بازنشانی پیام‌های خطا و استایل‌ها
+                        [titleError, subcategoryError, basepriceError, descriptionError, imageError].forEach(el => el.textContent = "");
+                        [titleInput, subcategoryInput, basepriceInput, descriptionInput, imageInput].forEach(el => el.classList.remove("is-invalid", "is-valid"));
+
+                        // بررسی مقدار عنوان
+                        let titleValue = titleInput.value.trim();
+                        if (titleValue === "") {
+                            titleError.textContent = "وارد کردن عنوان الزامی است.";
+                            titleInput.classList.add("is-invalid");
+                            isValid = false;
+                        } else if (titleValue.length < 2) {
+                            titleError.textContent = "عنوان باید حداقل ۲ کاراکتر باشد.";
+                            titleInput.classList.add("is-invalid");
+                            isValid = false;
+                        } else if (titleValue.length > 100) {
+                            titleError.textContent = "تعداد کاراکترهای مجاز برای عنوان، ۱۰۰ کاراکتر می‌باشد.";
+                            titleInput.classList.add("is-invalid");
+                            isValid = false;
+                        } else {
+                            titleInput.classList.add("is-valid");
+                        }
+
+                        // بررسی مقدار دسته‌بندی
+                        if (subcategoryInput.value === "") {
+                            subcategoryError.textContent = "لطفاً یک دسته‌بندی انتخاب کنید.";
+                            subcategoryInput.classList.add("is-invalid");
+                            isValid = false;
+                        } else {
+                            subcategoryInput.classList.add("is-valid");
+                        }
+
+                        // بررسی مقدار قیمت پایه
+                        let basePriceValue = basepriceInput.value.trim();
+                        if (basePriceValue === "") {
+                            basepriceError.textContent = "وارد کردن قیمت پایه الزامی است.";
+                            basepriceInput.classList.add("is-invalid");
+                            isValid = false;
+                        } else if (isNaN(basePriceValue) || !Number.isInteger(Number(basePriceValue))) {
+                            basepriceError.textContent = "قیمت پایه باید یک عدد صحیح باشد.";
+                            basepriceInput.classList.add("is-invalid");
+                            isValid = false;
+                        } else if (Number(basePriceValue) <= 0) {
+                            basepriceError.textContent = "قیمت پایه باید بیشتر از صفر باشد.";
+                            basepriceInput.classList.add("is-invalid");
+                            isValid = false;
+                        } else {
+                            basepriceInput.classList.add("is-valid");
+                        }
+
+                        // بررسی مقدار توضیحات
+                        let descriptionValue = descriptionInput.value.trim();
+                        if (descriptionValue === "") {
+                            descriptionError.textContent = "وارد کردن توضیحات الزامی است.";
+                            descriptionInput.classList.add("is-invalid");
+                            isValid = false;
+                        } else if (descriptionValue.length > 255) {
+                            descriptionError.textContent = "متن توضیحات نمی‌تواند از ۲۵۵ کاراکتر بیشتر باشد.";
+                            descriptionInput.classList.add("is-invalid");
+                            isValid = false;
+                        } else {
+                            descriptionInput.classList.add("is-valid");
+                        }
+
+                        // بررسی مقدار عکس
+                        if (imageInput.files.length === 0) {
+                            imageError.textContent = "آپلود کردن عکس الزامی است.";
+                            imageInput.classList.add("is-invalid");
+                            isValid = false;
+                        } else {
+                            const allowedExtensions = ["jpg", "jpeg", "png"];
+                            const fileExtension = imageInput.files[0].name.split('.').pop().toLowerCase();
+                            if (!allowedExtensions.includes(fileExtension)) {
+                                imageError.textContent = "فرمت فایل نامعتبر است. فقط jpg، jpeg و png مجاز هستند.";
+                                imageInput.classList.add("is-invalid");
+                                isValid = false;
+                            } else {
+                                imageInput.classList.add("is-valid");
+                            }
+                        }
+
+                        // جلوگیری از ارسال فرم در صورت وجود خطا
+                        if (!isValid) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                    });
+                });
+            </script>
+
+
+
+          
             <div class="table-responsive">
-                <div id="data-table_filter" class="dataTables_filter"><label>جستجو: <input type="search" class="" placeholder="" aria-controls="data-table"></label></div>
-                <br />
+               @*  <div id="data-table_filter" class="dataTables_filter"><label>جستجو: <input type="search" class="" placeholder="" aria-controls="data-table"></label></div>
+                <br /> *@
                 <table class="table table-bordered table-hover table-striped" id="data-table">
                     <thead>
                         <tr>
-                            <th>شناسه</th>
+                            <th>#</th>
                             <th>تصویر  </th>
                             <th>نام </th>
                             <th> دسته بندی</th>
@@ -158,21 +261,25 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @{
+                            int j = 1;
+                        }
                         @foreach (var item in Model.SubServices)
                         {
                             <tr>
-                                <td>@item.Id</td>
+                                <td>@j</td>
                                 <td><div class="text-center"><img src="~/UserTemplate/images/icon/@item.ImagePath" width="110" height="80" class="" alt=""></div></td>
                                 <td>@item.Title</td>
                                 <td>@item.SubCategoryTitle</td>
                                 <td>@item.BasePrice</td>
                                 <td class="text-center">@item.Description</td>
-                               
+
                                 <td style="white-space: nowrap;">
-                                    <a asp-area="Admin" asp-page="/SubServices/Delete" asp-route-id="@item.Id" class="btn btn-danger" style="display: inline-block;">حذف</a>
+                                    <a onclick="return confirm('آیا از حذف این هوم سرویس اطمینان دارید؟')" asp-area="Admin" asp-page="/SubServices/Delete" asp-route-id="@item.Id" class="btn btn-danger" style="display: inline-block;">حذف</a>
                                     <a asp-area="Admin" asp-page="/SubServices/Update" asp-route-id="@item.Id" class="btn btn-warning" style="display: inline-block;">ویرایش</a>
                                 </td>
                             </tr>
+                            j++;
 
                         }
 

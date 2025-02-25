@@ -3,14 +3,14 @@
 				event.preventDefault();
 				var color = $(this).data('color'),
 					url = 'css/presets/'+color+'.css';
-					logoSrc = '~/UserTemplate/images/presets/'+color+'/logo.png';
-					ctaIconSrc = '~/UserTemplate/images/presets/'+color+'/13.png';
-					ctaIconSrc2 = '~/UserTemplate/images/presets/'+color+'/14.png';
-					ctaIconSrc3 = '~/UserTemplate/images/presets/'+color+'/15.png';
-					ctaIconSrc4 = '~/UserTemplate/images/presets/'+color+'/logo3.png';
-					ctaIconSrc5 = '~/UserTemplate/images/presets/'+color+'/31.png';
-					ctaIconSrc6 = '~/UserTemplate/images/presets/'+color+'/32.png';
-					ctaIconSrc7 = '~/UserTemplate/images/presets/'+color+'/33.png';					
+					logoSrc = 'images/presets/'+color+'/logo.png';
+					ctaIconSrc = 'images/presets/'+color+'/13.png';
+					ctaIconSrc2 = 'images/presets/'+color+'/14.png';
+					ctaIconSrc3 = 'images/presets/'+color+'/15.png';
+					ctaIconSrc4 = 'images/presets/'+color+'/logo3.png';
+					ctaIconSrc5 = 'images/presets/'+color+'/31.png';
+					ctaIconSrc6 = 'images/presets/'+color+'/32.png';
+					ctaIconSrc7 = 'images/presets/'+color+'/33.png';					
 					
 				$('.navbar-brand img').attr('src', logoSrc);
 				$('.cta-icon.icon-secure img').attr('src', ctaIconSrc);

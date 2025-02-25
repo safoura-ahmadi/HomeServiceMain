@@ -13,6 +13,7 @@
         @TempData["SuccessMessage"]
     </div>
     <hr />
+    TempData["SuccessMessage"] = null;
 }
 @if (TempData["ErrorMessage"] != null)
 {
@@ -20,6 +21,7 @@
         @TempData["ErrorMessage"]
     </div>
     <hr />
+    TempData["ErrorMessage"] = null;
 }
 
 
@@ -39,53 +41,56 @@
 
         <div class="portlet-body">
             <div class="table-responsive">
-                <div id="data-table_filter" class="dataTables_filter"><label>جستجو: <input type="search" class="" placeholder="" aria-controls="data-table"></label></div>
-                <br />
+                @*    <div id="data-table_filter" class="dataTables_filter"><label>جستجو: <input type="search" class="" placeholder="" aria-controls="data-table"></label></div>
+                <br /> *@
                 <table class="table table-bordered table-hover table-striped" id="data-table">
                     <thead>
                         <tr>
-                            <th>شناسه  کامنت</th>
+                            <th>#</th>
                             <th>کامنت </th>
                             <th> نام کارشناس</th>
                             <th> امتیاز کارشناس</th>
                             <th> تاریخ ثبت</th>
                             <th> وضعیت </th>
-                          
+
 
                         </tr>
                     </thead>
                     <tbody>
-
+                        @{
+                            int j = 1;
+                        }
                         @foreach (var item in Model.Comments)
                         {
                             if (item.Status !=  CommentStatusEnum.Rejected)
                             {
 
                                 <tr>
-                                    <td>@item.Id</td>
+                                    <td>@j</td>
                                     <td>@item.Text</td>
                                     <td>@item.ExpertLname</td>
                                     <td>@item.Score</td>
                                     <td>@item.CreateAt.ToPersianString("yyyy/MM/dd")</td>
-                                        @if (item.Status == CommentStatusEnum.Accepted)
-                                        {
+                                    @if (item.Status == CommentStatusEnum.Accepted)
+                                    {
                                         <td>تایید شده</td>
-                                        }
-                                        else
-                                        {
+                                    }
+                                    else
+                                    {
                                         <td>
                                             <div class="d-flex justify-content-center gap-2">
                                                 <a asp-area="Admin" asp-page="/Comments/Accept" asp-route-id="@item.Id" class="btn btn-success w-25  fw-bold">تایید  </a>
-                                                <a asp-area="Admin" asp-page="/Comments/Reject" asp-route-id="@item.Id" class="btn btn-danger w-25  fw-bold">رد</a>
+                                                <a onclick="return confirm('آیا از رد این کامنت اطمینان دارید؟')" asp-area="Admin" asp-page="/Comments/Reject" asp-route-id="@item.Id" class="btn btn-danger w-25  fw-bold">رد</a>
                                             </div>
-                                          
+
 
 
 
                                         </td>
-                                        }
+                                    }
 
                                 </tr>
+                                j++;
                             }
                         }
                     </tbody>

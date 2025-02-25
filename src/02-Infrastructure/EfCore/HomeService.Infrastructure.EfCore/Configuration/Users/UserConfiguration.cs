@@ -1,6 +1,7 @@
 ﻿using HomeService.Domain.Core.Entities.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 public class UserConfiguration
 {
@@ -63,11 +64,22 @@ public class UserConfiguration
                 ConcurrencyStamp = "f7c8e9a1-2b34-4d59-931a-72bf4c61c5f9",
                 LockoutEnd = null,
                 LockoutEnabled = false,
+                ImagePath = "~/AdminTemplate/assets/images/logo.png"
             }
 
         };
         builder.Entity<User>().HasData(users);
+        builder.Entity<IdentityUserClaim<int>>().HasData(
 
+                   new IdentityUserClaim<int>() { Id = 1, UserId = 1, ClaimType = ClaimTypes.Role, ClaimValue = "Admin" },
+                   new IdentityUserClaim<int>() { Id = 2, UserId = 1, ClaimType = ClaimTypes.Email, ClaimValue = "Admin@gmail.com" },
+                   new IdentityUserClaim<int>() { Id = 3, UserId = 2, ClaimType = ClaimTypes.Role, ClaimValue = "Expert" },
+                   new IdentityUserClaim<int>() { Id = 4, UserId = 2, ClaimType = ClaimTypes.Email, ClaimValue = "Expert@gmail.com" },
+                   new IdentityUserClaim<int>() { Id = 5, UserId = 2, ClaimType = "ExpertId", ClaimValue = "1" },
+                   new IdentityUserClaim<int>() { Id = 6, UserId = 3, ClaimType = ClaimTypes.Role, ClaimValue = "Customer" },
+                   new IdentityUserClaim<int>() { Id = 7, UserId = 3, ClaimType = ClaimTypes.Email, ClaimValue = "Customer@gmail.com" },
+                   new IdentityUserClaim<int>() { Id = 8, UserId = 3, ClaimType = "CustomerId", ClaimValue = "1" }
+       );
 
 
 
