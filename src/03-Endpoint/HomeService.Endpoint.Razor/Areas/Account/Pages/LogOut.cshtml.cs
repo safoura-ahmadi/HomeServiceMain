@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace HomeService.Endpoint.Razor.Areas.Admin.Pages
+namespace HomeService.Endpoint.Razor.Areas.Account.Pages
 {
     public class LogOutModel(SignInManager<User> signInManager) : PageModel
     {
@@ -12,11 +12,11 @@ namespace HomeService.Endpoint.Razor.Areas.Admin.Pages
         public async Task<IActionResult> OnGet()
         {
             await _signInManager.SignOutAsync();
-            
-           
-        
-                return RedirectToPage("./Login");
-            
+
+
+
+            return RedirectToPage("./Login");
+
         }
     }
 }

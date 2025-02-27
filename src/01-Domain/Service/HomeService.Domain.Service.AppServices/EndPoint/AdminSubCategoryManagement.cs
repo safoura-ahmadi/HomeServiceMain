@@ -3,13 +3,15 @@ using HomeService.Domain.Core.Contracts.AppService.EndPoint;
 using HomeService.Domain.Core.Contracts.Service.Categories;
 using HomeService.Domain.Core.Dtos.Categories;
 using HomeService.Domain.Core.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace HomeService.Domain.Service.AppServices.EndPoint;
 
-public class AdminSubCategoryManagement(ICategoryService categoryService, ISubCategoryService subCategoryService) : IAdminSubCategoryManagement
+public class AdminSubCategoryManagement(ICategoryService categoryService, ISubCategoryService subCategoryService, ILogger<AdminSubCategoryManagement> logger) : IAdminSubCategoryManagement
 {
     private readonly ICategoryService _categoryService = categoryService;
     private readonly ISubCategoryService _subCategoryService = subCategoryService;
+    private readonly ILogger<AdminSubCategoryManagement> _logger = logger;
 
     public async Task<Result> Create(string title, int CategoryId, CancellationToken cancellationToken)
     {
@@ -20,6 +22,7 @@ public class AdminSubCategoryManagement(ICategoryService categoryService, ISubCa
 
     public async Task<Result> Delete(int id, CancellationToken cancellationToken)
     {
+        _logger.Log(LogLevel.Warning, "Attempt to delete{item}", "SubCategory");
         if (id <= 0)
             return Result.Fail("سابکتگوری با این مشخصات وجود ندارد");
         return await _subCategoryService.Delete(id, cancellationToken);

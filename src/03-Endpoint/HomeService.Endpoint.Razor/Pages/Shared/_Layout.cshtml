@@ -1,31 +1,57 @@
 ﻿<!DOCTYPE html>
 <html lang="fa">
+<!-- Mirrored from atiyehahmadi.ir/trade/my-profile.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 03 Jan 2025 19:01:49 GMT -->
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Theme Region" />
     <meta name="description" content="" />
+
     <title>سرویسچه | خدمات رسانی آنلاین</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="@Url.Content("~/UserTemplate/css/bootstrap.min.css")" />
-    <link rel="stylesheet" href="@Url.Content("~/UserTemplate/css/font-awesome.min.css")" />
-    <link rel="stylesheet" href="@Url.Content("~/UserTemplate/css/main.css")" />
-    <link rel="stylesheet" href="@Url.Content("~/UserTemplate/css/responsive.css")" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-    <!-- Font -->
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,500,700,300" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Signika+Negative:400,300,600,700" rel="stylesheet" />
+    <link rel="stylesheet" href="~/UserTemplate/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/UserTemplate/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/UserTemplate/css/icofont.css" />
+    <link rel="stylesheet" href="~/UserTemplate/css/owl.carousel.css" />
+    <link rel="stylesheet" href="~/UserTemplate/css/slidr.css" />
+    <link rel="stylesheet" href="~/UserTemplate/css/main.css" />
+    <link id="preset" rel="stylesheet" href="~/UserTemplate/css/presets/preset1.css" />
+    <link rel="stylesheet" href="~/UserTemplate/css/responsive.css" />
 
-    <!-- Icons -->
-    <link rel="icon" href="@Url.Content("~/UserTemplate/images/ico/favicon.ico")" />
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="@Url.Content("~/UserTemplate/images/ico/apple-touch-icon-144-precomposed.png")" />
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="@Url.Content("~/UserTemplate/images/ico/apple-touch-icon-114-precomposed.png")" />
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="@Url.Content("~/UserTemplate/images/ico/apple-touch-icon-72-precomposed.png")" />
-    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="@Url.Content("~/UserTemplate/images/ico/apple-touch-icon-57-precomposed.png")" />
+    <!-- font -->
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,500,700,300"
+          rel="stylesheet"
+          type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Signika+Negative:400,300,600,700"
+          rel="stylesheet"
+          type="text/css" />
 
+    <!-- icons -->
+    <link rel="icon" href="~/UserTemplate/images/ico/favicon.ico" />
+    <link rel="apple-touch-icon-precomposed"
+          sizes="144x144"
+          href="~/UserTemplate/images/ico/apple-touch-icon-144-precomposed.png" />
+    <link rel="apple-touch-icon-precomposed"
+          sizes="114x114"
+          href="~/UserTemplate/images/ico/apple-touch-icon-114-precomposed.png" />
+    <link rel="apple-touch-icon-precomposed"
+          sizes="72x72"
+          href="~/UserTemplate/images/ico/apple-touch-icon-72-precomposed.html" />
+    <link rel="apple-touch-icon-precomposed"
+          sizes="57x57"
+          href="~/UserTemplate/images/ico/apple-touch-icon-57-precomposed.png" />
+    <!-- icons -->
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- Template Developed By ThemeRegion -->
     <style>
         .collapse-table {
             overflow: hidden;
@@ -44,30 +70,72 @@
                 transform: rotate(180deg);
             }
     </style>
+
+
 </head>
 <body>
+    @{
+        string profile = "";
+        string orders = "";
+        string logout = "";
 
-    <!-- Header -->
+
+
+
+        switch (ViewData["Title"])
+        {
+            case "پروفایل من":
+                profile = "active";
+                break;
+            case "سفارشات من":
+            case "جزئیات سفارش":
+                orders = "active";
+                break;
+            case "خروج":
+                logout = "active";
+                break;
+
+
+        }
+    }
+    <!-- header -->
     <header id="header" class="clearfix">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <!-- navbar -->
+        <nav class="navbar navbar-default navbar-expand-lg">
             <div class="container">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#tr-mainmenu" aria-controls="tr-mainmenu" aria-expanded="false">
-                    <span class="navbar-toggler-icon"><i class="fa fa-align-justify"></i></span>
+                <button class="navbar-toggler"
+                        type="button"
+                        data-toggle="collapse"
+                        data-target="#tr-mainmenu"
+                        aria-controls="tr-mainmenu"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon">
+                        <i class="fa fa-align-justify"></i>
+                    </span>
                 </button>
                 <a class="navbar-brand" href="index.html">
-                    <img class="img-fluid" src="@Url.Content("~/UserTemplate/images/logo.png")" alt="Logo" />
+                    <img class="img-fluid" src="~/UserTemplate/images/logo.png" alt="Logo" />
                 </a>
 
                 <div class="collapse navbar-collapse" id="tr-mainmenu">
-                    <ul class="navbar-nav">
-                        <li class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">خانه</a>
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="javascript:void(0);"
+                               class="dropdown-toggle"
+                               data-toggle="dropdown">
+                                ‌خانه<span class="caret"></span>
+                            </a>
                             <ul class="dropdown-menu">
-                                <li><a href="index.html">خانه اصلی</a></li>
+                                <li><a href="index.html">خانه اصلی </a></li>
                             </ul>
                         </li>
-                        <li class="nav-item dropdown active">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">صفحات</a>
+                        <li class="active dropdown">
+                            <a href="javascript:void(0);"
+                               class="dropdown-toggle"
+                               data-toggle="dropdown">
+                                صفحات<span class="caret"></span>
+                            </a>
                             <ul class="dropdown-menu">
                                 <li><a href="about-us.html">درباره ما</a></li>
                                 <li><a href="contact-us.html">ارتباط با ما</a></li>
@@ -75,18 +143,153 @@
                         </li>
                     </ul>
                 </div>
+
+                <div class="nav-right">
+                    <!-- sign-in -->
+                    <a class="sign-in btn btn-info">
+                        ورود/ثبت نام
+                    </a><!-- sign-in -->
+                </div>
             </div>
+            <!-- container -->
         </nav>
+        <!-- navbar -->
     </header>
+    <!-- header -->
+    <!-- ad-profile-page -->
+    @if (ViewData["Title"] != "خانه ی اصلی")
+    {
+        <section id="main" class="clearfix ad-profile-page">
+            <div class="container">
+                <div class="breadcrumb-section">
+                    <!-- breadcrumb -->
+                    <ol class="breadcrumb">
+                        <li><a href="index.html">خانه</a></li>
+                        <li> کارتابل شخصی</li>
+                    </ol><!-- breadcrumb -->
+                    <h2 class="title">@ViewData["Title"]</h2>
+                </div><!-- banner -->
+                <div class="ad-profile section">
+                    <div class="user-profile">
 
-    <!-- Main Content -->
-    <main role="main">
-        @RenderBody()
-    </main>
+                        <div class="user-images">
+                            <div class="user-images">
+                                <img src="~/UserTemplate/images/user.jpg" alt="User Images" class="img-fluid">
+                            </div>
 
-    <!-- Footer -->
+
+                        </div>
+
+                        <div class="user">
+                            <h2>سلام, <a href="#">صفورا عزیز</a></h2>
+                            <h5>آخرین ورود شما سه‌شنبه ، 21 اردیبهشت 1399</h5>
+                        </div>
+
+                        <div class="favorites-user">
+                            <div class="my-ads">
+                                <a href="my-ads.html">23<small>سفارش های من</small></a>
+                            </div>
+                            <div class="favorites">
+                                <a href="#">18<small>پیشنهاد های من</small></a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- user-profile -->
+
+                    <ul class="user-menu">
+                        <li class=@profile><a asp-page="/Users/Profile">پروفایل</a></li>
+                        <li class=@orders><a asp-page="/Users/Orders"> سفارشات من</a></li>
+                        <li class=@logout><a asp-page="/Users/Logout">خروج از اکانت</a></li>
+                    </ul>
+                </div>
+                <!-- ad-profile -->
+                @RenderBody();
+            </div>
+            <!-- container -->
+        </section>
+    }
+
+    else
+    {
+        @RenderBody();
+    }
+
+    <!-- ad-profile-page -->
+    <!-- footer -->
     <footer id="footer" class="clearfix">
-        <div class="footer-bottom text-center">
+        <!-- footer-top -->
+        <section class="footer-top clearfix">
+            <div class="container">
+                <div class="row">
+                    <!-- footer-widget -->
+                    <div class="col-sm-3">
+                        <div class="footer-widget">
+                            <h3>لینک‌های مرتبط</h3>
+                            <ul>
+                                <li><a href="#">درباره ما</a></li>
+                                <li><a href="#">ارتباط با ما</a></li>
+                                <li><a href="#">مشاغل </a></li>
+                                <li><a href="#">همه‌ی شهرها</a></li>
+                                <li><a href="#">پشتیبانی</a></li>
+                                <li><a href="#">تبلیغات با ما</a></li>
+                                <li><a href="#">بلاگ</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- footer-widget -->
+                    <!-- footer-widget -->
+                    <div class="col-sm-3">
+                        <div class="footer-widget">
+                            <h3>چگونه کارشناسان خبره را بیابیم؟</h3>
+                            <ul>
+                                <li><a href="#">ویژگی کارشناس خوب</a></li>
+                                <li><a href="#">امتیازات کارشناسان شهر شما</a></li>
+                                <li><a href="#">راه ارتباطی با کارشناس</a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- footer-widget -->
+                    <!-- footer-widget -->
+                    <div class="col-sm-3">
+                        <div class="footer-widget social-widget">
+                            <h3>ما را دنبال کنید</h3>
+                            <ul>
+                                <li>
+                                    <a href="#"><i class="fa fa-facebook-official"></i>فیسبوک</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-twitter-square"></i>توییتر</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-telegram"></i>تلگرام</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-whatsapp"></i>واتساپ</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- footer-widget -->
+                    <!-- footer-widget -->
+                    <div class="col-sm-3">
+                        <div class="footer-widget news-letter">
+                            <h3>اشتراک خبرنامه</h3>
+                            <p>سرویسچه | خدمات رسانی آنلاین</p>
+                            <!-- form -->
+
+                        </div>
+                    </div>
+                    <!-- footer-widget -->
+                </div>
+                <!-- row -->
+            </div>
+            <!-- container -->
+        </section>
+        <!-- footer-top -->
+
+        <div class="footer-bottom clearfix text-center">
             <div class="container">
                 <p>
                     &copy; 1399. تمامی حقوق محفوظ است ارایه از
@@ -94,12 +297,35 @@
                 </p>
             </div>
         </div>
+        <!-- footer-bottom -->
     </footer>
+    <!-- footer -->
+    <!--/Preset Style Chooser-->
+    <div class="style-chooser">
+        <div class="style-chooser-inner">
+            <a href="#" class="toggler"><i class="fa fa-life-ring fa-spin"></i></a>
+            <h4>Presets</h4>
+            <ul class="preset-list clearfix">
+                <li class="preset1 active" data-preset="1">
+                    <a href="#" data-color="preset1"></a>
+                </li>
+                <li class="preset2" data-preset="2">
+                    <a href="#" data-color="preset2"></a>
+                </li>
+                <li class="preset3" data-preset="3">
+                    <a href="#" data-color="preset3"></a>
+                </li>
+                <li class="preset4" data-preset="4">
+                    <a href="#" data-color="preset4"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--/End:Preset Style Chooser-->
 
-    <!-- JS -->
-    <script src="@Url.Content("~/UserTemplate/js/jquery.min.js")"></script>
-    <script src="@Url.Content("~/UserTemplate/js/bootstrap.bundle.min.js")"></script>
-    <script src="@Url.Content("~/UserTemplate/js/custom.js")"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
+<!-- Mirrored from atiyehahmadi.ir/trade/my-profile.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 03 Jan 2025 19:01:49 GMT -->
 </html>

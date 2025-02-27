@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace HomeService.Endpoint.Razor.Areas.Admin.Pages
+namespace HomeService.Endpoint.Razor.Areas.Account.Pages
 {
     public class LoginModel(IUserAppService userAppService) : PageModel
     {
@@ -23,8 +23,8 @@ namespace HomeService.Endpoint.Razor.Areas.Admin.Pages
             var isLogin = await _userAppService.Login(UserName, Password, cancellationToken);
             if (isLogin.Succeeded)
             {
-               
-                return RedirectToPage("Index");
+
+               return RedirectToPage("Index", new { area = "Admin" });
             }
             TempData["ErrorMessage"] = "نام کاربری یا رمز عبور اشتباه است";
             return Page();

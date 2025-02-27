@@ -8,6 +8,7 @@ public class SubCategory
     [Key]
     public int Id { get; set; }
     [MaxLength(100)]
+    [MinLength(2)]
     [Required]
     public string Title { get; set; } = null!;
     public bool IsActive { get; set; } = true;

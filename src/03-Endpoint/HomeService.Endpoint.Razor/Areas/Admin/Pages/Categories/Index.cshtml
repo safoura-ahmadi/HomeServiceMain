@@ -118,7 +118,12 @@
                                 titleError.textContent = "نام باید حداقل 2 کاراکتر باشد.";
                                 titleInput.classList.add("is-invalid");
                                 isValid = false;
-                            } else {
+                            } 
+                            else if (titleInput.value.trim().length > 100) {
+                                titleError.textContent = "نام باید حداکثر 100 کاراکتر باشد.";
+                                titleInput.classList.add("is-invalid");
+                                isValid = false;
+                            }else {
                                 titleInput.classList.add("is-valid");
                             }
 

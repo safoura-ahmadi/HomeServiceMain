@@ -3,12 +3,14 @@ using HomeService.Domain.Core.Contracts.Service.BaseEntities;
 using HomeService.Domain.Core.Dtos.BaseEntities;
 using HomeService.Domain.Core.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace HomeService.Domain.Service.AppServices.BaseEntities;
 
-public class CommentAppService(ICommentService commentService) : ICommentAppService
+public class CommentAppService(ICommentService commentService, ILogger<CommentAppService> logger) : ICommentAppService
 {
     private readonly ICommentService _commentService = commentService;
+    private readonly ILogger<CommentAppService> _logger = logger;
 
     public async Task<List<GetCommentDto>> GetAll(int pageNumber, CancellationToken cancellationToken)
     {
@@ -22,6 +24,7 @@ public class CommentAppService(ICommentService commentService) : ICommentAppServ
     }
     public async Task<Result> ChangeStatusToRejected(int id, CancellationToken cancellationToken)
     {
+        _logger.Log(LogLevel.Warning, "Attempt to delete{item}", "Comment");
         if (id <= 0)
             return Result.Fail("کامنتی با این مشخصات یافت نشد");
             return await _commentService.ChangeStatusToRejected(id, cancellationToken);

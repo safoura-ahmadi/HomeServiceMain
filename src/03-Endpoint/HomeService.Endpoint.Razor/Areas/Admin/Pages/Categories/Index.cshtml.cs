@@ -21,6 +21,10 @@ namespace HomeService.Endpoint.Razor.Areas.Admin.Pages.Categories
         public IFormFile ImageFile { get; set; } = null!;
         public async Task OnGet(CancellationToken cancellationToken)
         {
+            if(User is null)
+            {
+                RedirectToPage("./AccessDenied");
+            }
             Categories = await _appService.GetAll(cancellationToken);
         }
         public async Task<IActionResult> OnPost(CancellationToken cancellationToken)

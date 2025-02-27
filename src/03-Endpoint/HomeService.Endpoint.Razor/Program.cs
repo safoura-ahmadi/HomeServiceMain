@@ -23,6 +23,7 @@ using HomeService.Domain.Service.Services.BaseEntity;
 using HomeService.Domain.Service.Services.Categories;
 using HomeService.Domain.Service.Services.Orders;
 using HomeService.Domain.Service.Services.Users;
+using HomeService.Endpoint.Razor.Middleware;
 using HomeService.Infrastructure.EfCore.Common;
 using HomeService.Infrastructure.EfCore.Repository.BaseEntities;
 using HomeService.Infrastructure.EfCore.Repository.Categories;
@@ -52,11 +53,10 @@ try
     builder.Services.AddSingleton(siteSetting!);
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseSqlServer(siteSetting!.ConnectionString.SqlConnection));
-    builder.Services.ConfigureApplicationCookie(options =>
+    builder.Services.AddAuthentication("Authenticate")
+    .AddCookie("Authenticate", options =>
     {
-        options.LoginPath = "/Admin/Login";
-        options.AccessDeniedPath = "/Admin/AccessDenied";
-        
+        options.AccessDeniedPath = "/Account/AccessDeniedModel";
     });
     // Add services to the container.
     builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
@@ -95,6 +95,7 @@ try
     builder.Services.AddScoped<ICityRepository, CityEfRepository>();
     builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
     {
+       
         options.SignIn.RequireConfirmedAccount = false;
         options.Password.RequireDigit = false;
         options.Password.RequiredLength = 6;
@@ -116,7 +117,7 @@ try
         // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
         app.UseHsts();
     }
-
+    app.UseErrorLogging();
     app.UseHttpsRedirection();
 
     app.UseRouting();

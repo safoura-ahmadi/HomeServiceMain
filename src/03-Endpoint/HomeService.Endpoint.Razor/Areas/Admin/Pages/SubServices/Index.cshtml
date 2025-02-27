@@ -46,36 +46,36 @@
 
             </div>
             <div id="form-modal" class="modal fade" role="dialog" aria-hidden="false" tabindex="-1">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-bs-dismiss="modal">×</button>
                             <h4 class="modal-title">ثبت هوم سرویس</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <p class="text-center m-t-30 m-b-40">
-                                        <i class="icon-user-following border border-primary img-circle text-primary font-xxxlg p-20"></i>
-                                    </p>
+                            <div class="row justify-content-center">
+                                <div class="col-12 text-center mb-4">
+                                    <i class="icon-user-following border border-primary rounded-circle text-primary fs-1 p-3"></i>
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-12">
                                     <form method="post" asp-page="/SubServices/Index" enctype="multipart/form-data" class="form-horizontal" role="form" id="subservice-form">
                                         @Html.AntiForgeryToken()
-                                        <div class="col-md-8 col-lg-6 m-auto m-b-10">
-                                            <div class="input-group round">
-                                                <span class="input-group-addon">
+                                        <div class="mb-3">
+                                            <div class="input-group">
+                                                <span class="input-group-text">
                                                     <i class="icon-home"></i>
                                                 </span>
                                                 <input type="text" class="form-control ltr text-right" asp-for="CreateModel.Title" placeholder="نام هوم سرویس" id="title-input">
-                                                <span class="input-group-addon validation-icon"></span>
+                                                <span class="input-group-text">
+                                                    <i class="validation-icon"></i>
+                                                </span>
                                             </div>
-                                            <div id="title-error" class="error-message text-danger mt-2"></div>
+                                            <div id="title-error" class="text-danger mt-2"></div>
                                         </div>
 
-                                        <div class="form-group m-b-10 m-auto mt-2">
+                                        <div class="mb-3">
                                             <div class="input-group">
-                                                <span class="input-group-addon">
+                                                <span class="input-group-text">
                                                     <i class="icon-options"></i>
                                                 </span>
                                                 <select asp-for="CreateModel.SubCategoryId" class="form-select" id="subcategory-input">
@@ -84,48 +84,57 @@
                                                         <option value="@item.Id">@item.Title</option>
                                                     }
                                                 </select>
-                                                <span class="input-group-addon validation-icon"></span>
+                                                <span class="input-group-text">
+                                                    <i class="validation-icon"></i>
+                                                </span>
                                             </div>
-                                            <div id="subcategory-error" class="error-message text-danger mt-2"></div>
+                                            <div id="subcategory-error" class="text-danger mt-2"></div>
                                         </div>
 
-                                        <div class="form-group m-b-10 m-auto mt-2">
+                                        <div class="mb-3">
                                             <div class="input-group">
-                                                <span class="input-group-addon">
+                                                <span class="input-group-text">
                                                     <i class="fas fa-hand-holding-dollar"></i>
                                                 </span>
                                                 <input type="text" class="form-control ltr text-right" asp-for="CreateModel.BasePrice" placeholder="قیمت پایه" id="baseprice-input">
-                                                <span class="input-group-addon validation-icon"></span>
+                                                <span class="input-group-text">
+                                                    <i class="validation-icon"></i>
+                                                </span>
                                             </div>
-                                            <div id="baseprice-error" class="error-message text-danger mt-2"></div>
+                                            <div id="baseprice-error" class="text-danger mt-2"></div>
                                         </div>
 
-                                        <div class="col-md-8 col-lg-6 m-auto m-b-10">
-                                            <div class="input-group round">
-                                                <span class="input-group-addon">
+                                        <div class="mb-3">
+                                            <div class="input-group">
+                                                <span class="input-group-text">
                                                     <i class="icon-options"></i>
                                                 </span>
                                                 <textarea asp-for="CreateModel.Description" class="form-control ltr text-right" placeholder="توضیحات" id="description-input" style="height: 70px;"></textarea>
-                                                <span class="input-group-addon validation-icon"></span>
+                                                <span class="input-group-text">
+                                                    <i class="validation-icon"></i>
+                                                </span>
                                             </div>
-                                            <div id="description-error" class="error-message text-danger mt-2"></div>
+                                            <div id="description-error" class="text-danger mt-2"></div>
                                         </div>
 
-                                        <div class="col-md-8 col-lg-6 m-auto m-b-10">
-                                            <div class="input-group round">
+                                        <div class="mb-3">
+                                            <div class="input-group">
                                                 <input asp-for="CreateModel.ImageFile" type="file" class="form-control ltr text-right" id="image-input">
-                                                <span class="input-group-addon validation-icon"></span>
+                                                <span class="input-group-text">
+                                                    <i class="validation-icon"></i>
+                                                </span>
                                             </div>
-                                            <div id="image-error" class="error-message text-danger mt-2"></div>
+                                            <div id="image-error" class="text-danger mt-2"></div>
                                         </div>
 
-                                        <div class="col-md-8 col-lg-6 m-auto">
-                                            <button type="submit" class="btn btn-success btn-block mt-4 mb-2">
+                                        <div class="d-grid gap-2">
+                                            <button type="submit" class="btn btn-success">
                                                 <i class="icon-cursor"></i>
                                                 ذخیره
-                                                <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
                                             </button>
-                                            <button type="button" class="btn btn-danger btn-block float-end mb-3" data-bs-dismiss="modal">بازگشت<div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div></button>
+                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                                                بازگشت
+                                            </button>
                                         </div>
                                     </form>
                                 </div>

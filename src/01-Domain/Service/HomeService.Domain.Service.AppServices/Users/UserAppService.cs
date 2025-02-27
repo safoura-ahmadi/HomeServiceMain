@@ -53,6 +53,7 @@ public class UserAppService(IUserService userService, ICustomerAppService custom
 
     public async Task<Result> UnConfirmById(int id, CancellationToken cancellationToken)
     {
+        _logger.Log(LogLevel.Warning, "Attempt to delete{item}", "User");
         if (id <= 0)
             return Result.Fail("کاربری با این مشخصات یافت نشد");
         _logger.LogInformation("have request to unconfirm user by {id}", id.ToString());

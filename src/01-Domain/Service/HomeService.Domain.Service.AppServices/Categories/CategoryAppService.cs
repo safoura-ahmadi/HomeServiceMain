@@ -4,13 +4,15 @@ using HomeService.Domain.Core.Contracts.Service.Categories;
 using HomeService.Domain.Core.Dtos.Categories;
 using HomeService.Domain.Core.Entities;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace HomeService.Domain.Service.AppServices.Categories;
 
-public class CategoryAppService(ICategoryService categoryService, IImageService imageService) : ICategoryAppService
+public class CategoryAppService(ICategoryService categoryService, IImageService imageService, ILogger<CategoryAppService> logger) : ICategoryAppService
 {
     private readonly ICategoryService _categoryService = categoryService;
     private readonly IImageService _imageService = imageService;
+    private readonly ILogger<CategoryAppService> _logger = logger;
 
     public async Task<Result> Create(string title, IFormFile imageFile, CancellationToken cancellationToken)
     {
@@ -38,9 +40,12 @@ public class CategoryAppService(ICategoryService categoryService, IImageService 
 
     public async Task<Result> Delete(int id, CancellationToken cancellationToken)
     {
+        _logger.Log(LogLevel.Warning, "Attempt to delete{item}", "Category");
         if (id <= 0)
             return Result.Fail("کتگوری با این مشخصات وجود ندارد");
+
         return await _categoryService.Delete(id, cancellationToken);
+
     }
 
     public async Task<List<GetCategoryForAdminPageDto>> GetAll(CancellationToken cancellationToken)
@@ -55,7 +60,7 @@ public class CategoryAppService(ICategoryService categoryService, IImageService 
         return await _categoryService.GetById(id, cancellationToken);
     }
 
-    public async Task<Result> Update(int id, string title, IFormFile imageFile,CancellationToken cancellationToken)
+    public async Task<Result> Update(int id, string title, IFormFile imageFile, CancellationToken cancellationToken)
     {
         if (id <= 0)
             return Result.Fail("ایدی دسته بندی نامعتبر است");
@@ -77,7 +82,7 @@ public class CategoryAppService(ICategoryService categoryService, IImageService 
         {
             Result.Fail("مشکلی در اپلود عکس بوجود آمده است");
         }
-        return await _categoryService.Update(id, title,imagePath, cancellationToken);
+        return await _categoryService.Update(id, title, imagePath, cancellationToken);
 
     }
 
@@ -87,7 +92,7 @@ public class CategoryAppService(ICategoryService categoryService, IImageService 
             return Result.Fail("کتگوری با این مشخصات یافت نشد");
         if (string.IsNullOrEmpty(model.Title))
             return Result.Fail("عنوان وارد شده نامعتبر است");
-       
+
         try
         {
             if (model.ImageFile is not null)
@@ -101,6 +106,6 @@ public class CategoryAppService(ICategoryService categoryService, IImageService 
         {
             Result.Fail("مشکلی در اپلود عکس بوجود آمده است");
         }
-        return await _categoryService.Update(model,cancellationToken);
+        return await _categoryService.Update(model, cancellationToken);
     }
 }

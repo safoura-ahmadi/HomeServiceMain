@@ -3,13 +3,15 @@ using HomeService.Domain.Core.Contracts.Service.BaseEntities;
 using HomeService.Domain.Core.Contracts.Service.Categories;
 using HomeService.Domain.Core.Dtos.Categories;
 using HomeService.Domain.Core.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace HomeService.Domain.Service.AppServices.Categories;
 
-public class SubServiceAppService(ISubServiceService subService, IImageService imageService) : ISubServiceAppService
+public class SubServiceAppService(ISubServiceService subService, IImageService imageService, ILogger<SubServiceAppService> logger) : ISubServiceAppService
 {
     private readonly ISubServiceService _subService = subService;
     private readonly IImageService _imageService = imageService;
+    private readonly ILogger<SubServiceAppService> _logger = logger;
 
     public async Task<Result> Create(CreateSubServiceDto model, CancellationToken cancellationToken)
     {
@@ -28,6 +30,7 @@ public class SubServiceAppService(ISubServiceService subService, IImageService i
 
     public async Task<Result> Delete(int id, CancellationToken cancellationToken)
     {
+        _logger.Log(LogLevel.Warning, "Attempt to delete{item}", "SubService");
         if (id <= 0)
             return Result.Fail("هوم سرویسی با این ایدی موجود نیست");
         return await _subService.Delete(id, cancellationToken);

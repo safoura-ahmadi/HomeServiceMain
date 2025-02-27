@@ -9,72 +9,84 @@
         <form method="post" asp-page="/SubServices/Update" enctype="multipart/form-data" class="form-horizontal" role="form">
             @Html.AntiForgeryToken()
             <input type="hidden" class="form-control ltr text-right" asp-for="CreateModel!.Id">
-            <div class="col-md-8 col-lg-6 m-auto m-b-10">
-                <div class="input-group round">
-                    <span class="input-group-addon">
+
+            <!-- Title Input -->
+            <div class="col-md-8 col-lg-6 m-auto mb-3">
+                <div class="input-group">
+                    <span class="input-group-text">
                         <i class="icon-home"></i>
                     </span>
-                    <input type="text" class="form-control ltr text-right" asp-for="CreateModel!.Title" placeholder="نام هوم سرویس " required>
-                    <div class="text-danger small mt-1">
-                        <span asp-validation-for="CreateModel!.Title"></span>
-                    </div>
-                </div><!-- /.input-group -->
-                <div class="form-group m-b-10 m-auto mt-2 ">
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            <i class="icon-options"></i>
-                        </span>
-                        <select asp-for="CreateModel!.SubCategoryId" class="form-select" required>
-                            @foreach (var item in @Model.SubCategories)
-                            {
-                                <option value="@item.Id">@item.Title</option>
-                            }
-                        </select>
-                    </div><!-- /.input-group -->
+                    <input type="text" class="form-control ltr text-right" asp-for="CreateModel!.Title" placeholder="نام هوم سرویس" >
                 </div>
-
-                <div class="form-group m-b-10 m-auto mt-2 ">
-                    <div class="input-group">
-                        <span class="input-group-addon">
-
-                            <i class=" fas fa-hand-holding-dollar"></i>
-                        </span>
-                        <input type="text" class="form-control ltr text-right" asp-for="CreateModel!.BasePrice" placeholder="قیمت پایه " required>
-                        <div class="text-danger small mt-1">
-                            <span asp-validation-for="CreateModel!.BasePrice"></span>
-                        </div>
-                    </div><!-- /.input-group -->
+                <div class="text-danger small mt-1">
+                    <span asp-validation-for="CreateModel!.Title"></span>
                 </div>
-            </div><!-- /.col-md-8 -->
-            <div class="col-md-8 col-lg-6 m-auto m-b-10">
-                <div class="input-group round">
-                    <span class="input-group-addon">
+            </div>
+
+            <!-- SubCategory Select -->
+            <div class="col-md-8 col-lg-6 m-auto mb-3">
+                <div class="input-group">
+                    <span class="input-group-text">
                         <i class="icon-options"></i>
                     </span>
-                    <input asp-for="CreateModel!.Description" type="text" style="width: 50px; height: 70px; font-size: 15px;" class="form-control ltr text-right" placeholder="توضیحات " required>
-                    <div class="text-danger small mt-1">
-                        <span asp-validation-for="CreateModel!.Description"></span>
-                    </div>>
+                    <select asp-for="CreateModel!.SubCategoryId" class="form-select">
+                        @foreach (var item in @Model.SubCategories)
+                        {
+                            <option value="@item.Id">@item.Title</option>
+                        }
+                    </select>
                 </div>
-            </div><!-- /.col-md-8 -->
-            <div class="col-md-8 col-lg-6 m-auto m-b-10">
-                <div class="input-group round">
-                    <input asp-for="CreateModel!.ImageFile" type="file" class="form-control ltr text-right">
+                <div class="text-danger small mt-1">
+                    <span asp-validation-for="CreateModel!.SubCategoryId"></span>
+                </div>
+            </div>
 
+            <!-- BasePrice Input -->
+            <div class="col-md-8 col-lg-6 m-auto mb-3">
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="fas fa-hand-holding-dollar"></i>
+                    </span>
+                    <input type="text" class="form-control ltr text-right" asp-for="CreateModel!.BasePrice" placeholder="قیمت پایه" >
                 </div>
-            </div><!-- /.col-md-8 -->
+                <div class="text-danger small mt-1">
+                    <span asp-validation-for="CreateModel!.BasePrice"></span>
+                </div>
+            </div>
+
+            <!-- Description Input -->
+            <div class="col-md-8 col-lg-6 m-auto mb-3">
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="icon-options"></i>
+                    </span>
+                    <textarea asp-for="CreateModel!.Description" class="form-control ltr text-right" placeholder="توضیحات" ص style="height: 70px;"></textarea>
+                </div>
+                <div class="text-danger small mt-1">
+                    <span asp-validation-for="CreateModel!.Description"></span>
+                </div>
+            </div>
+
+            <!-- Image Input -->
+            <div class="col-md-8 col-lg-6 m-auto mb-3">
+                <div class="input-group">
+                    <input asp-for="CreateModel!.ImageFile" type="file" class="form-control ltr text-right">
+                </div>
+                <div class="text-danger small mt-1">
+                    <span asp-validation-for="CreateModel!.ImageFile"></span>
+                </div>
+            </div>
+
+            <!-- Buttons -->
             <div class="col-md-8 col-lg-6 m-auto">
                 <button type="submit" class="btn btn-success btn-block mt-4 mb-2">
                     <i class="icon-cursor"></i>
                     ذخیره
-                    <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
                 </button>
-                <a class="btn btn-danger btn-block float-end mb-3" asp-area="Admin" asp-page="/SubServices/Index" asp-page-handler="SubServices" >
+                <a class="btn btn-danger btn-block float-end mb-3" asp-area="Admin" asp-page="/SubServices/Index" asp-page-handler="SubServices">
                     بازگشت
                 </a>
-            </div><!-- /.col-md-8 -->
+            </div>
         </form>
     </div>
-
-    <!-- /col-lg-12 -->
 }

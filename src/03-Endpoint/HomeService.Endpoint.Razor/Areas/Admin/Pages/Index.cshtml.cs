@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace HomeService.Endpoint.Razor.Areas.Admin
+namespace HomeService.Endpoint.Razor.Areas.Admin.Pages
 {
     [Authorize(Roles = "Admin")]
     public class IndexModel(IAdminIndexPageAppService adminIndexPageAppService) : PageModel

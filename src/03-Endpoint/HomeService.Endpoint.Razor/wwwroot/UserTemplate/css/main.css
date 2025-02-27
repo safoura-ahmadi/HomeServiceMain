@@ -1252,13 +1252,13 @@ a.verified i {
 }
 
 #home-section {
-	background-image: url(../images/bg/2.jpg);
-	padding: 70px 0 90px;
+	background-image: url(../images/bg/The-best-home-cleaning-application.jpeg);
+	padding: 200px 0 200px;
 	color: #fff;
 }
 
 #home-section.parallax-section:before {
-	background-color: rgba(37, 34, 34, 0.8);
+	background-color: rgba(88, 86, 86, 0.4);
 }
 
 #home-section h1 {
@@ -1267,7 +1267,7 @@ a.verified i {
 }
 
 #home-section h2 {
-	font-size: 60px;
+	font-size: 50px;
 	font-family: iransans-bold;
 	color: #fff;
 	margin: 4px 0 30px;

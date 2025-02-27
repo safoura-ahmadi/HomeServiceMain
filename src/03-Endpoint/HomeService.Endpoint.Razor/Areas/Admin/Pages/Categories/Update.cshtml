@@ -6,40 +6,44 @@
 @if (Model.Category is not null)
 {
     <div class="col-lg-12">
-    <form method="post" asp-page="/Categories/Update" enctype="multipart/form-data" class="form-horizontal" role="form">
-        @Html.AntiForgeryToken()
+        <form method="post" asp-page="/Categories/Update" enctype="multipart/form-data" class="form-horizontal" role="form">
+            @Html.AntiForgeryToken()
             <input type="hidden" class="form-control ltr text-right" asp-for="Category!.Id">
-        <div class="col-md-8 col-lg-6 m-auto m-b-10">
-            <div class="input-group round">
-                <span class="input-group-addon">
-                    <i class="icon-home"></i>
-                </span>
-                <input type="text" class="form-control ltr text-right" asp-for="Category!.Title" placeholder="نام کتگوری " required>
-                    <div class="text-danger small mt-1">
-                        <span asp-validation-for="Category!.Title"></span>
-                    </div>
-            </div><!-- /.input-group -->
 
-        </div><!-- /.col-md-8 -->
-
-        <div class="col-md-8 col-lg-6 m-auto m-b-10">
-            <div class="input-group round">
-                <input asp-for="Category!.ImageFile" type="file" class="form-control ltr text-right">
-                    <div class="text-danger small mt-1">
-                        <span asp-validation-for="Category!.ImageFile"></span>
-                    </div>
-            </div>
-        </div><!-- /.col-md-8 -->
-        <div class="col-md-8 col-lg-6 m-auto">
-            <button type="submit" class="btn btn-success btn-block mt-4 mb-2">
-                <i class="icon-cursor"></i>
-                ذخیره
-                <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
-            </button>
+            <!-- Title Input -->
+            <div class="col-md-8 col-lg-6 m-auto mb-3">
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="icon-home"></i>
+                    </span>
+                    <input type="text" class="form-control ltr text-right" asp-for="Category!.Title" placeholder="نام کتگوری">
+                </div>
+                <div class="text-danger small mt-1">
+                    <span asp-validation-for="Category!.Title"></span>
+                </div>
+            </div><!-- /.col-md-8 -->
+            <!-- Image Input -->
+            <div class="col-md-8 col-lg-6 m-auto mb-3">
+                <div class="input-group">
+                    <input asp-for="Category!.ImageFile" type="file" class="form-control ltr text-right">
+                </div>
+                <div class="text-danger small mt-1">
+                    <span asp-validation-for="Category!.ImageFile"></span>
+                </div>
+            </div><!-- /.col-md-8 -->
+            <!-- Buttons -->
+            <div class="col-md-8 col-lg-6 m-auto">
+                <button type="submit" class="btn btn-success btn-block mt-4 mb-2">
+                    <i class="icon-cursor"></i>
+                    ذخیره
+                    <div class="paper-ripple"><div class="paper-ripple__background"></div><div class="paper-ripple__waves"></div></div>
+                </button>
                 <a class="btn btn-danger btn-block float-end mb-3" asp-area="Admin" asp-page="/Categories/Index" asp-page-handler="Categories">
                     بازگشت
                 </a>
-                </div>
-    </form>
-</div><!-- /col-lg-12 -->
+            </div>
+        </form>
+    </div>
+
+    <!-- /col-lg-12 -->
 }

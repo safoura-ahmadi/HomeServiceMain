@@ -2,14 +2,16 @@
 using HomeService.Domain.Core.Contracts.Service.Orders;
 using HomeService.Domain.Core.Dtos.Orders;
 using HomeService.Domain.Core.Entities;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
 
 namespace HomeService.Domain.Service.AppServices.Orders;
 
-public class OrderAppService(IOrderService orderService, ISuggestionService suggestionService) : IOrderAppService
+public class OrderAppService(IOrderService orderService, ISuggestionService suggestionService, ILogger<OrderAppService> logger) : IOrderAppService
 {
     private readonly IOrderService _orderService = orderService;
     private readonly ISuggestionService _suggestionService = suggestionService;
+    private readonly ILogger<OrderAppService> _logger = logger;
 
     public async Task<Result> ChangeStateToWaitingForExpertOffer(int id, CancellationToken cancellationToken)
     {
@@ -80,6 +82,7 @@ public class OrderAppService(IOrderService orderService, ISuggestionService sugg
 
     public async Task<Result> Delete(int id, CancellationToken cancellationToken)
     {
+        _logger.Log(LogLevel.Warning, "Attempt to delete{item}", "Order");
         if (id <= 0)
             return Result.Fail("سفارشی با این مشخصات وجود ندارد");
         return await _orderService.Delete(id, cancellationToken);

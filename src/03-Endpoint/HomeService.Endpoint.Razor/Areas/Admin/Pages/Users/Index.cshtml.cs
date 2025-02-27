@@ -57,20 +57,22 @@ namespace HomeService.Endpoint.Razor.Areas.Admin.Pages.Users
                     if (result.Succeeded)
                     {
                         TempData["SuccessMessage"] = "ثبت نام با موفقیت انجام شد";
-                        return RedirectToPage("Index");
+                       
                     }
                     foreach (var error in result.Errors)
                     {
-                        ModelState.AddModelError(string.Empty, error.Description);
+                        TempData["ErrorMessage"] = error.Description;
+                        return RedirectToPage("Index");
                     }
                 }
                 catch
                 {
                     TempData["ErrorMessage"] = "مشکلی در دیتا بیس وجود دارد";
-                    return RedirectToPage("Index");
+                  
                 }
+                return RedirectToPage("Index");
             }
-            ViewData["ShowModal"] = true;
+          
             return Page();
         }
     }
