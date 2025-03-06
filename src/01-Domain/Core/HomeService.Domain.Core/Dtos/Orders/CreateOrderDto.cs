@@ -5,9 +5,7 @@ namespace HomeService.Domain.Core.Dtos.Orders;
 
 public class CreateOrderDto
 {
-    [Display(Name = "تاریخ اتمام کار")]
-    [Required(ErrorMessage = "وارد کردن تاریخ الزامی است")]
-    [DateValidation(ErrorMessage = "تاریخ وارد شده نامعتبر است")]
+
     public DateTime TimeToDone { get; set; }
     [Display(Name = "قیمت پیشنهادی")]
     [Required(ErrorMessage = "وارد کردن قیمت الزامی است")]
@@ -18,5 +16,7 @@ public class CreateOrderDto
     public string? Description { get; set; }
     public int CustomerId { get; set; }
     public int SubServiceId { get; set; }
+    [AllowedExtensions(new string[] { ".jpg", ".jpeg", ".png" }, ErrorMessage = "فرمت فایل نامعتبر است. فقط jpg، jpeg و png مجاز هستند.")]
+
     public List<IFormFile>? Images { get; set; }
 }

@@ -13,8 +13,11 @@
             <div class="delete-account section">
                 <h2>حذف اکانت</h2>
                 <h4>آیا برای خروج از اکانت خود مطمئن هستید؟</h4>
-                <a href="#" class="btn"> خروج اکانت</a>
-                <a href="#" class="btn cancle">انصراف</a>
+
+                <a class="btn" asp-area="Account" asp-page="/LogOut">
+                    خروج
+                </a>
+                <a asp-page="/Users/Profile"class="btn cancle">انصراف</a>
             </div>
         </div><!-- delete-account -->
 

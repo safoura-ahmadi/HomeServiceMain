@@ -12,4 +12,6 @@ public interface ISubServiceAppService
     Task<Result> Delete(int id, CancellationToken cancellationToken);
     Task<List<GetSubServiceDto>> Search(string text, CancellationToken cancellationToken);
     Task<UpdateSubServiceDto?> GetById(int id, CancellationToken cancellationToken);
+    Task<List<GetSubServiceDto>> GetBySubCategoryId(int subcategoryId, CancellationToken cancellationToken);
+
 }

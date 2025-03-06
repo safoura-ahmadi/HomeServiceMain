@@ -10,6 +10,6 @@ public class GetSuggestionForOrderDto
     public DateTime CreateAt { get; set; }
     public string? ExperLname { get; set; }
     public int Price { get; set; }
-    public string ExpertLname { get; set; } = null!;
     public bool IsAccepted { get; set; }
+    public int ExpertId { get; set; }
 }

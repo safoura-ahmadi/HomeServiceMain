@@ -15,6 +15,7 @@ public class SubCategoryEfRepository(ApplicationDbContext dbContext, ILogger<Sub
 
     public async Task<List<GetSubCategoryDto>> GetByCategoryId(int categoryId, CancellationToken cancellationToken)
     {
+       
         try
         {
             var item = await _dbContext.SubCategories.AsNoTracking()
@@ -36,6 +37,7 @@ public class SubCategoryEfRepository(ApplicationDbContext dbContext, ILogger<Sub
     //admin
     public async Task<List<GetSubCategoryDto>> GetAll(CancellationToken cancellationToken)
     {
+       
         try
         {
             var item = await _dbContext.SubCategories.AsNoTracking()

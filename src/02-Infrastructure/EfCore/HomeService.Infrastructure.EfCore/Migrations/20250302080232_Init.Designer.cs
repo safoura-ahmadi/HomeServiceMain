@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HomeService.Infrastructure.EfCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250220160601_Init2")]
-    partial class Init2
+    [Migration("20250302080232_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -212,7 +212,7 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                             CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CustomerId = 1,
                             ExpertId = 1,
-                            Score = 8,
+                            Score = 4,
                             Status = 0,
                             Text = "کارشون عالیه"
                         });
@@ -245,13 +245,13 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                         {
                             Id = 1,
                             OrderId = 1,
-                            Path = "Images/trending/1.jpg"
+                            Path = "1.jpg"
                         },
                         new
                         {
                             Id = 2,
                             OrderId = 1,
-                            Path = "Images/trending/2.jpg"
+                            Path = "2.jpg"
                         });
                 });
 
@@ -1025,10 +1025,6 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                     b.Property<decimal>("Balance")
                         .HasColumnType("decimal(18, 2)");
 
-                    b.Property<string>("Biography")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
                     b.Property<int>("CityId")
                         .HasColumnType("int");
 
@@ -1044,15 +1040,12 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Fname")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("ImagePath")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
-
-                    b.Property<bool>("IsConfirmed")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Lname")
                         .HasMaxLength(100)
@@ -1063,6 +1056,9 @@ namespace HomeService.Infrastructure.EfCore.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Mobile")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -1083,6 +1079,9 @@ namespace HomeService.Infrastructure.EfCore.Migrations
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
@@ -1116,7 +1115,6 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                             Email = "Admin@gmail.com",
                             EmailConfirmed = false,
                             Fname = "Safoura",
-                            IsConfirmed = true,
                             Lname = "ahmadi",
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
@@ -1124,6 +1122,7 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                             PasswordHash = "AQAAAAIAAYagAAAAEEYElkmU8CUuRLrvzHwkr+KZQSIYjReSWOd2FzOAPi3sm+ZxaBpA9F+fqwsJ3soaSA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "MS23CZ5FYG75543TAIMC5DDNKCVV7B74",
+                            Status = 1,
                             TwoFactorEnabled = false,
                             UserName = "Admin@gmail.com"
                         },
@@ -1137,14 +1136,14 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                             Email = "Expert@gmail.com",
                             EmailConfirmed = false,
                             Fname = "Tahoura",
-                            IsConfirmed = true,
                             Lname = "ahmadi",
-                            LockoutEnabled = true,
+                            LockoutEnabled = false,
                             NormalizedEmail = "EXPERT@GMAIL.COM",
                             NormalizedUserName = "EXPERT@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJkglU8KXnLbrWvBHwkr+KZQSIYjReSWOd2FzOAPi3sm+ZxaBpA9F+fqwsJ3soaSA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEYElkmU8CUuRLrvzHwkr+KZQSIYjReSWOd2FzOAPi3sm+ZxaBpA9F+fqwsJ3soaSA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "JK98SD2FYG75543TAIMC5DDNKCVV7B89",
+                            Status = 1,
                             TwoFactorEnabled = false,
                             UserName = "Expert@gmail.com"
                         },
@@ -1158,7 +1157,7 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                             Email = "Customer@gmail.com",
                             EmailConfirmed = false,
                             Fname = "Mahoura",
-                            IsConfirmed = true,
+                            ImagePath = "1.png",
                             Lname = "ahmadi",
                             LockoutEnabled = false,
                             NormalizedEmail = "Customer@GMAIL.COM",
@@ -1166,6 +1165,7 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                             PasswordHash = "AQAAAAIAAYagAAAAEMGklU8NXYfKrZHvBHwkr+KZQSIYjReSWOd2FzOAPi3sm+ZxaBpA9F+fqwsJ3soaSA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "PQ76XZ9FYG75543TAIMC5DDNKCVV7B32",
+                            Status = 1,
                             TwoFactorEnabled = false,
                             UserName = "Customer@gmail.com"
                         });
@@ -1267,6 +1267,64 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("AspNetUserClaims", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+                            ClaimValue = "Admin",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress",
+                            ClaimValue = "Admin@gmail.com",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+                            ClaimValue = "Expert",
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress",
+                            ClaimValue = "Expert@gmail.com",
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ClaimType = "ExpertId",
+                            ClaimValue = "1",
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+                            ClaimValue = "Customer",
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress",
+                            ClaimValue = "Customer@gmail.com",
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ClaimType = "CustomerId",
+                            ClaimValue = "1",
+                            UserId = 3
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>

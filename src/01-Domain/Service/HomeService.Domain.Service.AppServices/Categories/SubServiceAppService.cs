@@ -7,10 +7,10 @@ using Microsoft.Extensions.Logging;
 
 namespace HomeService.Domain.Service.AppServices.Categories;
 
-public class SubServiceAppService(ISubServiceService subService, IImageService imageService, ILogger<SubServiceAppService> logger) : ISubServiceAppService
+public class SubServiceAppService(ISubServiceService subService, IImageReposiotry imageService, ILogger<SubServiceAppService> logger) : ISubServiceAppService
 {
     private readonly ISubServiceService _subService = subService;
-    private readonly IImageService _imageService = imageService;
+    private readonly IImageReposiotry _imageService = imageService;
     private readonly ILogger<SubServiceAppService> _logger = logger;
 
     public async Task<Result> Create(CreateSubServiceDto model, CancellationToken cancellationToken)
@@ -48,6 +48,11 @@ public class SubServiceAppService(ISubServiceService subService, IImageService i
         if (id <= 0)
             return null;
          return await _subService.GetById(id, cancellationToken);
+    }
+
+    public async Task<List<GetSubServiceDto>> GetBySubCategoryId(int subcategoryId, CancellationToken cancellationToken)
+    {
+        return await _subService.GetBySubCategoryId(subcategoryId, cancellationToken);
     }
 
     public async Task<int> GetTotalConut(CancellationToken cancellationToken)

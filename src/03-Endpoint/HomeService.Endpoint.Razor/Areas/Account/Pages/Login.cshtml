@@ -4,140 +4,123 @@
     Layout = null;
 }
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en">
 
-<!-- Mirrored from demo.rayanik.com/modiran/light/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 11 Jan 2025 13:57:09 GMT -->
+
+<!-- Mirrored from atiyehahmadi.ir/trade/signin.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 03 Jan 2025 19:01:49 GMT -->
 <head>
-    <title>قالب مدیریتی مدیران</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="قالب مدیریت ایرانی مدیران ">
-    <meta name="keywords" content="قالب مدیریت, قالب داشبورد, قالب ادمین, قالب مدیران, قالب مدیریت راستچین , قالب ایرانی مدیریت, پوسته مدیریت, قالب ادمین داشبورد سایت, قالب مدیریتی, مدیران, قالب مدیریت مدیران, پنل مدیریت, پنل مدیریت مدرن, قالب ادمین متریال, قالب مدیریت بوت استرپ, قالب ادمین بوتسترپ, قالب ادمین سایت, پوسته مدیریتی ایرانی, قالب مدیرتی مدیران ایرانی, بهترین قالب مدیریت, قالب مدیریت ریسپانسیو, قالب مدیریت ارزان, قالب admin">
-    <link rel="shortcut icon" href="assets/images/favicon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Theme Region">
+    <meta name="description" content="">
 
-    <!-- BEGIN CSS -->
-    <link href="~/AdminTemplate/assets/plugins/bootstrap/bootstrap5/css/bootstrap.rtl.min.css" rel="stylesheet">
-    <link href="~/AdminTemplate/assets/plugins/simple-line-icons/css/simple-line-icons.min.css" rel="stylesheet">
-    <link href="~/AdminTemplate/assets/plugins/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
-    <link href="~/AdminTemplate/assets/plugins/paper-ripple/dist/paper-ripple.min.css" rel="stylesheet">
-    <link href="~/AdminTemplate/assets/plugins/iCheck/skins/square/_all.css" rel="stylesheet">
-    <link href="~/AdminTemplate/assets/css/style.css" rel="stylesheet">
-    <link href="~/AdminTemplate/assets/css/colors.css" rel="stylesheet">
-    <!-- END CSS -->
+    <title>کالا |  خرید و فروش بدون واسطه‌ی آنلاین </title>
 
+    <!-- CSS -->
+    <link rel="stylesheet" href="~/UserTemplate/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/UserTemplate/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/UserTemplate/css/icofont.css">
+    <link rel="stylesheet" href="~/UserTemplate/css/owl.carousel.css">
+    <link rel="stylesheet" href="~/UserTemplate/css/slidr.css">
+    <link rel="stylesheet" href="~/UserTemplate/css/main.css">
+    <link id="preset" rel="stylesheet" href="~/UserTemplate/css/presets/preset1.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <!-- font -->
+    <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,500,700,300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Signika+Negative:400,300,600,700' rel='stylesheet' type='text/css'>
+
+
+    <style>
+        .form-group {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .text-danger {
+           
+            position: absolute;
+            bottom: -20px; /* فاصله خطا از input */
+            font-size: 0.875rem; /* اندازه فونت خطا */
+            color: #dc3545; /* رنگ خطا */
+        }
+    </style>
 
 </head>
-<body class="fix-header active-ripple theme-darkpurple overflow-hidden  ">
-    <!-- BEGIN LOEADING -->
-    <div id="loader">
-        <div class="spinner"></div>
-    </div><!-- /loader -->
-    <!-- END LOEADING -->
-    <!-- BEGIN WRAPPER -->
-    <div class="fixed-modal-bg"></div>
-    <a href="#" class="btn btn-primary btn-icon btn-round btn-lg" id="toggle-dark-mode">
-        <i class="icon-bulb"></i>
-    </a>
+<body>
 
-    @if (TempData["ErrorMessage"] != null)
-    {
-        <div id="errorMessage" class="alert alert-danger" role="alert">
-            @TempData["ErrorMessage"]
-        </div>
 
-        TempData["ErrorMessage"] = null;
-    }
 
-    <div class="modal-page shadow">
-        <div class="container-fluid">
-            <div class="row">
+    <section id="main" class="clearfix user-page">
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div id="errorMessage" class="alert alert-danger" role="alert">
+                @TempData["ErrorMessage"]
+            </div>
 
-                <div class="col-md-12">
-                    <div class="logo-con m-t-10 m-b-10">
-                        <img src="~/AdminTemplate/assets/images/logo-dark.png" class="dark-logo center-block img-responsive" alt="logo">
-                        <img src="~/AdminTemplate/assets/images/logo.png" class="light-logo center-block img-responsive" alt="logo">
-                    </div><!-- /.logo-con -->
+            TempData["ErrorMessage"] = null;
+        }
+        <script>
 
-                    <h2 class="text-center m-b-20">ورود ادمین</h2>
-                    <hr>
-                    <form id="form" asp-page="Login" class="m-t-30 m-b-30" method="POST" role="form">
-                        <div class="form-group">
-                            <label for="email" class="sr-only">رایانامه</label>
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="icon-envelope"></i>
-                                </span>
-                                <input asp-for="UserName" id="email" class="form-control ltr text-left" type="email" required>
-                            </div><!-- /.input-group -->
-                        </div><!-- /.form-group -->
-                        <div class="form-group">
-                            <label for="password" class="sr-only">رمز عبور</label>
-                            <div class="input-group has-btn-toggle-pass">
-                                <span class="input-group-addon">
-                                    <i class="icon-key"></i>
-                                </span>
-                                <input asp-for="Password" id="password" class="form-control ltr text-left" type="password" minlength="5" required>
-                                <span class="btn-toggle-pass">
-                                    <i class="icon-eye"></i>
-                                </span>
-                            </div><!-- /.input-group -->
-                        </div><!-- /.form-group -->
-                        <p>
-                            <button class="btn btn-success btn-block" type="submit">
-                                <i class="icon-login font-lg"></i>
-                                ورود
-                            </button>
-                        </p>
-                    </form>
-                    @*  <hr class="m-b-30">
-                    <a href="forget.html" class="btn btn-default btn-block m-b-10">
-                        <i class="icon-refresh font-lg"></i>
-                        بازیابی رمز  عبور
-                    </a>
-                    <a href="register.html" class="btn btn-default btn-block">
-                        <i class="icon-user-follow font-lg"></i>
-                        حساب ندارید، ثبت نام کنید!
-                    </a> *@
-                </div><!-- /.col-md-12 -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div><!-- /.modal-page -->
-    <!-- END WRAPPER -->
-    <!-- BEGIN JS -->
-    <script src="~/AdminTemplate/assets/plugins/jquery/dist/jquery-3.6.1.min.js"></script>
-    <script src="~/AdminTemplate/assets/plugins/jquery-migrate/jquery-migrate-1.2.1.min.js"></script>
-    <script src="~/AdminTemplate/assets/plugins/bootstrap/bootstrap5/js/bootstrap.bundle.min.js"></script>
-    <script src="~/AdminTemplate/assets/plugins/paper-ripple/dist/PaperRipple.min.js"></script>
-    <script src="~/AdminTemplate/assets/plugins/sweetalert2/dist/sweetalert2.min.js"></script>
-    <script src="~/AdminTemplate/assets/plugins/iCheck/icheck.min.js"></script>
-    <script src="~/AdminTemplate/assets/plugins/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/AdminTemplate/assets/plugins/jquery-validation/src/localization/messages_fa.js"></script>
-    <script src="~/AdminTemplate/assets/js/core.js"></script>
+            setTimeout(function () {
+                          var errorMessage = document.getElementById("errorMessage");
+                    if (errorMessage) {
+                    errorMessage.style.transition = "opacity 0.5s";
+                    errorMessage.style.opacity = "0";
+                    setTimeout(function () { errorMessage.style.display = "none"; }, 500);
+                }
+            }, 5000);
+        </script>
 
-    <!-- BEGIN PAGE JAVASCRIPT -->
-    <script src="~/AdminTemplate/assets/js/pages/login.js"></script>
-    <script>
+       
+            <div class="container">
+                <div class="row text-center">
+                    <!-- user-login -->
+                    <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
 
-        setTimeout(function () {
-            var successMessage = document.getElementById("successMessage");
-            var errorMessage = document.getElementById("errorMessage");
+                        <div class="user-account">
+                            <h2>فرم ورود</h2>
+                            <!-- form -->
+                            <form method="post">
+                                <div class="form-group">
+                                    <input type="text" asp-for="PageModel.Username" class="form-control" placeholder="نام کاربری">
+                                    <div class="text-danger small mt-1">
+                                        <span asp-validation-for="PageModel.Username"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" asp-for="PageModel.Password" class="form-control" placeholder="رمزعبور">
+                                    <div class="text-danger small mt-1">
+                                        <span asp-validation-for="PageModel.Password"></span>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn">ورود</button>
+                            </form><!-- form -->
+                            <!-- forgot-password -->
+                        </div>
+                        <a asp-area="Account" asp-page="/Register" class="btn-primary">ساخت اکانت جدید</a>
+                    </div><!-- user-login -->
+                </div><!-- row -->
+            </div>
+            <!-- container -->
+        }
+      
 
-            if (successMessage) {
-                successMessage.style.transition = "opacity 0.5s";
-                successMessage.style.opacity = "0";
-                setTimeout(function () { successMessage.style.display = "none"; }, 500);
-            }
-
-            if (errorMessage) {
-                errorMessage.style.transition = "opacity 0.5s";
-                errorMessage.style.opacity = "0";
-                setTimeout(function () { errorMessage.style.display = "none"; }, 500);
-            }
-        }, 5000);
-    </script>
-    <!-- END PAGE JAVASCRIPT -->
+    </section><!-- signin-page -->
+    <script src="~/UserTemplate/js/jquery.min.js"></script>
+    <script src="~/UserTemplate/js/popper.min.js"></script>
+    <script src="~/UserTemplate/js/modernizr.min.js"></script>
+    <script src="~/UserTemplate/js/bootstrap.min.js"></script>
+    <script src="https://maps.google.com/maps/api/js?sensor=true"></script>
+    <script src="~/UserTemplate/js/gmaps.min.js"></script>
+    <script src="~/UserTemplate/js/owl.carousel.min.js"></script>
+    <script src="~/UserTemplate/js/scrollup.min.js"></script>
+    <script src="~/UserTemplate/js/price-range.js"></script>
+    <script src="~/UserTemplate/js/jquery.countdown.js"></script>
+    <script src="~/UserTemplate/js/custom.js"></script>
+    <script src="~/UserTemplate/js/switcher.js"></script>
 
 </body>
 
-<!-- Mirrored from demo.rayanik.com/modiran/light/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 11 Jan 2025 13:57:10 GMT -->
 </html>

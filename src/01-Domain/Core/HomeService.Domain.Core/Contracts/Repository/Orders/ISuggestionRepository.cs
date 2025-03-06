@@ -12,9 +12,12 @@ public interface ISuggestionRepository
     Task<Result> IsOrderHaveAcceptedSugestion(int orderId, CancellationToken cancellationToken);
     Task<List<SuggestionDto>> GetAll(int pageNumber, int pageSize, CancellationToken cancellationToken);
     Task<int> GetTotalCount(CancellationToken cancellationToken);
+  
     Task<Result> Delete(int id, CancellationToken cancellationToken);
     //
     Task<List<GetlastSuggestionDto>> GetLatestSuggestions(CancellationToken cancellationToken);
-
-
+    Task<SuggestionDetailsDto?> GetDetailById(int id, CancellationToken cancellationToken);
+    Task<int> GetExpertActiveSuggestionsCount(int expertId, CancellationToken cancellationToken);
+    Task<int> GetCustomerActiveSuggestionsCount(int customerId, CancellationToken cancellationToken);
+    Task<SuggestionOverviewDto?> GetById(int id, CancellationToken cancellationToken);
 }

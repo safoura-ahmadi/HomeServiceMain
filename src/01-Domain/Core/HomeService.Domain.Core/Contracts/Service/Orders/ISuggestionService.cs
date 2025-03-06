@@ -15,6 +15,10 @@ public interface ISuggestionService
     Task<Result> Delete(int id, CancellationToken cancellationToken);
     //
     Task<List<GetlastSuggestionDto>> GetLatestSuggestions(CancellationToken cancellationToken);
+    Task<SuggestionDetailsDto?> GetDetailById(int id, CancellationToken cancellationToken);
+    Task<int> GetExpertActiveSuggestionsCount(int expertId, CancellationToken cancellationToken);
+    Task<int> GetCustomerActiveSuggestionsCount(int customerId, CancellationToken cancellationToken);
+    Task<SuggestionOverviewDto?> GetById(int id, CancellationToken cancellationToken);
 
 
 }

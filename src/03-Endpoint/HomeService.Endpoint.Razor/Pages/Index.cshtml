@@ -51,86 +51,24 @@
 
 		<div id="selectsection" class="section services">
 			<!-- single-service -->
-			<div class="single-service">
-				<div class="services-icon"><img src="~/UserTemplate/images/icon/1.png" alt="images" class="img-fluid"></div>
-				<h5>ماشین و وسایل نقلیه</h5>
-				<ul>
-					<li><a asp-page="/HomePageSubService"> خودرو </a></li>
-				</ul>
-			</div><!-- single-service -->
-			<!-- single-service -->
-			<div class="single-service">
-				<div class="services-icon"><img src="~/UserTemplate/images/icon/2.png" alt="images" class="img-fluid"></div>
-				<h5>دستگاه‌های دیجیتال  و گجت‌ها</h5>
-				<ul>
-					<li><a href="categories-main.html">گوشی موبایل</a></li>
-					<li><a href="categories-main.html">کامپیوتر و تبلت</a></li>
-					<li><a href="categories-main.html">  امنیت و شبکه</a></li>
-				</ul>
-			</div><!-- single-service -->
-			<!-- single-service -->
-			<div class="single-service">
-				<div class="services-icon"><img src="~/UserTemplate/images/icon/3.png" alt="images" class="img-fluid"></div>
-				<h5>تاسیسات ساختمان</h5>
-				<ul>
-					<li><a href="categories-main.html">  سرمایش و گرمایش </a></li>
-					<li><a href="categories-main.html">لوله کشی </a></li>
-					<li><a href="categories-main.html">برق و الکتونیک</a></li>
-					<li><a href="categories-main.html">تلفن و مخبارات  </a></li>
-				</ul>
-			</div><!-- single-service -->
-			<!-- single-service -->
-			<div class="single-service">
-				<div class="services-icon"><img src="~/UserTemplate/images/icon/icons8-truck-80.png" style="height: 50px;" alt="images" class="img-fluid"></div>
-				<h5> اسباب کشی وباربری </h5>
-				<ul>
-					<li><a href="categories-main.html"> اسباب کشی</a></li>
-					<li><a href="categories-main.html"> حمل بار</a></li>
-				</ul>
-			</div><!-- single-service -->
-			<!-- single-service -->
-			<div class="single-service">
-				<div class="services-icon"><img src="~/UserTemplate/images/icon/icons8-freezer-50.png" alt="images" class="img-fluid"></div>
-				<h5> لوازم خانگی </h5>
-				<ul>
-					<li><a href="categories-main.html">لوازم آشپزخانه</a></li>
-					<li><a href="categories-main.html">لوازم شسشتو و نظافت</a></li>
-					<li><a href="categories-main.html">لوازم صوتی وتصویری  </a></li>
-				</ul>
-			</div><!-- single-service -->
-			<!-- single-service -->
-			<div class="single-service">
-				<div class="services-icon"><img src="~/UserTemplate/images/icon/icons8-chair-50.png" alt="images" class="img-fluid"></div>
-				<h5>فرصت های شغلی</h5>
-				<ul>
-					<li><a href="categories-main.html">ماشین اداری  </a></li>
-					<li><a href="categories-main.html">صندلی اداری </a></li>
-				</ul>
-			</div><!-- single-service -->
-			<!-- single-service -->
-			<div class="single-service">
-				<div class="services-icon"><img src="~/UserTemplate/images/icon/icons8-broom-50.png" alt="images" class="img-fluid"></div>
-				<h5>نظافت و بهداشت</h5>
-				<ul>
-					<li><a href="categories-main.html">نظافت</a></li>
-					<li><a href="categories-main.html">خشکشویی واتوشویی</a></li>
-					<li><a href="categories-main.html">قالی شویی و مبل شویی</a></li>
-					<li><a href="categories-main.html">بازی و کنسول</a></li>
-					<li><a href="categories-main.html">سفر و رویداد </a></li>
-				</ul>
-			</div><!-- single-service -->
-			<!-- single-service -->
-			<div class="single-service">
-				<div class="services-icon"><img src="~/UserTemplate/images/icon/icons8-sofa-50.png" alt="images" class="img-fluid"></div>
-				<h5> دگوراسیون ساختمان</h5>
-				<ul>
-					<li><a href="categories-main.html">زیبایی </a></li>
-					<li><a href="categories-main.html">دکوراسیون  </a></li>
-					<li><a href="categories-main.html"> نقاشی ساختمان</a></li>
-					<li><a href="categories-main.html">باغبانی </a></li>
-					<li><a href="categories-main.html">دیگر</a></li>
-				</ul>
-			</div><!-- single-service -->
+			@foreach(var category in Model.Categories)
+			{
+				<div class="single-service">
+					<div class="services-icon"><img src="~/UserTemplate/images/icon/@category.ImagePath" alt="images" class="img-fluid"></div>
+					<h5>@category.Tilte</h5>
+
+					<ul>
+						@foreach (var subcategory in category.SubCategories)
+						{
+							<li><a asp-page="/HomePageSubService" asp-route-id="@subcategory.Id"> @subcategory.Title </a></li>
+						}
+					</ul>
+				</div>
+
+				<!-- single-service -->
+				
+			}
+		
 			<!-- single-service -->
 			<div class="single-service">
 				<div class="services-icon"><img src="~/UserTemplate/images/icon/11.png" alt="images" class="img-fluid"></div>

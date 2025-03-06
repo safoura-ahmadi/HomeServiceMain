@@ -1,0 +1,133 @@
+﻿@page
+@using HomeService.Domain.Core.Contracts.AppService.BaseEntities
+@model HomeService.Endpoint.Razor.Areas.Account.Pages.RegisterModel
+@{
+    Layout = null;
+}
+
+@inject ICityAppService _cityAppService
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>کالا | خرید و فروش بدون واسطه‌ی آنلاین</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="~/UserTemplate/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/UserTemplate/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/UserTemplate/css/icofont.css">
+    <link rel="stylesheet" href="~/UserTemplate/css/owl.carousel.css">
+    <link rel="stylesheet" href="~/UserTemplate/css/slidr.css">
+    <link rel="stylesheet" href="~/UserTemplate/css/main.css">
+    <link id="preset" rel="stylesheet" href="~/UserTemplate/css/presets/preset1.css">
+    <link rel="stylesheet" href="~/UserTemplate/css/responsive.css">
+    <!-- font -->
+    <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,500,700,300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Signika+Negative:400,300,600,700' rel='stylesheet' type='text/css'>
+    <style>
+        .form-group {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .text-danger {
+            position: absolute;
+            bottom: -20px;
+            font-size: 0.875rem;
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <section id="main" class="clearfix user-page">
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div id="errorMessage" class="alert alert-danger" role="alert">
+                @TempData["ErrorMessage"]
+            </div>
+
+            TempData["ErrorMessage"] = null;
+        }
+        <script>
+
+            setTimeout(function () {
+                          var errorMessage = document.getElementById("errorMessage");
+                    if (errorMessage) {
+                    errorMessage.style.transition = "opacity 0.5s";
+                    errorMessage.style.opacity = "0";
+                    setTimeout(function () { errorMessage.style.display = "none"; }, 500);
+                }
+            }, 5000);
+        </script>
+
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+                    <div class="user-account">
+                        <h2>ساخت اکانت</h2>
+                        <form method="post" id="registration-form">
+  
+
+                            <div class="form-group">
+                                <input asp-for="CreateModel.Email" class="form-control" placeholder="ایمیل" id="email">
+                                <div class="text-danger small mt-1">
+                                    <span asp-validation-for="CreateModel.Email"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <input asp-for="CreateModel.Password" type="password" class="form-control" placeholder="رمزعبور" id="password">
+                                <div class="text-danger small mt-1">
+                                    <span asp-validation-for="CreateModel.Password"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <input asp-for="CreateModel.RePassword" type="password" class="form-control" placeholder="تایید رمزعبور" id="repassword">
+                                <div class="text-danger small mt-1">
+                                    <span asp-validation-for="CreateModel.RePassword"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <select asp-for="CreateModel.Role" class="form-control">
+                                    <option value="">انتخاب نقش</option>
+                                    <option value="1">مشتری</option>
+                                    <option value="2">کارشناس</option>
+                                </select>
+                                <div class="text-danger small mt-1">
+                                    <span asp-validation-for="CreateModel.Role"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <select asp-for="CreateModel.CityId" class="form-control">
+                                    <option value="">انتخاب شهر</option>
+                                    @foreach (var city in await _cityAppService.GetAll(default))
+                                    {
+                                        <option value="@city.Id">@city.Title</option>
+                                    }
+                                </select>
+                                <div class="text-danger small mt-1">
+                                    <span asp-validation-for="CreateModel.CityId"></span>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn">ثبت‌نام</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/UserTemplate/js/jquery.min.js"></script>
+    <script src="~/UserTemplate/js/popper.min.js"></script>
+    <script src="~/UserTemplate/js/bootstrap.min.js"></script>
+    <script src="~/UserTemplate/js/custom.js"></script>
+</body>
+</html>

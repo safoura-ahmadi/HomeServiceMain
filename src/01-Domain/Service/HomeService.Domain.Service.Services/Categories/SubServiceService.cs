@@ -2,12 +2,15 @@
 using HomeService.Domain.Core.Contracts.Service.Categories;
 using HomeService.Domain.Core.Dtos.Categories;
 using HomeService.Domain.Core.Entities;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace HomeService.Domain.Service.Services.Categories;
 
-public class SubServiceService(ISubServiceRepository repository) : ISubServiceService
+public class SubServiceService(ISubServiceRepository repository, IMemoryCache memoryCache) : ISubServiceService
 {
     private readonly ISubServiceRepository _repository = repository;
+    private readonly IMemoryCache _memoryCache = memoryCache;
 
     public async Task<Result> Create(CreateSubServiceDto model, CancellationToken cancellationToken)
     {
@@ -38,7 +41,19 @@ public class SubServiceService(ISubServiceRepository repository) : ISubServiceSe
 
     public async Task<List<GetSubServiceDto>> GetBySubCategoryId(int subcategoryId, CancellationToken cancellationToken)
     {
-        return await _repository.GetBySubCategoryId(subcategoryId, cancellationToken);
+        List<GetSubServiceDto> item = _memoryCache.Get<List<GetSubServiceDto>>("SubCategoryServiceList") ?? [];
+
+        if ( item.Count > 0)
+        {
+           
+        }
+        else
+        {
+            item = await _repository.GetBySubCategoryId(subcategoryId, cancellationToken);
+            _memoryCache.Set("SubCategoryServiceList", item, TimeSpan.FromHours(12));
+        }
+        return item;
+      
     }
 
     public async Task<int> GetTotalCount(CancellationToken cancellationToken)

@@ -12,10 +12,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 namespace HomeService.Endpoint.Razor.Areas.Admin.Pages.Users
 {
     [Authorize(Roles = "Admin")]
-    public class IndexModel(IUserAppService userAppService, ICityAppService cityAppService) : PageModel
+    public class IndexModel(IUserAppService userAppService) : PageModel
     {
         private readonly IUserAppService _userAppService = userAppService;
-        private readonly ICityAppService _cityAppService = cityAppService;
+   
 
         [BindProperty]
         public CreateUserDto CreateModel { get; set; } = null!;
@@ -26,8 +26,7 @@ namespace HomeService.Endpoint.Razor.Areas.Admin.Pages.Users
         public static int CurrentPage { get; set; }
         [BindProperty]
         public int MyPage { get; set; }
-        [BindProperty]
-        public List<City> Cities { get; set; } = [];
+      
 
         public async Task OnGet(CancellationToken cancellationToken, int pageNumber = 1)
         {
@@ -36,7 +35,7 @@ namespace HomeService.Endpoint.Razor.Areas.Admin.Pages.Users
             CurrentPage = pageNumber;
             MyPage = pageNumber;
             Users = await _userAppService.GetAll(pageNumber, cancellationToken);
-            Cities = await _cityAppService.GetAll(cancellationToken);
+        ;
         }
         public IActionResult OnGetNextPage()
         {

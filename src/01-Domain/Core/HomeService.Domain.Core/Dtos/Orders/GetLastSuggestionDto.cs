@@ -9,5 +9,6 @@ public class GetlastSuggestionDto
     public DateTime CreateAt { get; set; }
     public string ExperLname { get; set; } = "UnKnown";
     public int Price { get; set; }
+    public int ExpertId { get; set; }
     public string SubServiceName { get; set; } = null!;
 }

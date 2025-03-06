@@ -1,0 +1,141 @@
+﻿@page
+@using HomeService.Domain.Core.Contracts.AppService.BaseEntities
+@model HomeService.Endpoint.Razor.Areas.Admin.Pages.Users.UpdateModel
+@{
+    ViewData["Title"] = "پیشخوان > مدیریت کاربران > ویرایش";
+}
+@inject ICityAppService _CityAppService
+@if (TempData["ErrorMessage"] != null)
+{
+    <div id="errorMessage" class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+    <hr />
+    TempData["ErrorMessage"] = null;
+}
+@if (Model.UserUpdateModel is not null)
+{
+    <div class="col-lg-12">
+        <div class="portlet box shadow">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h3 class="title">
+                        کاربران
+                    </h3>
+                </div><!-- /.portlet-title -->
+            </div><!-- /.portlet-heading -->
+            <div class="portlet-body">
+                <div class="top-buttons-box mb-2">
+                </div>
+                <div class="row">
+                    <form method="post" asp-page="/Orders/Update" enctype="multipart/form-data" id="simple-form" role="form">
+                        <input asp-for="UserUpdateModel!.Id" type="hidden">
+                        <input asp-for="UserUpdateModel!.Email" type="hidden">
+                        <input asp-for="UserUpdateModel!.Balance" type="hidden">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input asp-for="UserUpdateModel!.Fname" class="form-control" type="text" placeholder="نام">
+                                </div>
+                                <div class="text-danger small mt-1">
+                                    <span asp-validation-for="UserUpdateModel!.Fname"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input asp-for="UserUpdateModel!.Lname" class="form-control" type="text" placeholder="نام خانوادگی">
+                                </div>
+                                <div class="text-danger small mt-1">
+                                    <span asp-validation-for="UserUpdateModel!.Lname"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input asp-for="UserUpdateModel!.Mobile" class="form-control" type="text" placeholder="شماره موبایل" />
+                                </div>
+                                <div class="text-danger small mt-1">
+                                    <span asp-validation-for="UserUpdateModel!.Mobile"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input asp-for="UserUpdateModel!.Email" class="form-control" type="email" disabled />
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input asp-for="UserUpdateModel!.Balance" class="form-control" type="text" disabled />
+                                </div>
+
+                            </div>
+                         
+
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <select asp-for="UserUpdateModel!.Amount" class="form-select">
+                                        <option value="0">انتخاب کنید</option>
+                                        <option value="100000">100000 تومان</option>
+                                        <option value="200000">200000 تومان</option>
+                                        <option value="300000">300000 تومان</option>
+                                        <option value="400000">400000 تومان</option>
+                                    </select>
+                                </div>
+                                <div class="text-danger small mt-1">
+                                    <span asp-validation-for="UserUpdateModel!.Balance"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input asp-for="UserUpdateModel!.Password" class="form-control" type="password" placeholder="کلمه عبور" />
+                                </div>
+                                <div class="text-danger small mt-1">
+                                    <span asp-validation-for="UserUpdateModel!.Password"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <select asp-for="UserUpdateModel!.CityId" class="form-select">
+                                        @foreach (var city in  await _CityAppService.GetAll(default))
+                                        {
+                                            <option value="@city.Id">@city.Title</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 col-lg-12 m-auto mb-3">
+                                <div class="input-group">
+                                    <input asp-for="UserUpdateModel!.ImageFile" type="file" class="form-control  text-right">
+                                </div>
+                                <div class="text-danger small mt-1">
+                                    <span asp-validation-for="UserUpdateModel!.ImageFile"></span>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <hr>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-success">
+                                <i class="icon-check"></i>
+                                ذخیره
+                            </button>
+                            <a asp-page="Index" class="btn btn-warning">
+                                بازگشت
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.portlet-body -->
+        </div><!-- /.portlet -->
+    </div>
+
+    <!-- /.col-lg-12 -->
+}

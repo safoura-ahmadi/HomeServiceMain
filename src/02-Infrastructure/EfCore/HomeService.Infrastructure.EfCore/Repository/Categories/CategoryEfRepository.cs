@@ -16,6 +16,7 @@ public class CategoryEfRepository(ApplicationDbContext dbContext, ILogger<Catego
 
     public async Task<List<GetCategoryForMainPageDto>> GetAllForMainPage(CancellationToken cancellationToken)
     {
+        
         try
         {
             var item = await _dbContext.Categories.AsNoTracking()
@@ -81,6 +82,7 @@ public class CategoryEfRepository(ApplicationDbContext dbContext, ILogger<Catego
     }
     public async Task<List<GetCategoryForAdminPageDto>> GetAll(CancellationToken cancellationToken)
     {
+       
         try
         {
             var item = await _dbContext.Categories.AsNoTracking()

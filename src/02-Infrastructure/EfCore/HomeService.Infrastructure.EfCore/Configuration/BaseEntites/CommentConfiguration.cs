@@ -30,7 +30,7 @@ public class CommentConfiguration : IEntityTypeConfiguration<Comment>
                 CustomerId = 1,
                Status = CommentStatusEnum.Pending,
                 Text = "کارشون عالیه",
-                Score = 8
+                Score = 4
             }
             );
     }

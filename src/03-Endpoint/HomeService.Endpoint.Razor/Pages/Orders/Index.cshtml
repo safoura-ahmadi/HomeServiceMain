@@ -1,0 +1,388 @@
+﻿@page
+@using Framework
+@using HomeService.Domain.Core.Contracts.AppService.Orders
+@model HomeService.Endpoint.Razor.Pages.Orders.IndexModel
+@{
+    ViewData["Title"] = "سفارشات من";
+}
+@inject ISuggestionAppService _SuggestionAppService
+@if (TempData["SuccessMessage"] != null)
+{
+    <div id="successMessage" class="alert alert-success" role="alert">
+        @TempData["SuccessMessage"]
+    </div>
+    <hr />
+    TempData["SuccessMessage"] = null;
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div id="errorMessage" class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+    <hr />
+    TempData["ErrorMessage"] = null;
+}
+<script>
+
+    setTimeout(function () {
+        var successMessage = document.getElementById("successMessage");
+        var errorMessage = document.getElementById("errorMessage");
+
+        if (successMessage) {
+            successMessage.style.transition = "opacity 0.5s";
+            successMessage.style.opacity = "0";
+            setTimeout(function () { successMessage.style.display = "none"; }, 500);
+        }
+
+        if (errorMessage) {
+            errorMessage.style.transition = "opacity 0.5s";
+            errorMessage.style.opacity = "0";
+            setTimeout(function () { errorMessage.style.display = "none"; }, 500);
+        }
+    }, 5000);
+</script>
+<div class="ads-info">
+    <div class="row">
+        <div class="col">
+            <div class="my-ads section">
+                <h2>سفارش ها </h2>
+                <div class="container mt-4">
+                    <table class="table table-bordered table-hover text-center">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ردیف</th>
+                                <th>هوم سرویس</th>
+                                <th>تاریخ ثبت</th>
+                                <th>وضعیت</th>
+                                <th>جزییات</th>
+                                <th>پیشنهادات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int j = 1;
+                            }
+                            @foreach (var order in Model.Orders)
+                            {
+                                <tr>
+                                    <td>@j</td>
+                                    <td>@order.SubServiceName</td>
+                                    <td>@order.CreateAt.ToPersianString("yyyy/MM/dd")</td>
+                                    @if (
+                                   order.Status == Domain.Core.Enums.Orders.OrderStatusEnum.UnDefined
+                                   || order.Status == Domain.Core.Enums.Orders.OrderStatusEnum.WaitingForExpertOffer
+                                   || order.Status == Domain.Core.Enums.Orders.OrderStatusEnum.WaitingForExpertSelection
+                                   )
+                                    {
+                                        <td><button class="badge p-2 bg-danger">@order.Status.GetEnumDisplayName() </button></td>
+                                    }
+
+                                    else if (order.Status == Domain.Core.Enums.Orders.OrderStatusEnum.WorkCompletedAndPaid)
+                                    {
+                                        @* <td><button class="badge p-2 bg-warning" data-toggle="modal" data-target="#finalStatusDetail"> پرداخت </button></td> *@
+                                        <td><button class="badge p-2 bg-warning showFinalStatusDetail" data-toggle="modal" data-target="#finalStatusDetail" data-order-id="@order.Id"> پرداخت </button></td>
+
+                                    }
+                                    else
+                                    {
+                                        <td><button class="badge p-2 bg-success"> @order.Status.GetEnumDisplayName() </button></td>
+                                    }
+                                    <td><a asp-page="/Orders/OrderDetails" asp-route-id="@order.Id" class="btn btn-info">نمایش</a></td>
+                                    <td>
+                                        <button class="btn btn-outline-primary btn-sm btn-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#@order.Id">
+                                            <i class="fa-solid fa-chevron-down"></i>
+                                        </button>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="8" class="p-0">
+                                        <div id="@order.Id" class="collapse collapse-table">
+                                            <table class="table table-bordered table-striped table-hover m-0">
+                                                <thead class="table-secondary">
+                                                    <tr>
+                                                        <th>شناسه</th>
+                                                        <th>کارشناس</th>
+                                                        <th>قیمت پیشنهادی </th>
+                                                        <th>تاریخ ثبت </th>
+                                                        <th>تاریخ پیشنهادی</th>
+                                                        <th> وضعیت</th>
+                                                        <th>جزییات</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{
+                                                        int k = 1;
+                                                    }
+                                                    @foreach (var item in await _SuggestionAppService.GetByOrderId(order.Id, default))
+                                                    {
+                                                        <tr>
+                                                            <td>@k</td>
+                                                            <td>@item.ExperLname</td>
+                                                            <td>@item.Price</td>
+                                                            <td>@item.CreateAt.ToPersianString("yyyy/MM/dd")</td>
+                                                            <td>@item.TimeToDone.ToPersianString("yyyy/MM/dd")</td>
+                                                            @if (order.Status == Domain.Core.Enums.Orders.OrderStatusEnum.WaitingForExpertOffer ||
+                                                           order.Status == Domain.Core.Enums.Orders.OrderStatusEnum.WaitingForExpertSelection)
+                                                            {
+                                                                <td>
+
+                                                                    <a onclick="return confirm('آیا  به انتخاب این پیشنهاد اطمینان دارید؟')" asp-page="/Suggestions/ChangeStatetoAccepted" asp-route-id="@item.Id" class="btn btn-success  fw-bold">تایید  </a>
+
+
+
+
+
+
+                                                                </td>
+                                                            }
+                                                            else
+                                                            {
+                                                                if (item.IsAccepted)
+                                                                {
+                                                                    <td>تایید شده</td>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <td>رد شده</td>
+                                                                }
+
+                                                            }
+
+                                                            <td>
+                                                                <button class="btn btn-warning suggestion-detail-button" data-id="@item.Id"
+                                                                        data-expert-id="@item.ExpertId">
+                                                                    جزییات پیشنهاد
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                        k++;
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                                j++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="pishnahaddetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">جزییات پیشنهاد</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label for="SuggestionDetail_OrderId" class="form-label">شناسه سفارش</label>
+                <input id="SuggestionDetail_OrderId" type="text" class="form-control" disabled />
+                <label for="SuggestionDetail_ExpertLname" class="form-label">کارشناس</label>
+                <input id="SuggestionDetail_ExpertLname" type="text" class="form-control" disabled />
+                <label for="SuggestionDetail_Score" class="form-label">میانگین امتیاز کارشناس</label>
+                <input id="SuggestionDetail_Score" type="text" class="form-control" disabled />
+                <label for="SuggestionDetail_Description" class="form-label">توضیحات</label>
+                <input id="SuggestionDetail_Description" type="text" class="form-control" style="height: 100px" disabled />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary mx-2" data-dismiss="modal">بستن</button>
+                <a id="viewCommentsLink" class="btn btn-success">دیدن کامنت ها</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* <div class="modal fade" id="finalStatusDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">جزییات پیشنهاد</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label for="" class="form-label">شناسه سفارش</label>
+                <input type="text" class="form-control" disabled placeholder="1" />
+                <label for="" class="form-label"> کارشناس</label>
+                <input type="text" class="form-control" disabled placeholder="علی قلی پور" />
+                <label for="" class="form-label"> مبلغ نهایی</label>
+                <input type="text" class="form-control" disabled placeholder="6000" />
+                <label for="" class="form-label"> کامنت </label>
+                <input type="text" class="form-control" style="height: 100px" disabled placeholder="" />
+                <div class="form-group mt-3">
+                    <label class="form-label">امتیازدهی:</label>
+                    <div class="d-flex flex-row">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="rating" id="rating1" value="5">
+                            <label class="form-check-label mr-2" for="rating1">خیلی خوب</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="rating" id="rating2" value="4">
+                            <label class="form-check-label mr-2" for="rating2">خوب</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="rating" id="rating3" value="3">
+                            <label class="form-check-label mr-2" for="rating3">متوسط</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="rating" id="rating4" value="2">
+                            <label class="form-check-label mr-2" for="rating4">بد</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="rating" id="rating5" value="1">
+                            <label class="form-check-label mr-2" for="rating5">خیلی بد</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary mx-2" data-dismiss="modal">بستن</button>
+                <button type="button" class="btn btn-success">پرداخت هزینه</button>
+            </div>
+        </div>
+    </div>
+</div>
+ *@
+<!-- Modal -->
+<div class="modal fade" id="finalStatusDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">جزییات پیشنهاد</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label for="OrderFinalInfo_OrderId" class="form-label">شناسه سفارش</label>
+                <input id="OrderFinalInfo_OrderId" type="text" class="form-control" disabled />
+                <label for="OrderFinalInfo_ExpertLname" class="form-label">کارشناس</label>
+                <input id="OrderFinalInfo_ExpertLname" type="text" class="form-control" disabled />
+                <label for="OrderFinalInfo_TotalPrice" class="form-label">مبلغ نهایی</label>
+                <input id="OrderFinalInfo_TotalPrice" type="text" class="form-control" disabled />
+                 <form method="post" asp-page="/Orders/Index" class="form-horizontal" role="form" id="registration-form">
+                <label for="" class="form-label"> کامنت </label>
+                <input asp-for="Comment!.Text" type="text" class="form-control" style="height: 100px"  />
+                    <div class="form-group mt-3">
+                        <label class="form-label">امتیازدهی:</label>
+                        <div class="d-flex flex-row">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" asp-for="Comment!.Score" value="5" id="rating1" checked>
+                                <label class="form-check-label mr-2" for="rating1">خیلی خوب</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" asp-for="Comment!.Score" value="4" id="rating2">
+                                <label class="form-check-label mr-2" for="rating2">خوب</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" asp-for="Comment!.Score" value="3" id="rating3">
+                                <label class="form-check-label mr-2" for="rating3">متوسط</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" asp-for="Comment!.Score" value="2" id="rating4">
+                                <label class="form-check-label mr-2" for="rating4">بد</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" asp-for="Comment!.Score" value="1" id="rating5">
+                                <label class="form-check-label mr-2" for="rating5">خیلی بد</label>
+                            </div>
+                        </div>
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary mx-2" data-dismiss="modal">بستن</button>
+
+                        <button type="submit" class="btn btn-success">پرداخت هزینه</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts
+    {
+    <script src="~/UserTemplate/js/jquery.min.js"></script>
+    <script src="~/UserTemplate/js/popper.min.js"></script>
+    <script src="~/UserTemplate/js/modernizr.min.js"></script>
+    <script src="~/UserTemplate/js/bootstrap.min.js"></script>
+    <script src="https://maps.google.com/maps/api/js?sensor=true"></script>
+    <script src="~/UserTemplate/js/gmaps.min.js"></script>
+    <script src="~/UserTemplate/js/owl.carousel.min.js"></script>
+    <script src="~/UserTemplate/js/scrollup.min.js"></script>
+    <script src="~/UserTemplate/js/price-range.js"></script>
+    <script src="~/UserTemplate/js/jquery.countdown.js"></script>
+    <script src="~/UserTemplate/js/switcher.js"></script>
+    <script src="~/UserTemplate/js/bootstrap.min.js"></script>
+    @*    <script src="~/UserTemplate/js/jquery-3.7.1.slim.min.js"></script>*@
+    <script src="~/UserTemplate/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.suggestion-detail-button').click(function (e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                var expertId = $(this).data('expert-id');
+
+                $.ajax({
+                    url: '?handler=SuggestionDetail&id=' + id + '&expertId=' + expertId,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        $('#SuggestionDetail_OrderId').val(data.orderId);
+                        $('#SuggestionDetail_ExpertLname').val(data.expertLname);
+                        $('#SuggestionDetail_Score').val(data.score);
+                        $('#SuggestionDetail_Description').val(data.description);
+                        $('#viewCommentsLink').attr('href', '/Users/Comments?id=' + data.expertId);
+                        $('#pishnahaddetail').modal('show');
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("AJAX request failed:", status, error);
+                    }
+                });
+            });
+
+            $('[data-dismiss="modal"]').click(function () {
+                $('#pishnahaddetail').modal('hide');
+            });
+        });
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.showFinalStatusDetail').click(function (e) {
+                e.preventDefault();
+                var orderId = $(this).data('order-id');
+
+                $.ajax({
+                    url: '?handler=OrderFinalInfo&id=' + orderId,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        $('#OrderFinalInfo_OrderId').val(data.id);
+                        $('#OrderFinalInfo_ExpertLname').val(data.expertLname);
+                        $('#OrderFinalInfo_TotalPrice').val(data.totalPrice);
+                        $('#finalStatusDetail').modal('show'); // باز کردن مودال
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("AJAX request failed:", status, error);
+                    }
+                });
+            });
+
+            $('[data-dismiss="modal"]').click(function () {
+                $('#finalStatusDetail').modal('hide');
+            });
+        });
+    </script>
+}

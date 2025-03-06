@@ -28,6 +28,7 @@ namespace HomeService.Endpoint.Razor.Areas.Admin.Pages.Comments
             Comments = await _appService.GetAll(pageNumber, cancellationToken);
             CommentCount = await _appService.GetTotalCount(cancellationToken);
         }
+    
         public IActionResult OnGetNextPage()
         {
             return RedirectToAction("Index", new { pageNumber = CurrentPage + 1 });

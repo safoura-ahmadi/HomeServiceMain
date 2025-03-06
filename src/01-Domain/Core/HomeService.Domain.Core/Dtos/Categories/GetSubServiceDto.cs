@@ -13,5 +13,6 @@ public class GetSubServiceDto
     public int BasePrice { get; set; }
     public string Description { get; set; } = null!;
     public string SubCategoryTitle { get; set; } = null!;
+    public string CategoryTitle { get; set; } = null!;
 
 }

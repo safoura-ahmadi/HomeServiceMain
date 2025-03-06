@@ -1,4 +1,71 @@
 ﻿@page
+@using Framework
 @model HomeService.Endpoint.Razor.Areas.Admin.Pages.Orders.DetailsModel
 @{
+}
+
+@if (Model.DetailModel is not null)
+{
+    <div class="ads-info">
+        <div class="row">
+            <div class="col">
+                <div class="my-ads section">
+                    <h2>جزییات سفارش</h2>
+                    <div class="container-fluid w-100">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>سفارش دهنده</th>
+                                    <th>هوم سرویس</th>
+                                    <th>قیمت سفارش</th>
+                                    <th>تاریخ ثبت درخواست</th>
+                                    <th>تاریخ اجرا</th>
+                                    <th>وضعیت</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>@Model.DetailModel.CustomerLname</td>
+                                    <td>@Model.DetailModel.SubServiceName</td>
+                                    <td>@Model.DetailModel.Price</td>
+                                    <td>@Model.DetailModel.CreateAt.ToPersianString("yyyy/MM/dd")</td>
+                                    <td>@Model.DetailModel.TimeToDone.ToPersianString("yyyy/MM/dd")</td>
+                                    <td>@Model.DetailModel.Status.GetEnumDisplayName()</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="my-ads section">
+                    <h2>توضیحات درخواست</h2>
+                    <div class="container-fluid w-100">
+                        <input asp-for="DetailModel!.Description" type="text" class="form-control" style="height: 150px;" disabled >
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="my-ads section">
+                    <h2>تصاویر ثبت شده</h2>
+                    <div class="container-fluid w-100">
+                        <div class="d-flex" style="gap: 10px; width: 100px; height: 105px;">
+                            @foreach(var item in Model.DetailModel.Images)
+                            {
+                            <img src="~/UserTemplate/images/icon/@item.Path" alt="" class="img-fluid">
+                            }
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
 }

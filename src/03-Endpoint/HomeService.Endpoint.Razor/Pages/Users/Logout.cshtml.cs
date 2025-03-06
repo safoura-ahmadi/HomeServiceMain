@@ -7,6 +7,7 @@ namespace HomeService.Endpoint.Razor.Pages.Users
     {
         public void OnGet()
         {
+            HttpContext.Session.Remove("isConfirmed");
         }
     }
 }

@@ -15,9 +15,11 @@ namespace HomeService.Endpoint.Razor.Areas.Admin.Pages
         public StatisticsDataDto StaticData { get; set; } = null!;
         [BindProperty]
         public List<GetlastSuggestionDto> LastSuggestions { get; set; } = [];
+        [BindProperty]
+        public SuggestionDetailsDto? SuggestionDetail { get; set; } = null;
 
         [BindProperty]
-        public List<GetLastOrderDto> LastOrders { get; set; } = [];
+        public List<GettOrderOverViewDto> LastOrders { get; set; } = [];
         public async Task OnGet(CancellationToken cancellationToken)
         {
             StaticData = await _adminIndexPageAppService.GetStatisticsData(cancellationToken);
@@ -25,5 +27,11 @@ namespace HomeService.Endpoint.Razor.Areas.Admin.Pages
             LastOrders = await _adminIndexPageAppService.GetLatestOrders(cancellationToken);
 
         }
+        public async Task<IActionResult> OnGetSuggestionDetail(int id, CancellationToken cancellationToken)
+        {
+            SuggestionDetail = await _adminIndexPageAppService.GetSuggestionDetailById(id, cancellationToken);
+            return new JsonResult(SuggestionDetail);
+        }
+
     }
 }

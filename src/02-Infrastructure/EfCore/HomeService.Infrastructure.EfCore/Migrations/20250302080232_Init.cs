@@ -103,13 +103,13 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Fname = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Fname = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     Lname = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Address = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     ImagePath = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     Balance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    IsConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    Biography = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    Mobile = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CityId = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -498,12 +498,12 @@ namespace HomeService.Infrastructure.EfCore.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "Address", "Balance", "Biography", "CityId", "ConcurrencyStamp", "Email", "EmailConfirmed", "Fname", "ImagePath", "IsConfirmed", "Lname", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                columns: new[] { "Id", "AccessFailedCount", "Address", "Balance", "CityId", "ConcurrencyStamp", "Email", "EmailConfirmed", "Fname", "ImagePath", "Lname", "LockoutEnabled", "LockoutEnd", "Mobile", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Status", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { 1, 0, null, 100000m, null, 1, "d9b0f212-3c43-4c67-bba1-303cc82f13f5", "Admin@gmail.com", false, "Safoura", null, true, "ahmadi", false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "AQAAAAIAAYagAAAAEEYElkmU8CUuRLrvzHwkr+KZQSIYjReSWOd2FzOAPi3sm+ZxaBpA9F+fqwsJ3soaSA==", null, false, "MS23CZ5FYG75543TAIMC5DDNKCVV7B74", false, "Admin@gmail.com" },
-                    { 2, 0, null, 100000m, null, 1, "a3d5f1c2-9b12-4e7a-a3c1-45edc91e36b7", "Expert@gmail.com", false, "Tahoura", null, true, "ahmadi", true, null, "EXPERT@GMAIL.COM", "EXPERT@GMAIL.COM", "AQAAAAIAAYagAAAAEJkglU8KXnLbrWvBHwkr+KZQSIYjReSWOd2FzOAPi3sm+ZxaBpA9F+fqwsJ3soaSA==", null, false, "JK98SD2FYG75543TAIMC5DDNKCVV7B89", false, "Expert@gmail.com" },
-                    { 3, 0, null, 100000m, null, 1, "f7c8e9a1-2b34-4d59-931a-72bf4c61c5f9", "Customer@gmail.com", false, "Mahoura", null, true, "ahmadi", false, null, "Customer@GMAIL.COM", "CUSTOMER@GMAIL.COM", "AQAAAAIAAYagAAAAEMGklU8NXYfKrZHvBHwkr+KZQSIYjReSWOd2FzOAPi3sm+ZxaBpA9F+fqwsJ3soaSA==", null, false, "PQ76XZ9FYG75543TAIMC5DDNKCVV7B32", false, "Customer@gmail.com" }
+                    { 1, 0, null, 100000m, 1, "d9b0f212-3c43-4c67-bba1-303cc82f13f5", "Admin@gmail.com", false, "Safoura", null, "ahmadi", false, null, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "AQAAAAIAAYagAAAAEEYElkmU8CUuRLrvzHwkr+KZQSIYjReSWOd2FzOAPi3sm+ZxaBpA9F+fqwsJ3soaSA==", null, false, "MS23CZ5FYG75543TAIMC5DDNKCVV7B74", 1, false, "Admin@gmail.com" },
+                    { 2, 0, null, 100000m, 1, "a3d5f1c2-9b12-4e7a-a3c1-45edc91e36b7", "Expert@gmail.com", false, "Tahoura", null, "ahmadi", false, null, null, "EXPERT@GMAIL.COM", "EXPERT@GMAIL.COM", "AQAAAAIAAYagAAAAEEYElkmU8CUuRLrvzHwkr+KZQSIYjReSWOd2FzOAPi3sm+ZxaBpA9F+fqwsJ3soaSA==", null, false, "JK98SD2FYG75543TAIMC5DDNKCVV7B89", 1, false, "Expert@gmail.com" },
+                    { 3, 0, null, 100000m, 1, "f7c8e9a1-2b34-4d59-931a-72bf4c61c5f9", "Customer@gmail.com", false, "Mahoura", "1.png", "ahmadi", false, null, null, "Customer@GMAIL.COM", "CUSTOMER@GMAIL.COM", "AQAAAAIAAYagAAAAEMGklU8NXYfKrZHvBHwkr+KZQSIYjReSWOd2FzOAPi3sm+ZxaBpA9F+fqwsJ3soaSA==", null, false, "PQ76XZ9FYG75543TAIMC5DDNKCVV7B32", 1, false, "Customer@gmail.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -543,9 +543,29 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                 values: new object[] { 1, 1 });
 
             migrationBuilder.InsertData(
+                table: "AspNetUserClaims",
+                columns: new[] { "Id", "ClaimType", "ClaimValue", "UserId" },
+                values: new object[,]
+                {
+                    { 1, "http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "Admin", 1 },
+                    { 2, "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress", "Admin@gmail.com", 1 },
+                    { 3, "http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "Expert", 2 },
+                    { 4, "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress", "Expert@gmail.com", 2 },
+                    { 5, "ExpertId", "1", 2 },
+                    { 6, "http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "Customer", 3 },
+                    { 7, "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress", "Customer@gmail.com", 3 },
+                    { 8, "CustomerId", "1", 3 }
+                });
+
+            migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { 1, 1 });
+                values: new object[,]
+                {
+                    { 1, 1 },
+                    { 2, 2 },
+                    { 3, 3 }
+                });
 
             migrationBuilder.InsertData(
                 table: "Customers",
@@ -585,7 +605,7 @@ namespace HomeService.Infrastructure.EfCore.Migrations
             migrationBuilder.InsertData(
                 table: "Comments",
                 columns: new[] { "Id", "CreateAt", "CustomerId", "ExpertId", "Score", "Status", "Text" },
-                values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 1, 8, 0, "کارشون عالیه" });
+                values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 1, 4, 0, "کارشون عالیه" });
 
             migrationBuilder.InsertData(
                 table: "ExpertSubServices",
@@ -597,7 +617,7 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                 columns: new[] { "Id", "CreateAt", "CustomerId", "Description", "ExpertId", "IsActive", "Price", "Status", "SubServiceId", "TimeToDone" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, null, null, true, 500000, 4, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, null, 1, true, 500000, 4, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
                     { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, null, null, true, 500000, 2, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
@@ -606,8 +626,8 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                 columns: new[] { "Id", "OrderId", "Path" },
                 values: new object[,]
                 {
-                    { 1, 1, "Images/trending/1.jpg" },
-                    { 2, 1, "Images/trending/2.jpg" }
+                    { 1, 1, "1.jpg" },
+                    { 2, 1, "2.jpg" }
                 });
 
             migrationBuilder.InsertData(

@@ -10,10 +10,7 @@ public class OrderService(IOrderRepository repository) : IOrderService
 {
     private readonly IOrderRepository _repository = repository;
 
-    public async Task<Result> ChangeStateToExpertArrivedAtLocation(int id, CancellationToken cancellationToken)
-    {
-        return await _repository.ChangeStateToExpertArrivedAtLocation(id, cancellationToken);
-    }
+   
 
     public async Task<Result> ChangeStateToWaitingForExpertOffer(int id, CancellationToken cancellationToken)
     {
@@ -76,8 +73,46 @@ public class OrderService(IOrderRepository repository) : IOrderService
         return await _repository.SetFinalTimeToDone(id, timeToDone, cancellationToken);
     }
     //
-    public async Task<List<GetLastOrderDto>> GetLatestOrders(CancellationToken cancellationToken)
+    public async Task<List<GettOrderOverViewDto>> GetLatestOrders(CancellationToken cancellationToken)
     {
         return await _repository.GetLatestOrders(cancellationToken);
+    }
+
+    public async Task<GetOrderDto?> GetById(int id, CancellationToken cancellationToken)
+    {
+        return await _repository.GetById(id, cancellationToken);
+    }
+
+    public async Task<int> GetActiveOrdersCountByExpert(int expertId, CancellationToken cancellationToken)
+    {
+        return await _repository.GetActiveOrdersCountByExpert(expertId, cancellationToken);
+    }
+
+    public async Task<int> GetActiveOrdersCountByCustomer(int customerId, CancellationToken cancellationToken)
+    {
+        return await _repository.GetActiveOrdersCountByCustomer(customerId, cancellationToken);
+    }
+
+    public async Task<List<GettOrderOverViewDto>> GetCustomerOrders(int CustomerId, CancellationToken cancellationToken)
+    {
+        return await _repository.GetCustomerOrders(CustomerId, cancellationToken);
+    }
+
+    public async Task<Result> ChangeStateToCompleted(int id, CancellationToken cancellationToken)
+    {
+       return await _repository.ChangeStateToCompleted(id, cancellationToken);
+    }
+
+  
+
+    public async Task<Result> Update(UpdateOrderDto model, CancellationToken cancellationToken)
+    {
+        return await _repository.Update(model, cancellationToken);
+    }
+
+    public async Task<GetFinalOrderDto?> GetFinalInfoById(int id, CancellationToken cancellationToken)
+    {
+        return await _repository.GetFinalInfoById(id, cancellationToken);
+             
     }
 }

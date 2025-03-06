@@ -43,6 +43,8 @@ public class SubServiceEfRepository(ApplicationDbContext dbContext, ILogger<SubS
         try
         {
             var item = await _dbContext.SubServices.AsNoTracking()
+                .Include(s => s.SubCategory)
+                .ThenInclude(sc => sc!.Category)
                  .Where(s => s.IsActive && s.SubCategoryId == subcategoryId)
                  .Select(s => new GetSubServiceDto
                  {
@@ -51,7 +53,8 @@ public class SubServiceEfRepository(ApplicationDbContext dbContext, ILogger<SubS
                      Description = s.Description,
                      BasePrice = s.BasePrice,
                      ImagePath = s.ImagePath,
-
+                     SubCategoryTitle = s.SubCategory!.Title,
+                     CategoryTitle = s.SubCategory!.Category!.Title
                  }
                  ).ToListAsync(cancellationToken);
             return item;

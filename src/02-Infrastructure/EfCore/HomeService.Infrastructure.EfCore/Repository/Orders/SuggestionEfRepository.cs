@@ -2,6 +2,7 @@
 using HomeService.Domain.Core.Dtos.Orders;
 using HomeService.Domain.Core.Entities;
 using HomeService.Domain.Core.Entities.Orders;
+using HomeService.Domain.Core.Entities.Users;
 using HomeService.Domain.Core.Enums.Orders;
 using HomeService.Infrastructure.EfCore.Common;
 using Microsoft.EntityFrameworkCore;
@@ -45,16 +46,17 @@ public class SuggestionEfRepository(ApplicationDbContext dbContext, ILogger<Sugg
         {
             var item = await _dbContext.Suggestions.AsNoTracking()
                 .Include(s => s.Expert)
+                .ThenInclude(e => e!.User)
                 .Where(s => s.OrderId == orderId && s.IsActive)
                 .Select(s => new GetSuggestionForOrderDto
                 {
                     Id = s.Id,
-                    ExperLname = s.Expert!.Lname,
+                    ExperLname = s.Expert!.User!.Lname??"نامشخص",
                     Price = s.Price,
                     CreateAt = s.CreateAt,
-                    ExpertLname = s.Expert!.Lname ?? "نامشخص",
                     TimeToDone = s.TimeToDone,
-                    IsAccepted = s.IsAccepted
+                    IsAccepted = s.IsAccepted,
+                    ExpertId = s.ExpertId
                 }).ToListAsync(cancellationToken);
             return item;
         }
@@ -183,6 +185,7 @@ public class SuggestionEfRepository(ApplicationDbContext dbContext, ILogger<Sugg
                 .Include(s => s.Order)
                 .ThenInclude(o => o!.SubService)
                 .Include(s => s.Expert)
+                .ThenInclude(e => e.User)
                  .Where(o => o.Order!.IsActive)
                 .OrderByDescending(s => s.CreateAt)
                 .Take(10)
@@ -190,9 +193,10 @@ public class SuggestionEfRepository(ApplicationDbContext dbContext, ILogger<Sugg
                 {
                     Id = s.Id,
                     CreateAt = s.CreateAt,
-                    ExperLname = s.Expert!.Lname ?? "نامشخص",
+                    ExperLname = s.Expert!.User!.Lname ?? "نامشخص",
                     Price = s.Price,
-                    SubServiceName = s.Order!.SubService!.Title
+                    SubServiceName = s.Order!.SubService!.Title,
+                    ExpertId = s.ExpertId
                 }
                 ).ToListAsync(cancellationToken);
             return items;
@@ -202,6 +206,91 @@ public class SuggestionEfRepository(ApplicationDbContext dbContext, ILogger<Sugg
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SuggestionEfRepository", ex.Message);
             return [];
+        }
+    }
+
+    public async Task<SuggestionDetailsDto?> GetDetailById(int id, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var item = await _dbContext.Suggestions.AsNoTracking()
+                .Where(s => s.Id == id && s.IsActive)
+                .Include(s => s.Expert)
+                .Select(s => new SuggestionDetailsDto
+                {
+                    Id = s.Id,
+                    Description = s.Description,
+                    ExpertLname = s.Expert!.User!.Lname ?? "نامشخص",
+                    OrderId = s.OrderId,
+                    Score = 0,
+                    ExpertId = s.ExpertId
+
+                }).FirstOrDefaultAsync(cancellationToken);
+            return item;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SuggestionEfRepository", ex.Message);
+
+            return null;
+        }
+    }
+
+    public async Task<int> GetExpertActiveSuggestionsCount(int expertId, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var item = await _dbContext.Suggestions.AsNoTracking()
+                .Where(s => s.ExpertId == expertId && s.IsActive)
+                .CountAsync(cancellationToken);
+            return item;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SuggestionEfRepository", ex.Message);
+
+            return 0;
+        }
+    }
+
+    public async Task<int> GetCustomerActiveSuggestionsCount(int customerId, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var item = await _dbContext.Suggestions.AsNoTracking()
+                .Include(s => s.Order)
+                .Where(s => s.Order!.CustomerId == customerId && s.IsActive)
+                .CountAsync(cancellationToken);
+            return item;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SuggestionEfRepository", ex.Message);
+
+            return 0;
+        }
+    }
+
+    public async Task<SuggestionOverviewDto?> GetById(int id, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var item = await _dbContext.Suggestions.AsNoTracking()
+                .Where(s => s.Id == id && s.IsActive)
+                .Select(s => new SuggestionOverviewDto
+                {
+                    Id = s.Id,
+                    ExpertId = s.ExpertId,
+                    OrderId = s.OrderId,
+                    Price = s.Price,
+                    TimeToDone = s.TimeToDone,
+                }).FirstOrDefaultAsync(cancellationToken);
+            return item;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SuggestionEfRepository", ex.Message);
+            return null;
         }
     }
 }

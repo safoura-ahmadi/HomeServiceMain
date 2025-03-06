@@ -1,6 +1,7 @@
 ﻿using HomeService.Domain.Core.Contracts.Repository.Users;
 using HomeService.Domain.Core.Dtos.Users;
 using HomeService.Domain.Core.Entities;
+using HomeService.Domain.Core.Entities.Users;
 using HomeService.Domain.Core.Enums.Users;
 using HomeService.Infrastructure.EfCore.Common;
 using Microsoft.EntityFrameworkCore;
@@ -72,9 +73,9 @@ public class UserEfRepository(ApplicationDbContext dbContext, ILogger<UserEfRepo
                 .Where(u => u.Id == id)
                 .FirstAsync(cancellationToken);
             if (item.Balance < money)
-                return Result.Fail("موجودی حساب به حد کافی نیست لطفا کیف پول خود را شارژ کنید");
+                return Result.Fail("کیف پول شما مبلغ لازم برای پرداخت را ندارد. لطفا از قسمت پروفایل کیف پول خود را شارژ کنید");
             item.Balance -= money;
-            await _dbContext.SaveChangesAsync(cancellationToken);
+
             return Result.Ok("مبلغ تعیین شده با موفقیت از حساب شما برداشت شد");
 
 
@@ -95,7 +96,7 @@ public class UserEfRepository(ApplicationDbContext dbContext, ILogger<UserEfRepo
             if (item is null)
                 return Result.Fail("کیف پولی یافت نشد");
             item.Balance += money;
-            await _dbContext.SaveChangesAsync(cancellationToken);
+        
             return Result.Ok("کیف پول با موفقیت شارژ شد");
 
 
@@ -116,15 +117,15 @@ public class UserEfRepository(ApplicationDbContext dbContext, ILogger<UserEfRepo
             item.Fname = model.Fname;
             item.ImagePath = model.ImagePath;
             item.Lname = model.Lname;
-            item.Biography = model.Biography;
             item.CityId = model.CityId;
-            item.Email = model.Email;
+            item.Address = model.Address;
             item.Balance = model.Balance;
+
 
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("پروفایل کاربر با موفقیت اپدیت شد");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "UserEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
@@ -142,7 +143,7 @@ public class UserEfRepository(ApplicationDbContext dbContext, ILogger<UserEfRepo
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("کاربر تایید شد");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "UserEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
@@ -160,11 +161,69 @@ public class UserEfRepository(ApplicationDbContext dbContext, ILogger<UserEfRepo
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("کاربر غیرفعال شد");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "UserEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
 
+    }
+
+    public async Task<UpdateUsertDto?> GetById(int id, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var item = await _dbContext.Users.AsNoTracking()
+           .Where(u => u.Id == id)
+           .Select(u => new UpdateUsertDto
+           {
+               Id = u.Id,
+               Address = u.Address,
+               Balance = u.Balance,
+               CityId = u.CityId,
+               Email = u.Email,
+               Fname = u.Fname,
+               Lname = u.Lname,
+               ImagePath = u.ImagePath,
+
+           }).FirstOrDefaultAsync(cancellationToken);
+            return item;
+
+
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "UserEfRepository", ex.Message);
+            return null;
+        }
+    }
+
+
+
+    public async Task<GetUserStaticDataDto?> GetUserStaticDate(int id, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var item = await _dbContext.Users.AsNoTracking()
+                .Where(u => u.Id == id && u.Status != UserStatusEnum.Rejected)
+                .Select(u => new GetUserStaticDataDto
+                {
+
+                    Fname = u.Fname,
+                    ImagePath = u.ImagePath,
+
+                }).FirstOrDefaultAsync(cancellationToken);
+            return item;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "UserEfRepository", ex.Message);
+            return null;
+        }
+    }
+
+    public async Task Commit(CancellationToken cancellationToken)
+    {
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 }

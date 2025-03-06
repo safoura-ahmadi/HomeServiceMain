@@ -49,4 +49,18 @@ public class CommentAppService(ICommentService commentService, ILogger<CommentAp
             return Result.Fail("کامنتی با این مشخصات یافت نشد");
         return await _commentService.ChangeStatusToAccepted(id, cancellationToken);
     }
+
+    public async Task<List<GetCommentDto>> GetByExpertId(int expertId, CancellationToken cancellationToken)
+    {
+        if (expertId <= 0)
+            return [];
+        return await _commentService.GetByExpertId(expertId, cancellationToken);
+    }
+
+    public async Task<Result> Create(CreateCommentDto item, CancellationToken cancellationToken)
+    {
+        if (item.ExpertId <= 0 || item.CustomerId <= 0 || item.ExpertId is  null)
+            return Result.Fail("کامنت شما بدلیل نامعتبر بودن مشخصات فروشنده یا خریدار ذخیره نشد");
+        return await _commentService.Create(item, cancellationToken);
+    }
 }

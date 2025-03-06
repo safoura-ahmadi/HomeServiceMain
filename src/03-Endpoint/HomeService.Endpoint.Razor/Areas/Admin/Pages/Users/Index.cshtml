@@ -1,6 +1,7 @@
 ﻿@page
+@using HomeService.Domain.Core.Contracts.AppService.BaseEntities
 @model HomeService.Endpoint.Razor.Areas.Admin.Pages.Users.IndexModel
-
+@inject ICityAppService _cityAppService
 @{
     ViewData["Title"] = "پیشخوان > مدیریت کاربران";
 }
@@ -68,11 +69,11 @@
                                                 <span class="input-group-addon">
                                                     <i class="icon-user"></i>
                                                 </span>
-                                                <input type="text" asp-for="CreateModel.Email" class="form-control ltr text-left" placeholder="ایمیل" >
-                                               
+                                                <input type="text" asp-for="CreateModel.Email" class="form-control ltr text-left" placeholder="ایمیل">
+
                                             </div>
                                             <div class="text-danger small mt-1" id="email-error"></div>
-                                         
+
                                             <div class="form-group m-b-10 m-auto mt-2">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">
@@ -87,7 +88,7 @@
                                             <div class="form-group m-b-10 m-auto mt-2">
                                                 <div class="input-group">
                                                     <select asp-for="CreateModel.CityId" class="form-select">
-                                                        @foreach (var city in Model.Cities)
+                                                        @foreach (var city in await _cityAppService.GetAll(default))
                                                         {
                                                             <option value="@city.Id">@city.Title</option>
                                                         }
@@ -100,8 +101,8 @@
                                                 <span class="input-group-addon">
                                                     <i class="icon-key"></i>
                                                 </span>
-                                                <input type="password" asp-for="CreateModel.Password" class="form-control ltr text-left" placeholder="کلمه عبور" >
-                                              
+                                                <input type="password" asp-for="CreateModel.Password" class="form-control ltr text-left" placeholder="کلمه عبور">
+
                                             </div>
                                             <div class="text-danger small mt-1" id="password-error"></div> <!-- تگ برای نمایش خطای پسورد -->
                                         </div>
@@ -175,6 +176,7 @@
                                 <th>نام خانوادگی</th>
                                 <th>نقش</th>
                                 <th>وضعیت</th>
+                                <th>عملیات</th>
 
 
                             </tr>
@@ -195,7 +197,7 @@
                                     }
                                     else
                                     {
-                                        <td><img style="border-radius : 50%" src="@user.ImagePath" width="80" height="80" /></td>
+                                        <td><img style="border-radius : 50%" src="~/UserTemplate/images/icon/@user.ImagePath" width="80" height="80" /></td>
                                     }
 
                                     <td>@user.Email</td>
@@ -219,6 +221,7 @@
 
                                         </td>
                                     }
+                                    <td><a class="btn btn-success btn-small" asp-area="Admin" asp-page="/Users/Update" asp-route-id="@user.Id">ویرایش</a></td>
 
 
                                 </tr>

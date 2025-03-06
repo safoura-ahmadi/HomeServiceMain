@@ -1,5 +1,6 @@
 ﻿@page
-@model HomeService.Endpoint.Razor.Pages.Users.OrderDetailsModel
+@using Framework
+@model HomeService.Endpoint.Razor.Pages.Orders.OrderDetailsModel
 @{
     ViewData["Title"] = "جزئیات سفارش";
 }
@@ -12,45 +13,53 @@
                     <table class="table table-bordered table-striped table-hover">
                         <thead>
                             <tr>
-                                <th>شناسه سفارش</th>
                                 <th>سفارش دهنده</th>
                                 <th>هوم سرویس</th>
+                                <th>قیمت سفارش</th>
                                 <th>تاریخ ثبت درخواست</th>
                                 <th>تاریخ اجرا</th>
-                                <th>ساعت اجرا</th>
                                 <th>وضعیت</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- محتوای جدول اینجا قرار می‌گیرد -->
+                            <tr>
+                                <td>@Model.DetailModel.CustomerLname</td>
+                                <td>@Model.DetailModel.SubServiceName</td>
+                                <td>@Model.DetailModel.Price</td>
+                                <td>@Model.DetailModel.CreateAt.ToPersianString("yyyy/MM/dd")</td>
+                                <td>@Model.DetailModel.TimeToDone.ToPersianString("yyyy/MM/dd")</td>
+                                <td>@Model.DetailModel.Status.GetEnumDisplayName()</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="row">
-        <div class="col">
-            <div class="my-ads section">
-                <h2>توضیحات درخواست</h2>
-                <div class="container-fluid w-100">
-                    <input type="text" class="form-control" style="height: 150px;" disabled value="توضیحات اینجا نوشته می شود این اطالاعات باید از بک دریافت شود">
-                </div>
+<div class="row">
+    <div class="col">
+        <div class="my-ads section">
+            <h2>توضیحات درخواست</h2>
+            <div class="container-fluid w-100">
+                <input asp-for="DetailModel!.Description" type="text" class="form-control" style="height: 150px;" disabled>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="row">
-        <div class="col">
-            <div class="my-ads section">
-                <h2>تصاویر ثبت شده</h2>
-                <div class="container-fluid w-100">
-                    <div class="d-flex" style="gap: 10px; width: 100px; height: 105px;">
-                        <img src="~/UserTemplate/images/bg/2.jpg" alt="" class="img-fluid">
-                        <img src="~/UserTemplate/images/bg/car2.jpg" alt="" class="img-fluid">
-                        <img src="~/UserTemplate/images/bg/car3.jpg" alt="" class="img-fluid">
-                    </div>
+<div class="row">
+    <div class="col">
+        <div class="my-ads section">
+            <h2>تصاویر ثبت شده</h2>
+            <div class="container-fluid w-100">
+                <div class="d-flex" style="gap: 10px; width: 100px; height: 105px;">
+                    @foreach (var item in Model.DetailModel.Images)
+                    {
+                        <img src="~/UserTemplate/images/icon/@item.Path" alt="" class="img-fluid">
+                    }
+
                 </div>
             </div>
         </div>
@@ -70,15 +79,6 @@
     <script src="~/UserTemplate/js/jquery.countdown.js"></script>
     <script src="~/UserTemplate/js/custom.js"></script>
     <script src="~/UserTemplate/js/switcher.js"></script>
-    <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','../www.google-analytics.com/analytics.html','ga');
-
-        ga('create', 'UA-73239902-1', 'auto');
-        ga('send', 'pageview');
-
-    </script>
+  
 
 }

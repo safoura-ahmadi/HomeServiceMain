@@ -8,10 +8,10 @@ using Microsoft.Extensions.Logging;
 
 namespace HomeService.Domain.Service.AppServices.Categories;
 
-public class CategoryAppService(ICategoryService categoryService, IImageService imageService, ILogger<CategoryAppService> logger) : ICategoryAppService
+public class CategoryAppService(ICategoryService categoryService, IImageReposiotry imageService, ILogger<CategoryAppService> logger) : ICategoryAppService
 {
     private readonly ICategoryService _categoryService = categoryService;
-    private readonly IImageService _imageService = imageService;
+    private readonly IImageReposiotry _imageService = imageService;
     private readonly ILogger<CategoryAppService> _logger = logger;
 
     public async Task<Result> Create(string title, IFormFile imageFile, CancellationToken cancellationToken)
@@ -51,6 +51,11 @@ public class CategoryAppService(ICategoryService categoryService, IImageService 
     public async Task<List<GetCategoryForAdminPageDto>> GetAll(CancellationToken cancellationToken)
     {
         return await _categoryService.GetAll(cancellationToken);
+    }
+
+    public async Task<List<GetCategoryForMainPageDto>> GetAllForMainPage(CancellationToken cancellationToken)
+    {
+        return await _categoryService.GetAllForMainPage(cancellationToken);
     }
 
     public async Task<UpdateCategoryDto?> GetById(int id, CancellationToken cancellationToken)

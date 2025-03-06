@@ -40,7 +40,7 @@ public class UserConfiguration
                 NormalizedUserName = "EXPERT@GMAIL.COM",
                 Email = "Expert@gmail.com",
                 NormalizedEmail = "EXPERT@GMAIL.COM",
-                PasswordHash = "AQAAAAIAAYagAAAAEJkglU8KXnLbrWvBHwkr+KZQSIYjReSWOd2FzOAPi3sm+ZxaBpA9F+fqwsJ3soaSA==",
+                PasswordHash = "AQAAAAIAAYagAAAAEEYElkmU8CUuRLrvzHwkr+KZQSIYjReSWOd2FzOAPi3sm+ZxaBpA9F+fqwsJ3soaSA==",
                 SecurityStamp = "JK98SD2FYG75543TAIMC5DDNKCVV7B89",
                 ConcurrencyStamp = "a3d5f1c2-9b12-4e7a-a3c1-45edc91e36b7",
                 LockoutEnd = null,
@@ -64,7 +64,7 @@ public class UserConfiguration
                 ConcurrencyStamp = "f7c8e9a1-2b34-4d59-931a-72bf4c61c5f9",
                 LockoutEnd = null,
                 LockoutEnabled = false,
-                ImagePath = "~/AdminTemplate/assets/images/logo.png"
+                ImagePath = "1.png"
             }
 
         };
@@ -73,12 +73,15 @@ public class UserConfiguration
 
                    new IdentityUserClaim<int>() { Id = 1, UserId = 1, ClaimType = ClaimTypes.Role, ClaimValue = "Admin" },
                    new IdentityUserClaim<int>() { Id = 2, UserId = 1, ClaimType = ClaimTypes.Email, ClaimValue = "Admin@gmail.com" },
-                   new IdentityUserClaim<int>() { Id = 3, UserId = 2, ClaimType = ClaimTypes.Role, ClaimValue = "Expert" },
-                   new IdentityUserClaim<int>() { Id = 4, UserId = 2, ClaimType = ClaimTypes.Email, ClaimValue = "Expert@gmail.com" },
-                   new IdentityUserClaim<int>() { Id = 5, UserId = 2, ClaimType = "ExpertId", ClaimValue = "1" },
-                   new IdentityUserClaim<int>() { Id = 6, UserId = 3, ClaimType = ClaimTypes.Role, ClaimValue = "Customer" },
-                   new IdentityUserClaim<int>() { Id = 7, UserId = 3, ClaimType = ClaimTypes.Email, ClaimValue = "Customer@gmail.com" },
-                   new IdentityUserClaim<int>() { Id = 8, UserId = 3, ClaimType = "CustomerId", ClaimValue = "1" }
+                       new IdentityUserClaim<int>() { Id = 3, UserId = 1, ClaimType = "Fname", ClaimValue = "Safoura" },
+                   new IdentityUserClaim<int>() { Id = 4, UserId = 2, ClaimType = ClaimTypes.Role, ClaimValue = "Expert" },
+                   new IdentityUserClaim<int>() { Id = 5, UserId = 2, ClaimType = ClaimTypes.Email, ClaimValue = "Expert@gmail.com" },
+                      new IdentityUserClaim<int>() { Id = 6, UserId = 2, ClaimType = "Fname", ClaimValue = "Tahoura" },
+                   new IdentityUserClaim<int>() { Id = 7, UserId = 2, ClaimType = "ExpertId", ClaimValue = "1" },
+                   new IdentityUserClaim<int>() { Id = 8, UserId = 3, ClaimType = ClaimTypes.Role, ClaimValue = "Customer" },
+                   new IdentityUserClaim<int>() { Id = 9, UserId = 3, ClaimType = ClaimTypes.Email, ClaimValue = "Customer@gmail.com" },
+                   new IdentityUserClaim<int>() { Id = 10, UserId = 3, ClaimType = "CustomerId", ClaimValue = "1" },
+                   new IdentityUserClaim<int>() { Id = 11, UserId = 3, ClaimType = "Fname", ClaimValue = "Mahoura" }
        );
 
 

@@ -1,20 +1,23 @@
+using HomeService.Domain.Core.Contracts.AppService.Categories;
+using HomeService.Domain.Core.Dtos.Categories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace HomeService.Endpoint.Razor.Pages
 {
-    public class IndexModel : PageModel
+    public class IndexModel(ICategoryAppService categoryAppService) : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
-
-        public IndexModel(ILogger<IndexModel> logger)
+        private readonly ICategoryAppService _categoryAppService = categoryAppService;
+        [BindProperty]
+        public List<GetCategoryForMainPageDto> Categories { get; set; } = [];
+        public async Task<IActionResult> OnGet(CancellationToken cancellationToken )
         {
-            _logger = logger;
-        }
-
-        public void OnGet()
-        {
-
+            if (HttpContext.Session.GetString("isConfirmed") != "True")
+            {
+                return RedirectToPage("AccessDenied", new { area = "Account" });
+            }
+            Categories = await _categoryAppService.GetAllForMainPage(cancellationToken);
+            return Page();
         }
     }
 }

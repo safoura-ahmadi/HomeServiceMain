@@ -23,7 +23,7 @@ public class CommentEfRepository(ApplicationDbContext dbContext, ILogger<Comment
             var comment = new Comment()
             {
                 CustomerId = item.CustomerId,
-                ExpertId = item.ExpertId,
+                ExpertId = item.ExpertId??0,
                 Status = CommentStatusEnum.Pending,
                 Score = item.Score,
                 Text = item.Text,
@@ -33,9 +33,9 @@ public class CommentEfRepository(ApplicationDbContext dbContext, ILogger<Comment
             await _dbContext.Comments.AddAsync(comment, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("کامنت با موفقیت ثبت شد");
-               
+
         }
-        catch(Exception ex) 
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "CommentEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
@@ -47,23 +47,23 @@ public class CommentEfRepository(ApplicationDbContext dbContext, ILogger<Comment
         try
         {
             var item = await _dbContext.Comments.AsNoTracking().
-                Include(c => c.Expert).
-                Where(c => c.ExpertId == expertId && c.Status != CommentStatusEnum.Rejected).
+                Include(c => c.Expert)
+                .ThenInclude(e => e!.User).
+                Where(c => c.ExpertId == expertId && c.Status == CommentStatusEnum.Accepted).
                 Select(c => new GetCommentDto
                 {
 
                     Id = c.Id,
                     Score = c.Score,
                     Text = c.Text,
-                    Status = c.Status,
                     CreateAt = c.CreateAt,
-                    ExpertLname = c.Expert!.Lname ?? "نامشخص"
+                    ExpertLname = c.Expert!.User!.Lname ?? "نامشخص"
                 }
 
                ).ToListAsync(cancellationToken);
             return item;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "CommentEfRepository", ex.Message);
             return [];
@@ -78,7 +78,7 @@ public class CommentEfRepository(ApplicationDbContext dbContext, ILogger<Comment
                 .Select(c => (float?)c.Score).AverageAsync(cancellationToken);
             return averageScore ?? 0f;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "CommentEfRepository", ex.Message);
             return 0;
@@ -104,7 +104,7 @@ public class CommentEfRepository(ApplicationDbContext dbContext, ILogger<Comment
                     Score = c.Score,
                     Text = c.Text,
                     Status = c.Status,
-                    ExpertLname = c.Expert!.Lname ?? "نامشخص",
+                    ExpertLname = c.Expert!.User!.Lname ?? "نامشخص",
                     CreateAt = c.CreateAt
 
                 }
@@ -112,7 +112,7 @@ public class CommentEfRepository(ApplicationDbContext dbContext, ILogger<Comment
                 ).ToListAsync(cancellationToken);
             return item;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "CommentEfRepository", ex.Message);
             return [];
@@ -126,7 +126,7 @@ public class CommentEfRepository(ApplicationDbContext dbContext, ILogger<Comment
                 .CountAsync(cancellationToken);
             return item;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "CommentEfRepository", ex.Message);
             return 0;
@@ -145,7 +145,7 @@ public class CommentEfRepository(ApplicationDbContext dbContext, ILogger<Comment
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("کامنت با موفقیت  غیرفعال شد");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "CommentEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
@@ -159,7 +159,7 @@ public class CommentEfRepository(ApplicationDbContext dbContext, ILogger<Comment
         {
             var items = await _dbContext.Comments.AsNoTracking()
                 .Include(c => c.Expert)
-                .Where(c => (!string.IsNullOrEmpty(c.Text) && c.Text.Contains(text)) || (string.IsNullOrEmpty(c.Expert!.Lname) && c.Expert!.Lname!.Contains(text) )&& c.Status != CommentStatusEnum.Rejected)
+                .Where(c => (!string.IsNullOrEmpty(c.Text) && c.Text.Contains(text)) || (string.IsNullOrEmpty(c.Expert!.Lname) && c.Expert!.Lname!.Contains(text)) && c.Status != CommentStatusEnum.Rejected)
                 .Select(c => new GetCommentDto
                 {
                     Id = c.Id,
@@ -168,12 +168,12 @@ public class CommentEfRepository(ApplicationDbContext dbContext, ILogger<Comment
                     Status = c.Status,
                     Score = c.Score,
                     CreateAt = c.CreateAt,
-                     
+
                 }).ToListAsync(cancellationToken);
             return items;
 
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "CommentEfRepository", ex.Message);
             return [];
@@ -191,7 +191,7 @@ public class CommentEfRepository(ApplicationDbContext dbContext, ILogger<Comment
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("کامنت با موفقیت  غیرفعال شد");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "CommentEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");

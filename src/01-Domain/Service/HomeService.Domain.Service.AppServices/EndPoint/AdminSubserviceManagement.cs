@@ -9,11 +9,11 @@ using HomeService.Domain.Core.Entities.Categories;
 
 namespace HomeService.Domain.Service.AppServices.EndPoint;
 
-public class AdminSubserviceManagement(ISubServiceService subServiceService, ISubCategoryService subCategoryService, IImageService imageService) : IAdminSubserviceManagement
+public class AdminSubserviceManagement(ISubServiceService subServiceService, ISubCategoryService subCategoryService, IImageReposiotry imageService) : IAdminSubserviceManagement
 {
     private readonly ISubServiceService _subServiceService = subServiceService;
     private readonly ISubCategoryService _subCategoryService = subCategoryService;
-    private readonly IImageService _imageService = imageService;
+    private readonly IImageReposiotry _imageService = imageService;
 
     public async Task<Result> Create(CreateSubServiceDto model, CancellationToken cancellationToken)
     {

@@ -25,15 +25,30 @@ public class SuggestionService(ISuggestionRepository repository) : ISuggestionSe
         return await _repository.Delete(id, cancellationToken);
     }
 
+    public async Task<int> GetCustomerActiveSuggestionsCount(int customerId, CancellationToken cancellationToken)
+    {
+        return await _repository.GetCustomerActiveSuggestionsCount(customerId, cancellationToken);
+    }
+
+    public async Task<int> GetExpertActiveSuggestionsCount(int expertId, CancellationToken cancellationToken)
+    {
+        return await _repository.GetExpertActiveSuggestionsCount(expertId, cancellationToken);
+    }
+
     public async Task<List<SuggestionDto>> GetAll(int pageNumber, int pageSize, CancellationToken cancellationToken)
     {
         return await _repository.GetAll(pageNumber, pageSize, cancellationToken);
     }
-    
- 
+
+
     public async Task<List<GetSuggestionForOrderDto>> GetByOrderId(int orderId, CancellationToken cancellationToken)
     {
         return await _repository.GetByOrderId(orderId, cancellationToken);
+    }
+
+    public async Task<SuggestionDetailsDto?> GetDetailById(int id, CancellationToken cancellationToken)
+    {
+        return await _repository.GetDetailById(id, cancellationToken);
     }
 
     public async Task<List<GetlastSuggestionDto>> GetLatestSuggestions(CancellationToken cancellationToken)
@@ -54,5 +69,10 @@ public class SuggestionService(ISuggestionRepository repository) : ISuggestionSe
     public async Task<Result> IsOrderHaveActiveSuggestion(int orderId, CancellationToken cancellationToken)
     {
         return await _repository.IsOrderHaveActiveSuggestion(orderId, cancellationToken);
+    }
+
+    public async Task<SuggestionOverviewDto?> GetById(int id, CancellationToken cancellationToken)
+    {
+        return await _repository.GetById(id, cancellationToken);
     }
 }

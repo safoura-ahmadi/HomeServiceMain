@@ -104,7 +104,10 @@
                                     <td>@item.CreateAt.ToPersianString("yyyy/MM/dd")</td>
                                     <td>@item.SubServiceName</td>
                                     <td class="text-center">
-                                        <label class="label-warning round">نمایش جزییات</label>
+                                        <a class="btn btn-warning round"
+                                           asp-page="/Orders/Details"
+                                           asp-area="Admin"
+                                           asp-route-id="@item.Id">نمایش جزییات</a>
                                     </td>
                                 </tr>
                             }
@@ -112,7 +115,7 @@
                         </tbody>
                     </table>
                 </div><!-- /.table-responsive -->
-              
+
             </div><!-- /.portlet-body -->
         </div><!-- /.portlet -->
     </div><!-- /.col-xl-6 -->
@@ -161,24 +164,114 @@
                                     <td>@item.ExperLname </td>
                                     <td>@item.Price</td>
                                     <td class="text-center">
-                                        <label class="label-warning round">نمایش جزییات</label>
+                                        <button class="btn btn-warning round suggestion-detail-button"
+                                                data-id="@item.Id"
+                                                data-expert-id="@item.ExpertId">
+                                            <!-- اضافه کردن expertId -->
+                                            نمایش
+                                        </button>
                                     </td>
+
                                 </tr>
                             }
 
                         </tbody>
                     </table>
                 </div><!-- /.table-responsive -->
-            
+
             </div><!-- /.portlet-body -->
         </div><!-- /.col-xl-6 -->
     </div><!-- /.buttons-box -->
 </div><!-- /.portlet-heading -->
-@section Scripts
-{
+<div class="modal fade"
+     id="pishnahaddetail"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">جزییات پیشنهاد</h5>
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label for="SuggestionDetail_OrderId" class="form-label">شناسه سفارش</label>
+                <input id="SuggestionDetail_OrderId" type="text" class="form-control" disabled />
+                <label for="SuggestionDetail_ExpertLname" class="form-label">کارشناس</label>
+                <input id="SuggestionDetail_ExpertLname" type="text" class="form-control" disabled />
+                <label for="SuggestionDetail_Score" class="form-label">میانگین امتیاز کارشناس</label>
+                <input id="SuggestionDetail_Score" type="text" class="form-control" disabled />
+                <label for="SuggestionDetail_Description" class="form-label">توضیحات</label>
+                <input id="SuggestionDetail_Description" type="text" class="form-control" style="height: 100px" disabled />
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-secondary mx-2"
+                        data-dismiss="modal">
+                    بستن
+                </button>
+                <a id="viewCommentsLink" class="btn btn-success">دیدن کامنت ها</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // رویداد کلیک برای دکمه‌های باز کردن مودال
+            $('.suggestion-detail-button').click(function (e) {
+                e.preventDefault(); // جلوگیری از رفتن به یک صفحه جدید
+                var id = $(this).data('id');
+                var expertId = $(this).data('expert-id'); // دریافت expertId
+
+                $.ajax({
+                    url: '?handler=SuggestionDetail&id=' + id + '&expertId=' + expertId, // اضافه کردن expertId به URL
+                    type: "GET",
+                    dataType: "json", // انتظار دریافت JSON
+                    success: function (data) {
+                        // پر کردن اطلاعات Modal با استفاده از داده دریافتی
+                        $('#SuggestionDetail_OrderId').val(data.orderId);
+                        $('#SuggestionDetail_ExpertLname').val(data.expertLname);
+                        $('#SuggestionDetail_Score').val(data.score);
+                        $('#SuggestionDetail_Description').val(data.description);
+
+                        // به‌روزرسانی لینک دکمه‌ی "دیدن کامنت‌ها"
+                        $('#viewCommentsLink').attr('href', '/Admin/Comments/GetByExpert?id=' + data.expertId);
+
+                        // باز کردن Modal
+                        $('#pishnahaddetail').modal('show');
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("AJAX request failed:", status, error);
+                    }
+                });
+            });
+
+            // رویداد کلیک برای دکمه‌ی بستن مودال
+            $('[data-dismiss="modal"]').click(function () {
+                $('#pishnahaddetail').modal('hide'); // بستن مودال
+            });
+        });
+    </script>
     <script src="~/AdminTemplate/assets/plugins/chart.js/dist/Chart.bundle.min.js"></script>
     <script src="~/AdminTemplate/assets/plugins/jquery-incremental-counter/jquery.incremental-counter.min.js"></script>
     <script src="~/AdminTemplate/assets/plugins/ammap3/ammap/ammap.js"></script>
     <script src="~/AdminTemplate/assets/plugins/ammap3/ammap/maps/js/iranHighFa.js"></script>
     <script src="~/AdminTemplate/assets/js/pages/dashboard2.js"></script>
+
+    <script src="~/UserTemplate/js/jquery.min.js"></script>
+    <script src="~/UserTemplate/js/popper.min.js"></script>
+    <script src="~/UserTemplate/js/bootstrap.min.js"></script>
+
+
 }
+
+
+

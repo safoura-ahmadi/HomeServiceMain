@@ -59,6 +59,15 @@ try
         options.AccessDeniedPath = "/Account/AccessDeniedModel";
     });
     // Add services to the container.
+    builder.Services.AddMemoryCache();
+    //builder.Services.AddDistributedMemoryCache();
+    //builder.Services.AddStackExchangeRedisCache(options =>
+    //{
+    //    options.Configuration = builder.Configuration.GetConnectionString("172.0.0.1:9999");
+    //    options.InstanceName = "SampleInstance";
+    //});
+
+    builder.Services.AddResponseCaching();
     builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
     builder.Services.AddScoped<IAdminIndexPageAppService, AdminIndexPageAppService>();
     builder.Services.AddScoped<IExpertAppService, ExpertAppService>();
@@ -79,7 +88,8 @@ try
     builder.Services.AddScoped<ISubServiceAppService, SubServiceAppService>();
     builder.Services.AddScoped<ISubServiceService, SubServiceService>();
     builder.Services.AddScoped<ISubServiceRepository, SubServiceEfRepository>();
-    builder.Services.AddScoped<IImageService, ImageService>();
+    builder.Services.AddScoped<IImageReposiotry, ImageService>();
+    builder.Services.AddScoped<IImageRepository, ImageEfRepository>();
     builder.Services.AddScoped<IAdminSubserviceManagement, AdminSubserviceManagement>();
     builder.Services.AddScoped<ISubCategoryService, SubCategoryService>();
     builder.Services.AddScoped<ISubCategoryRepository, SubCategoryEfRepository>();
@@ -93,6 +103,12 @@ try
     builder.Services.AddScoped<ICityAppService, CityAppService>();
     builder.Services.AddScoped<ICityService, CityService>();
     builder.Services.AddScoped<ICityRepository, CityEfRepository>();
+    builder.Services.AddSession(options =>
+    {
+        options.IdleTimeout = TimeSpan.FromMinutes(15);
+        options.Cookie.HttpOnly = true;
+        options.Cookie.IsEssential = true;
+    });
     builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
     {
        
@@ -117,6 +133,7 @@ try
         // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
         app.UseHsts();
     }
+    app.UseSession();
     app.UseErrorLogging();
     app.UseHttpsRedirection();
 

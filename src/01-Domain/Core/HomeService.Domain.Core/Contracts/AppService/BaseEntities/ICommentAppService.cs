@@ -11,4 +11,7 @@ public interface ICommentAppService
     Task<Result> ChangeStatusToRejected(int id, CancellationToken cancellationToken);
     Task<List<GetCommentDto>> Search(string text, CancellationToken cancellationToken);
     Task<Result> ChangeStatusToAccepted(int id, CancellationToken cancellationToken);
+    Task<List<GetCommentDto>> GetByExpertId(int expertId, CancellationToken cancellationToken);
+    Task<Result> Create(CreateCommentDto item, CancellationToken cancellationToken);
+
 }

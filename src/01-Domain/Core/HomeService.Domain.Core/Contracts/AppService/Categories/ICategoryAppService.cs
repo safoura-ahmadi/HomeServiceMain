@@ -12,4 +12,5 @@ public interface ICategoryAppService
     Task<Result> Create(string title, IFormFile imageFile, CancellationToken cancellationToken);
     Task<Result> Update(UpdateCategoryDto model, CancellationToken cancellationToken);
     Task<UpdateCategoryDto?> GetById(int id, CancellationToken cancellationToken);
+    Task<List<GetCategoryForMainPageDto>> GetAllForMainPage(CancellationToken cancellationToken);
 }

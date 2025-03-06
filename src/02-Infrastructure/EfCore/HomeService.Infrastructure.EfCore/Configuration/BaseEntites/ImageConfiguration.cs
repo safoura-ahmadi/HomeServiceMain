@@ -15,8 +15,8 @@ public class ImageConfiguration : IEntityTypeConfiguration<Image>
 
         builder.HasData(new List<Image>()
             {
-                new() { Id = 1, OrderId = 1, Path = "Images/trending/1.jpg" },
-                new() { Id = 2, OrderId = 1, Path = "Images/trending/2.jpg" }
+                new() { Id = 1, OrderId = 1, Path = "1.jpg" },
+                new() { Id = 2, OrderId = 1, Path = "2.jpg" }
              
             });
     }

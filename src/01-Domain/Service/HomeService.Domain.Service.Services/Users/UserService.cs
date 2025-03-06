@@ -15,6 +15,11 @@ public class UserService(IUserRepository repository) : IUserService
         return await _repository.ChargeBalance(id, money, cancellationToken);
     }
 
+    public async Task Commit(CancellationToken cancellationToken)
+    {
+         await _repository.Commit(cancellationToken);
+    }
+
     public async Task<Result> ConfirmById(int id, CancellationToken cancellationToken)
     {
         return await _repository.ConfirmById(id, cancellationToken);
@@ -23,6 +28,18 @@ public class UserService(IUserRepository repository) : IUserService
     public async Task<List<GetAllUserDto>> GetAll(int pageNumber, int pageSize, CancellationToken cancellationToken)
     {
         return await _repository.GetAll(pageNumber, pageSize, cancellationToken);
+    }
+
+    public async Task<UpdateUsertDto?> GetById(int id, CancellationToken cancellationToken)
+    {
+        return await _repository.GetById(id, cancellationToken);
+    }
+
+
+    public async Task<GetUserStaticDataDto?> GetUserStaticDate(int id, CancellationToken cancellationToken)
+    {
+        return await _repository.GetUserStaticDate(id, cancellationToken);
+
     }
 
     public async Task<UserStatusEnum> IsConfirmedByAdmin(int id, CancellationToken cancellationToken)
@@ -37,7 +54,7 @@ public class UserService(IUserRepository repository) : IUserService
 
     public async Task<Result> Update(UpdateUsertDto model, CancellationToken cancellationToken)
     {
-       return await _repository.Update(model, cancellationToken);
+        return await _repository.Update(model, cancellationToken);
     }
 
     public async Task<Result> WithdrawBalance(int id, decimal money, CancellationToken cancellationToken)

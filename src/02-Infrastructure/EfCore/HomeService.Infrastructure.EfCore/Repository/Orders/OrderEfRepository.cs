@@ -4,6 +4,7 @@ using HomeService.Domain.Core.Entities;
 using HomeService.Domain.Core.Entities.BaseEntities;
 using HomeService.Domain.Core.Entities.Categories;
 using HomeService.Domain.Core.Entities.Orders;
+using HomeService.Domain.Core.Entities.Users;
 using HomeService.Domain.Core.Enums.Orders;
 using HomeService.Infrastructure.EfCore.Common;
 using Microsoft.EntityFrameworkCore;
@@ -56,7 +57,6 @@ public class OrderEfRepository(ApplicationDbContext dbContext, ILogger<OrderEfRe
                 {
                     Id = o.Id,
                     CreateAt = o.CreateAt,
-                    CustomerId = o.CustomerId,
                     CustomerLname = o.Customer!.Lname,
                     Description = o.Description,
                     Price = o.Price,
@@ -123,23 +123,7 @@ public class OrderEfRepository(ApplicationDbContext dbContext, ILogger<OrderEfRe
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
-    public async Task<Result> ChangeStateToExpertArrivedAtLocation(int id, CancellationToken cancellationToken)
-    {
-        try
-        {
-            var item = await _dbContext.Orders.FirstOrDefaultAsync(o => o.Id == id && o.IsActive, cancellationToken);
-            if (item is null)
-                return Result.Fail("سفارشی با این مشخص یافت نشد");
-            item.Status = OrderStatusEnum.ExpertArrivedAtLocation;
-            await _dbContext.SaveChangesAsync(cancellationToken);
-            return Result.Ok("وضعیت سفارش با موفقیت تغییر یافت");
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
-            return Result.Fail("مشکلی در دیتا بیس وجود دارد");
-        }
-    }
+
     public async Task<OrderStatusEnum> GetLastStatusOfOrder(int id, CancellationToken cancellationToken)
     {
         try
@@ -164,6 +148,7 @@ public class OrderEfRepository(ApplicationDbContext dbContext, ILogger<OrderEfRe
             var item = await _dbContext.Orders.AsNoTracking()
                 .Where(o => o.IsActive)
                  .Include(o => o.Customer)
+                 .ThenInclude(c => c!.User)
                  .Include(o => o.SubService)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
@@ -173,7 +158,7 @@ public class OrderEfRepository(ApplicationDbContext dbContext, ILogger<OrderEfRe
                     CreateAt = o.CreateAt,
                     Status = o.Status,
                     SubServiceName = o.SubService!.Title,
-                    CustomerLname = o.Customer!.Lname ?? "نامشخص",
+                    CustomerLname = o.Customer!.User!.Lname ?? "نامشخص",
                     TimeToDone = o.TimeToDone,
 
 
@@ -287,21 +272,22 @@ public class OrderEfRepository(ApplicationDbContext dbContext, ILogger<OrderEfRe
         }
     }
     //
-    public async Task<List<GetLastOrderDto>> GetLatestOrders(CancellationToken cancellationToken)
+    public async Task<List<GettOrderOverViewDto>> GetLatestOrders(CancellationToken cancellationToken)
     {
         try
         {
             var items = await _dbContext.Orders.AsNoTracking()
                  .Include(o => o.Customer)
+                 .ThenInclude(c => c.User)
                  .Include(o => o.SubService)
                 .OrderByDescending(o => o.CreateAt)
                 .Take(10)
                 .Where(o => o.IsActive)
-                .Select(o => new GetLastOrderDto
+                .Select(o => new GettOrderOverViewDto
                 {
                     Id = o.Id,
                     CreateAt = o.CreateAt,
-                    CustomerLname = o.Expert!.Lname ?? "نامشخص",
+                    CustomerLname = o.Expert!.User!.Lname ?? "نامشخص",
                     SubServiceName = o.SubService!.Title,
 
                 }
@@ -316,5 +302,166 @@ public class OrderEfRepository(ApplicationDbContext dbContext, ILogger<OrderEfRe
         }
     }
 
+    public async Task<GetOrderDto?> GetById(int id, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var item = await _dbContext.Orders.AsNoTracking()
+                .Where(o => o.Id == id && o.IsActive)
+                .Include(o => o.Expert)
+                .Include(o => o.Customer)
+                .Include(o => o.SubService)
+                .Include(o => o.Images)
+                .Select(o => new GetOrderDto
+                {
+                    Id = o.Id,
+                    CustomerLname = o.Customer!.User!.Lname ?? "نامشخص",
+                    CreateAt = o.CreateAt,
+                    Description = o.Description,
+                    Images = o.Images,
+                    Price = o.Price,
+                    Status = o.Status,
+                    SubServiceName = o.SubService!.Title,
+                    TimeToDone = o.TimeToDone
+                }).FirstOrDefaultAsync(cancellationToken);
+            return item;
 
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
+            return null;
+        }
+    }
+
+    public async Task<int> GetActiveOrdersCountByExpert(int expertId, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var item = await _dbContext.Orders.AsNoTracking()
+                .Where(o => o.ExpertId == expertId && o.IsActive)
+                .CountAsync(cancellationToken);
+            return item;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
+
+            return 0;
+        }
+    }
+
+    public async Task<int> GetActiveOrdersCountByCustomer(int customerId, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var item = await _dbContext.Orders.AsNoTracking()
+               .Where(o => o.CustomerId == customerId && o.IsActive)
+               .CountAsync(cancellationToken);
+            return item;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
+            return 0;
+        }
+    }
+
+    public async Task<List<GettOrderOverViewDto>> GetCustomerOrders(int CustomerId, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var item = await _dbContext.Orders.AsNoTracking()
+                .Include(o => o.Customer)
+                .Include(o => o.SubService)
+                .Where(o => o.CustomerId == CustomerId && o.IsActive)
+                .Select(o => new GettOrderOverViewDto
+                {
+                    Id = o.Id,
+                    CreateAt = o.CreateAt,
+                    CustomerLname = o.Customer!.Lname ?? "نا مشخص",
+                    SubServiceName = o.SubService!.Title,
+                    Status = o.Status
+                }).ToListAsync(cancellationToken);
+            return item;
+
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
+            return [];
+        }
+    }
+
+    public async Task<Result> ChangeStateToCompleted(int id, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var item = await _dbContext.Orders.FirstOrDefaultAsync(o => o.Id == id && o.IsActive, cancellationToken);
+            if (item is null)
+                return Result.Fail("سفارشی با این مشخص یافت نشد");
+            item.Status = OrderStatusEnum.Completed;
+            await _dbContext.SaveChangesAsync(cancellationToken);
+            return Result.Ok("وضعیت سفارش با موفقیت تغییر یافت");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
+            return Result.Fail("مشکلی در دیتا بیس وجود دارد");
+        }
+    }
+
+   
+
+    public async Task<Result> Update(UpdateOrderDto model, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var item = await _dbContext.Orders.FirstOrDefaultAsync(o => o.Id == model.Id && o.IsActive, cancellationToken);
+            if (item is null)
+                return Result.Fail("سفارشی با این مشخصات وجود ندارد");
+            item.Status = OrderStatusEnum.WorkCompletedAndPaid;
+            item.ExpertId = model.ExpertId;
+            item.Price = model.Price;
+            item.TimeToDone = model.TimeToDone;
+            
+            await _dbContext.SaveChangesAsync(cancellationToken);
+            return Result.Ok("سفارش شما با موفقیت آپدیت شد");
+
+                
+
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
+            return Result.Fail("مشکلی در دیتا بیس وجود دارد");
+        }
+    }
+
+    public async Task<GetFinalOrderDto?> GetFinalInfoById(int id, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var item = await _dbContext.Orders.AsNoTracking()
+                .Include(o => o.Expert)
+                .ThenInclude(o => o!.User)
+                .Where(o => o.Id == id && o.IsActive)
+                .Select(o => new GetFinalOrderDto
+                {
+                    Id = o.Id,
+                    ExpertLname = o.Expert!.User!.Lname ?? "نامشخص",
+                    Price = o.Price,
+                    ExpertId = o.ExpertId,
+                    ExpertUserId = o.Expert.UserId
+                    
+                }).FirstOrDefaultAsync(cancellationToken);
+            return item;
+
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "OrderEfRepositor", ex.Message);
+            return null;
+        }
+    }
 }

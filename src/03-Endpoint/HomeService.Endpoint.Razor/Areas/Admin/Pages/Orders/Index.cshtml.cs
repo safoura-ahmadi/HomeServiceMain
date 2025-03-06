@@ -50,9 +50,7 @@ namespace HomeService.Endpoint.Razor.Areas.Admin.Pages.Orders
                 case OrderStatusEnum.WaitingForExpertSelection:
                     result = await _appService.ChangeStateToWaitingForExpertSelection(orderId, cancellationToken);
                     break;
-                case OrderStatusEnum.ExpertArrivedAtLocation:
-                    result = await _appService.ChangeStateToExpertArrivedAtLocation(orderId, cancellationToken);
-                    break;
+  
                 case OrderStatusEnum.WorkCompletedAndPaid:
                     result = await _appService.ChangeStateToWorkCompletedAndPaid(orderId, cancellationToken);
                     break;

@@ -209,7 +209,7 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                             CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CustomerId = 1,
                             ExpertId = 1,
-                            Score = 8,
+                            Score = 4,
                             Status = 0,
                             Text = "کارشون عالیه"
                         });
@@ -242,13 +242,13 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                         {
                             Id = 1,
                             OrderId = 1,
-                            Path = "Images/trending/1.jpg"
+                            Path = "1.jpg"
                         },
                         new
                         {
                             Id = 2,
                             OrderId = 1,
-                            Path = "Images/trending/2.jpg"
+                            Path = "2.jpg"
                         });
                 });
 
@@ -281,56 +281,56 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                         new
                         {
                             Id = 1,
-                            ImagePath = "1.png",
+                            ImagePath = "icons8-sofa-50.png",
                             IsActive = true,
                             Title = "دکوراسیون ساختمان"
                         },
                         new
                         {
                             Id = 2,
-                            ImagePath = "2.png",
+                            ImagePath = "3.png",
                             IsActive = true,
                             Title = "تأسیسات ساختمان"
                         },
                         new
                         {
                             Id = 3,
-                            ImagePath = "3.png",
+                            ImagePath = "1.png",
                             IsActive = true,
                             Title = "وسایل نقلیه"
                         },
                         new
                         {
                             Id = 4,
-                            ImagePath = "7.png",
+                            ImagePath = "icons8-truck-80.png",
                             IsActive = true,
                             Title = "اسباب کشی و باربری"
                         },
                         new
                         {
                             Id = 5,
-                            ImagePath = "8.png",
+                            ImagePath = "icons8-freezer-50.png",
                             IsActive = true,
                             Title = "لوازم خانگی"
                         },
                         new
                         {
                             Id = 6,
-                            ImagePath = "6.png",
+                            ImagePath = "icons8-chair-50.png",
                             IsActive = true,
                             Title = "خدمات اداری"
                         },
                         new
                         {
                             Id = 7,
-                            ImagePath = "7.png",
+                            ImagePath = "icons8-broom-50.png",
                             IsActive = true,
                             Title = "نظافت و بهداشت"
                         },
                         new
                         {
                             Id = 8,
-                            ImagePath = "8.png",
+                            ImagePath = "2.png",
                             IsActive = true,
                             Title = "دیجیتال و نرم افزار"
                         });
@@ -1022,10 +1022,6 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                     b.Property<decimal>("Balance")
                         .HasColumnType("decimal(18, 2)");
 
-                    b.Property<string>("Biography")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
                     b.Property<int>("CityId")
                         .HasColumnType("int");
 
@@ -1041,8 +1037,8 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Fname")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("ImagePath")
                         .HasMaxLength(500)
@@ -1057,6 +1053,9 @@ namespace HomeService.Infrastructure.EfCore.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Mobile")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -1138,7 +1137,7 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "EXPERT@GMAIL.COM",
                             NormalizedUserName = "EXPERT@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJkglU8KXnLbrWvBHwkr+KZQSIYjReSWOd2FzOAPi3sm+ZxaBpA9F+fqwsJ3soaSA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEYElkmU8CUuRLrvzHwkr+KZQSIYjReSWOd2FzOAPi3sm+ZxaBpA9F+fqwsJ3soaSA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "JK98SD2FYG75543TAIMC5DDNKCVV7B89",
                             Status = 1,
@@ -1155,6 +1154,7 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                             Email = "Customer@gmail.com",
                             EmailConfirmed = false,
                             Fname = "Mahoura",
+                            ImagePath = "1.png",
                             Lname = "ahmadi",
                             LockoutEnabled = false,
                             NormalizedEmail = "Customer@GMAIL.COM",
@@ -1283,43 +1283,64 @@ namespace HomeService.Infrastructure.EfCore.Migrations
                         new
                         {
                             Id = 3,
+                            ClaimType = "Fname",
+                            ClaimValue = "Safoura",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
                             ClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
                             ClaimValue = "Expert",
                             UserId = 2
                         },
                         new
                         {
-                            Id = 4,
+                            Id = 5,
                             ClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress",
                             ClaimValue = "Expert@gmail.com",
                             UserId = 2
                         },
                         new
                         {
-                            Id = 5,
+                            Id = 6,
+                            ClaimType = "Fname",
+                            ClaimValue = "Tahoura",
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 7,
                             ClaimType = "ExpertId",
                             ClaimValue = "1",
                             UserId = 2
                         },
                         new
                         {
-                            Id = 6,
+                            Id = 8,
                             ClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
                             ClaimValue = "Customer",
                             UserId = 3
                         },
                         new
                         {
-                            Id = 7,
+                            Id = 9,
                             ClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress",
                             ClaimValue = "Customer@gmail.com",
                             UserId = 3
                         },
                         new
                         {
-                            Id = 8,
+                            Id = 10,
                             ClaimType = "CustomerId",
                             ClaimValue = "1",
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 11,
+                            ClaimType = "Fname",
+                            ClaimValue = "Mahoura",
                             UserId = 3
                         });
                 });
