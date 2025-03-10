@@ -92,11 +92,8 @@ public class UserAppService(IUserService userService, ICustomerAppService custom
         if (model.Role == RoleEnum.Customer)
         {
             role = "Customer";
-            user.Customer = new Customer()
-            {
-                CityId = model.CityId
-            };
-
+            user.Customer = new Customer();
+            
         }
 
         if (model.Role == RoleEnum.Expert)
@@ -165,10 +162,18 @@ public class UserAppService(IUserService userService, ICustomerAppService custom
             return IdentityResult.Failed(new IdentityError { Description = "مشکلی در آپدیت عکس ایجاد شده" });
 
         }
+        if(!string.IsNullOrEmpty(model.NewPassword))
+        {
+            var changePasswordResult = await _userManager.ChangePasswordAsync(user, model.OldPassword!, model.NewPassword);
+            if (!changePasswordResult.Succeeded)
+                return IdentityResult.Failed(new IdentityError { Description = "رمز عبور پیشین نامعتبر است" });
+
+        }
         user.Fname = model.Fname ?? user.Fname;
         user.Lname = model.Lname ?? user.Lname;
         if (model.ImagePath is not null)
             user.ImagePath = model.ImagePath;
+        if(model.Amount > 1)
         user.Balance += model.Amount;
         user.Address = model.Address ?? user.Address;
         user.CityId = model.CityId;
@@ -178,6 +183,7 @@ public class UserAppService(IUserService userService, ICustomerAppService custom
 
         return await _userManager.UpdateAsync(user);
     }
+
 
     public async Task<UpdateUsertDto?> GetById(int id, CancellationToken cancellationToken)
     {
@@ -200,5 +206,12 @@ public class UserAppService(IUserService userService, ICustomerAppService custom
     public async Task Commit(CancellationToken cancellationToken)
     {
         await _userService.Commit(cancellationToken);
+    }
+
+    public async Task<int> GetCityId(int id, CancellationToken cancellationToken)
+    {
+        if (id <= 0)
+            return 0;
+        return await _userService.GetCityId(id, cancellationToken);
     }
 }

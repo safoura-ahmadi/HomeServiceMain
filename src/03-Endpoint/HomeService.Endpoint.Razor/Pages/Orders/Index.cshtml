@@ -127,7 +127,7 @@
                                                             {
                                                                 <td>
 
-                                                                    <a onclick="return confirm('آیا  به انتخاب این پیشنهاد اطمینان دارید؟')" asp-page="/Suggestions/ChangeStatetoAccepted" asp-route-id="@item.Id" class="btn btn-success  fw-bold">تایید  </a>
+                                                                    <a onclick="return confirm('آیا  به انتخاب این پیشنهاد اطمینان دارید؟')" asp-page="/Suggestions/ChangeStatetoAccepted" asp-route-id="@item.Id" asp-route-OrderId="@order.Id" class="btn btn-success  fw-bold">تایید  </a>
 
 
 

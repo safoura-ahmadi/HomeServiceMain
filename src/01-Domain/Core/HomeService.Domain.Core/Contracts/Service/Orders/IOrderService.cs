@@ -7,7 +7,7 @@ namespace HomeService.Domain.Core.Contracts.Service.Orders;
 public interface IOrderService
 {
     Task<int> Create(CreateOrderDto order, CancellationToken cancellationToken);
-    Task<List<GetOrderDto>> GetAvailableOrdersForExpert(int cityId, int subserviceId, CancellationToken cancellationToken);
+    Task<List<GetOrderDto>> GetAvailableOrdersForExpert(int expertId, int cityId, List<int> subserviceIds, CancellationToken cancellationToken);
 
     Task<Result> ChangeStateToWaitingForExpertOffer(int id, CancellationToken cancellationToken);
     Task<Result> ChangeStateToWaitingForExpertSelection(int id, CancellationToken cancellationToken);

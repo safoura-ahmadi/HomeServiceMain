@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace HomeService.Endpoint.Razor.Pages.Orders
 {
-    [Authorize(Roles = "Customer,Admin")]
+    [Authorize]
     public class OrderDetailsModel(IOrderAppService orderAppService) : PageModel
     {
         private readonly IOrderAppService _orderAppService = orderAppService;
@@ -15,7 +15,7 @@ namespace HomeService.Endpoint.Razor.Pages.Orders
         public GetOrderDto? DetailModel { get; set; }
         public async Task<IActionResult> OnGet(int id, CancellationToken cancellationToken)
         {
-            if (HttpContext.Session.GetString("isConfirmed") != "True")
+            if (Request.Cookies["isConfirmed"] != "True")
             {
                 return Redirect("~/Account/AccessDenied");
             }

@@ -35,6 +35,10 @@ public class UserService(IUserRepository repository) : IUserService
         return await _repository.GetById(id, cancellationToken);
     }
 
+    public async Task<int> GetCityId(int id, CancellationToken cancellationToken)
+    {
+        return await _repository.GetCityId(id, cancellationToken);
+    }
 
     public async Task<GetUserStaticDataDto?> GetUserStaticDate(int id, CancellationToken cancellationToken)
     {

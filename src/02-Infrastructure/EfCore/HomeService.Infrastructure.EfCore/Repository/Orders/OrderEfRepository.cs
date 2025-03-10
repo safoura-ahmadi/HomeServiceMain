@@ -44,23 +44,31 @@ public class OrderEfRepository(ApplicationDbContext dbContext, ILogger<OrderEfRe
             return 0;
         }
     }
-    public async Task<List<GetOrderDto>> GetAvailableOrdersForExpert(int cityId, int subserviceId, CancellationToken cancellationToken)
+    public async Task<List<GetOrderDto>> GetAvailableOrdersForExpert(int expertId, int cityId, List<int> subserviceIds, CancellationToken cancellationToken)
     {
         try
         {
             var item = await _dbContext.Orders.AsNoTracking()
-                .Where(o => o.IsActive && o.Customer!.CityId == cityId &&
-                o.SubServiceId == subserviceId &&
-                (o.Status == OrderStatusEnum.WaitingForExpertOffer ||
-                o.Status == OrderStatusEnum.WaitingForExpertSelection))
+                  .Where(o => o.IsActive &&
+                (
+                    (o.ExpertId.HasValue && o.ExpertId == expertId) // حالت اول
+                    ||
+                    ( // حالت دوم
+                        o.Customer!.User!.CityId == cityId &&
+                        subserviceIds.Contains(o.SubServiceId) &&
+                        (o.Status == OrderStatusEnum.WaitingForExpertOffer ||
+                         o.Status == OrderStatusEnum.WaitingForExpertSelection)
+                    )
+                )
+            )
+
                 .Select(o => new GetOrderDto
                 {
                     Id = o.Id,
                     CreateAt = o.CreateAt,
-                    CustomerLname = o.Customer!.Lname,
-                    Description = o.Description,
-                    Price = o.Price,
-                    TimeToDone = o.TimeToDone
+                    SubServiceName = o.SubService!.Title,
+                    Status = o.Status,
+                    SubServiceId = o.SubServiceId
                 }).ToListAsync(cancellationToken);
             return item;
         }
@@ -250,12 +258,12 @@ public class OrderEfRepository(ApplicationDbContext dbContext, ILogger<OrderEfRe
                 .Include(o => o.Customer)
                 .Include(o => o.Expert)
                 .Include(o => o.SubService)
-                .Where(o => o.IsActive && (!string.IsNullOrEmpty(o.Customer!.Lname) && o.Customer.Lname.Contains(text) || o.SubService!.Title.Contains(text)))
+                .Where(o => o.IsActive && (!string.IsNullOrEmpty(o.Customer!.User!.Lname) && o.Customer.User!.Lname.Contains(text) || o.SubService!.Title.Contains(text)))
                 .Select(o => new GetOrderDto
                 {
                     Id = o.Id,
                     CreateAt = o.CreateAt,
-                    CustomerLname = o.Customer!.Lname ?? "نامشخص",
+                    CustomerLname = o.Customer!.User!.Lname ?? "نامشخص",
                     SubServiceName = o.SubService!.Title,
 
 
@@ -379,7 +387,7 @@ public class OrderEfRepository(ApplicationDbContext dbContext, ILogger<OrderEfRe
                 {
                     Id = o.Id,
                     CreateAt = o.CreateAt,
-                    CustomerLname = o.Customer!.Lname ?? "نا مشخص",
+                    CustomerLname = o.Customer!.User!.Lname ?? "نا مشخص",
                     SubServiceName = o.SubService!.Title,
                     Status = o.Status
                 }).ToListAsync(cancellationToken);
@@ -411,7 +419,7 @@ public class OrderEfRepository(ApplicationDbContext dbContext, ILogger<OrderEfRe
         }
     }
 
-   
+
 
     public async Task<Result> Update(UpdateOrderDto model, CancellationToken cancellationToken)
     {
@@ -424,11 +432,11 @@ public class OrderEfRepository(ApplicationDbContext dbContext, ILogger<OrderEfRe
             item.ExpertId = model.ExpertId;
             item.Price = model.Price;
             item.TimeToDone = model.TimeToDone;
-            
+
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("سفارش شما با موفقیت آپدیت شد");
 
-                
+
 
         }
         catch (Exception ex)
@@ -453,7 +461,7 @@ public class OrderEfRepository(ApplicationDbContext dbContext, ILogger<OrderEfRe
                     Price = o.Price,
                     ExpertId = o.ExpertId,
                     ExpertUserId = o.Expert.UserId
-                    
+
                 }).FirstOrDefaultAsync(cancellationToken);
             return item;
 

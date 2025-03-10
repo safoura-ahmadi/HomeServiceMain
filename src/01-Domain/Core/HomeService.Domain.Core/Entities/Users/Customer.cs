@@ -10,12 +10,12 @@ public class Customer
     [Key]
     public int Id { get; set; }
     [MaxLength(100)]
-    public string? Lname { get; set; }
+
     #endregion
 
 
     #region NavigationProperties
-    public int CityId { get; set; }
+
     public int UserId { get; set; }
     public User? User { get; set; }
     public List<Order> Orders { get; set; } = [];

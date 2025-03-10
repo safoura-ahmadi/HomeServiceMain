@@ -6,6 +6,7 @@ using HomeService.Domain.Core.Contracts.Service.Orders;
 using HomeService.Domain.Core.Dtos.Orders;
 using HomeService.Domain.Core.Entities;
 using HomeService.Domain.Core.Entities.Configs;
+using HomeService.Domain.Core.Enums.Orders;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
 
@@ -169,6 +170,21 @@ public class OrderAppService(IOrderService orderService, ISuggestionService sugg
     {
         var fee = (decimal)(price * feePercent)/100;
         return fee;
+    }
+
+    public async Task<OrderStatusEnum> GetLastStatusOfOrder(int id, CancellationToken cancellationToken)
+    {
+        if (id <= 0)
+            return OrderStatusEnum.UnDefined;
+        return await _orderService.GetLastStatusOfOrder(id, cancellationToken);
+    }
+
+    public async Task<List<GetOrderDto>> GetAvailableOrdersForExpert(int expertId, int cityId, List< int> subserviceIds, CancellationToken cancellationToken)
+    {
+        if (expertId <= 0 || cityId <= 0 ||subserviceIds.Any(x => x <= 0))
+            return [];
+        return await _orderService.GetAvailableOrdersForExpert(expertId, cityId, subserviceIds, cancellationToken);
+
     }
 }
 

@@ -22,7 +22,7 @@ public class ExpertConfiguration : IEntityTypeConfiguration<Expert>
             {
                 Id = 1,
                 UserId = 2,
-                Lname = "ahamdi"
+               
                  
 
             }

@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace HomeService.Domain.Core.Entities.ValidationAtrribute
 {
-    public class AllowedExtensionsAttribute : ValidationAttribute
+    public class AllowedExtensionsValidation : ValidationAttribute
     {
         private readonly string[] _extensions;
 
-        public AllowedExtensionsAttribute(string[] extensions)
+        public AllowedExtensionsValidation(string[] extensions)
         {
             _extensions = extensions;
         }

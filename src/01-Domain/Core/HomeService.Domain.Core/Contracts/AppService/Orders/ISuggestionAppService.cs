@@ -16,4 +16,5 @@ public interface ISuggestionAppService
     Task<SuggestionDetailsDto?> GetSuggestionDetailById(int id, CancellationToken cancellationToken);
     Task<SuggestionOverviewDto?> GetById(int id, CancellationToken cancellationToken);
     Task<Result> ChangeStatetoAccepted(int id, CancellationToken cancellationToken);
+    Task<Result> Create(SuggestionDto suggestion, CancellationToken cancellationToken);
 }

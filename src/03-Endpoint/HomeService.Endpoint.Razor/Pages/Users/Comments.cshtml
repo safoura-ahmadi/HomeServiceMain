@@ -3,7 +3,7 @@
 @using HomeService.Domain.Core.Contracts.AppService.BaseEntities
 @model HomeService.Endpoint.Razor.Pages.Users.CommentsModel
 @{
-    ViewData["Title"] = "نظرات";
+    ViewData["Title"] = "کامنت‌ها";
 }
 
 <div class="portlet box shadow">
@@ -26,6 +26,7 @@
                     <tr>
                         <th>#</th>
                         <th>کامنت </th>
+                        <th> نام مشتری</th>
                         <th> نام کارشناس</th>
                         <th> امتیاز کارشناس</th>
                         <th> تاریخ ثبت</th>
@@ -46,6 +47,7 @@
                         <tr>
                             <td>@j</td>
                             <td>@item.Text</td>
+                            <td>@item.CustomerLname</td>
                             <td>@item.ExpertLname</td>
                             <td>@item.Score</td>
                             <td>@item.CreateAt.ToPersianString("yyyy/MM/dd")</td>

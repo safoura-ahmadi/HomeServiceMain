@@ -14,4 +14,6 @@ public interface ISubServiceService
     Task<List<GetSubServiceDto>> GetAll(int pageNumber, int pageSize, CancellationToken cancellationToken);
     Task<int> GetTotalCount(CancellationToken cancellationToken);
     Task<UpdateSubServiceDto?> GetById(int id, CancellationToken cancellationToken);
+    Task<List<GetExpertPageSubServiceDto>> GetAllForExpertPages(CancellationToken cancellationToken);
+
 }

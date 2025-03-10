@@ -185,6 +185,7 @@ public class UserEfRepository(ApplicationDbContext dbContext, ILogger<UserEfRepo
                Fname = u.Fname,
                Lname = u.Lname,
                ImagePath = u.ImagePath,
+               Mobile = u.Mobile
 
            }).FirstOrDefaultAsync(cancellationToken);
             return item;
@@ -225,5 +226,22 @@ public class UserEfRepository(ApplicationDbContext dbContext, ILogger<UserEfRepo
     public async Task Commit(CancellationToken cancellationToken)
     {
         await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<int> GetCityId(int id, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var item = await _dbContext.Users.AsNoTracking()
+                .Where(u => u.Id == id)
+                .Select(u => u.CityId)
+                .FirstOrDefaultAsync(cancellationToken);
+            return item;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "UserEfRepository", ex.Message);
+            return 0;
+        }
     }
 }

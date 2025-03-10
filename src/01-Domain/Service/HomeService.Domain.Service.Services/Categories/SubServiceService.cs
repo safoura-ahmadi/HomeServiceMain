@@ -28,6 +28,11 @@ public class SubServiceService(ISubServiceRepository repository, IMemoryCache me
         return await _repository.GetAll(pageNumber, pageSize, cancellationToken);
     }
 
+    public async Task<List<GetExpertPageSubServiceDto>> GetAllForExpertPages(CancellationToken cancellationToken)
+    {
+        return await _repository.GetAllForExpertPages(cancellationToken);
+    }
+
     public async Task<int> GetBasePrice(int id, CancellationToken cancellationToken)
     {
         return await _repository.GetBasePrice(id, cancellationToken);
@@ -41,19 +46,19 @@ public class SubServiceService(ISubServiceRepository repository, IMemoryCache me
 
     public async Task<List<GetSubServiceDto>> GetBySubCategoryId(int subcategoryId, CancellationToken cancellationToken)
     {
-        List<GetSubServiceDto> item = _memoryCache.Get<List<GetSubServiceDto>>("SubCategoryServiceList") ?? [];
+        List<GetSubServiceDto> item = _memoryCache.Get<List<GetSubServiceDto>>($"SubCategory{subcategoryId}ServiceList") ?? [];
 
-        if ( item.Count > 0)
+        if (item.Count > 0)
         {
-           
+
         }
         else
         {
             item = await _repository.GetBySubCategoryId(subcategoryId, cancellationToken);
-            _memoryCache.Set("SubCategoryServiceList", item, TimeSpan.FromHours(12));
+            _memoryCache.Set($"SubCategory{subcategoryId}ServiceList", item, TimeSpan.FromHours(12));
         }
         return item;
-      
+
     }
 
     public async Task<int> GetTotalCount(CancellationToken cancellationToken)

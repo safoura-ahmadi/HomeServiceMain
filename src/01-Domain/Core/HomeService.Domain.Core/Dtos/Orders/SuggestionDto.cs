@@ -12,10 +12,10 @@ public class SuggestionDto
     [MaxLength(255, ErrorMessage = "استفاده کردن از 255 کاراکتر به بالا مجاز نیست")]
     public string? Description { get; set; }
     [Display(Name = "تاریخ اتمام کار")]
-    [DateValidation(ErrorMessage = "تاریخ وارد شده نامعتبر است")]
+  
     [Required(ErrorMessage = "وارد کردن تاریخ الزامی است")]
     public DateTime TimeToDone { get; set; }
-    public string? ExperLname { get; set; }
+    
     [Display(Name = "قیمت پیشنهادی")]
     [PriceValidation(ErrorMessage = "قیمت وارد شده نامعتبر است")]
     [Required(ErrorMessage = "وارد کردن قیمت الزامی است")]
@@ -24,5 +24,6 @@ public class SuggestionDto
     public int ExpertId { get; set; }
     
     public int OrderId { get; set; }
+    public int SubServiceId { get; set; }
 
 }

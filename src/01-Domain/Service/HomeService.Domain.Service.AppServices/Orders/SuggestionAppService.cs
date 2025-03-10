@@ -1,12 +1,15 @@
 ﻿using HomeService.Domain.Core.Contracts.AppService.Orders;
 using HomeService.Domain.Core.Contracts.Service.BaseEntities;
+using HomeService.Domain.Core.Contracts.Service.Categories;
 using HomeService.Domain.Core.Contracts.Service.Orders;
 using HomeService.Domain.Core.Dtos.Orders;
 using HomeService.Domain.Core.Entities;
+using HomeService.Domain.Core.Entities.Categories;
+using HomeService.Domain.Core.Entities.Orders;
 
 namespace HomeService.Domain.Service.AppServices.Orders;
 
-public class SuggestionAppService(ISuggestionService suggestionService, ICommentService commentService, IOrderService orderService) : ISuggestionAppService
+public class SuggestionAppService(ISuggestionService suggestionService, ICommentService commentService, IOrderService orderService,ISubServiceService subServiceService) : ISuggestionAppService
 
 {
     private readonly ISuggestionService _suggestionService = suggestionService;
@@ -72,9 +75,9 @@ public class SuggestionAppService(ISuggestionService suggestionService, IComment
             return Result.Fail("پیشنهادی با این مشخصات وجود ندارد");
         if (suggest.OrderId <= 0)
             return Result.Fail("برای این پیشنهاد سفارشی وجود ندارد");
-        var orderState = await _orderService.GetLastStatusOfOrder(id, cancellationToken);
-        if (orderState != Core.Enums.Orders.OrderStatusEnum.WaitingForExpertSelection)
-            return Result.Fail("سفارش در وضعیت انتخاب متخصص قرار ندارد");
+        //var orderState = await _orderService.GetLastStatusOfOrder(id, cancellationToken);
+        //if (orderState != Core.Enums.Orders.OrderStatusEnum.WaitingForExpertSelection)
+        //    return Result.Fail("سفارش در وضعیت انتخاب متخصص قرار ندارد");
         var result = await _suggestionService.ChangeStatetoAccepted(id, cancellationToken);
         if (!result.Success)
             return result;
@@ -87,5 +90,17 @@ public class SuggestionAppService(ISuggestionService suggestionService, IComment
 
         };
         return await _orderService.Update(model, cancellationToken);
+    }
+
+    public async Task<Result> Create(SuggestionDto suggestion, CancellationToken cancellationToken)
+    {
+        if (suggestion.ExpertId <= 0 || suggestion.SubServiceId <= 0 || suggestion.OrderId <= 0)
+            return Result.Fail("مشخصات پیشنهاد نامعتبر است");
+        var serviceBasePrice = await subServiceService.GetBasePrice(suggestion.SubServiceId, cancellationToken);
+        if (suggestion.Price < serviceBasePrice)
+            return Result.Fail("قیمت پیشنهادی شما برای این سفارش نمیتواند کمتر از قیمت پایه ی هوم سرویس باشد");
+
+       return await _suggestionService.Create(suggestion, cancellationToken);
+       
     }
 }

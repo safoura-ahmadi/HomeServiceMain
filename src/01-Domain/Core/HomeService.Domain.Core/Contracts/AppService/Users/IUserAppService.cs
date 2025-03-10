@@ -20,4 +20,5 @@ public interface IUserAppService
     Task<UpdateUsertDto?> GetById(int id, CancellationToken cancellationToken);
     Task<GetUserStaticDataDto?> GetUserStaticDate(int id, CancellationToken cancellationToken);
     Task Commit(CancellationToken cancellationToken);
+    Task<int> GetCityId(int id, CancellationToken cancellationToken);
 }

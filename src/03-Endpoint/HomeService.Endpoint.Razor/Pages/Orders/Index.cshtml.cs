@@ -36,7 +36,7 @@ namespace HomeService.Endpoint.Razor.Pages.Orders
 
         public async Task<IActionResult> OnGet(CancellationToken cancellationToken)
         {
-            if (HttpContext.Session.GetString("isConfirmed") != "True")
+            if (Request.Cookies["isConfirmed"] != "True")
             {
                 return Redirect("~/Account/AccessDenied");
             }
@@ -60,7 +60,7 @@ namespace HomeService.Endpoint.Razor.Pages.Orders
         }
         public async Task<IActionResult> OnGetSuggestionDetail(int id, CancellationToken cancellationToken)
         {
-            if (HttpContext.Session.GetString("isConfirmed") != "True")
+            if (Request.Cookies["isConfirmed"] != "True")
             {
                 return Redirect("~/Account/AccessDenied");
             }
@@ -69,7 +69,7 @@ namespace HomeService.Endpoint.Razor.Pages.Orders
         }
         public async Task<IActionResult> OnGetOrderFinalInfo(int id, CancellationToken cancellationToken)
         {
-              if (HttpContext.Session.GetString("isConfirmed") != "True")
+              if (Request.Cookies["isConfirmed"] != "True")
             {
                 return Redirect("~/Account/AccessDenied");
             }
@@ -79,7 +79,7 @@ namespace HomeService.Endpoint.Razor.Pages.Orders
         }
         public async Task<IActionResult> OnPost(CancellationToken cancellationToken)
         {
-            if (HttpContext.Session.GetString("isConfirmed") != "True")
+            if (Request.Cookies["isConfirmed"] != "True")
             {
                 return Redirect("~/Account/AccessDenied");
             }
@@ -90,9 +90,10 @@ namespace HomeService.Endpoint.Razor.Pages.Orders
                 var expertId= OrderFactor!.ExpertId;
                 var expertUserId = OrderFactor!.ExpertUserId;
                 var totalPrice = OrderFactor!.TotalPrice;
-                var siteFee = OrderFactor!.SiteFee;
+               
                 var price = OrderFactor.Price;
                 var withdrawResult = await _userAppService.WithdrawBalance(customerUserId, totalPrice, cancellationToken);
+                var siteFee = OrderFactor!.SiteFee;
                 if (!withdrawResult.Success)
                 {
                     TempData["ErrorMessage"] = withdrawResult.Message;

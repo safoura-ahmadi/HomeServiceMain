@@ -19,7 +19,7 @@ public class ExpertEfRepository(ApplicationDbContext dbContext, ILogger<ExpertEf
         {
             var item = new Expert()
             {
-                Lname = lName,
+              
                 UserId = userId,
 
             };

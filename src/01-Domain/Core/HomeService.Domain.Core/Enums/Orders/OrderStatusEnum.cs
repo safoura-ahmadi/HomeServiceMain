@@ -8,9 +8,9 @@ public enum OrderStatusEnum
     [Display(Name = "در انتظار پیشنهاد متخصص")]
     WaitingForExpertOffer = 1,
     [Display(Name = "در انتظار انتخاب متخصص")]
-    WaitingForExpertSelection,
+    WaitingForExpertSelection = 2,
     [Display(Name = " پرداخت")]
-    WorkCompletedAndPaid,
+    WorkCompletedAndPaid = 3,
     [Display(Name = "خاتمه یافته")]
-    Completed
+    Completed= 4
 }

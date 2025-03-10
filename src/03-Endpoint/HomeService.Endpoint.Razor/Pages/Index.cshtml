@@ -29,20 +29,9 @@
 				<div class="banner">
 					<!-- banner-form -->
 					<div class="banner-form banner-form-full">
-						<form action="#">
-							<!-- category-change -->
-							<div class="dropdown category-dropdown">
-								<a data-toggle="dropdown" href="#"><span class="change-text">انتخاب دسته‌بندی</span> <i class="fa fa-angle-down"></i></a>
-								<ul class="dropdown-menu category-change">
-									<li><a asp-page="/HomePageSubService">مد و زیبایی</a></li>
-									<li><a asp-page="/HomePageSubService">ماشین و وسایل نقلیه</a></li>
-									<li><a asp-page="/HomePageSubService">دستگاه‌های دیجیتال  و گجت‌ها</a></li>
-									<li><a asp-page="/HomePageSubService">املاک</a></li>
-									<li><a asp-page="/HomePageSubService">ورزشی و بازی</a></li>
-								</ul>
-							</div><!-- category-change -->
-							<input type="text" class="form-control" placeholder="عبارت مورد نظر خود را تایپ کنید">
-							<button type="submit" class="form-control" value="Search">جستجو</button>
+						<form method="post" asp-page="/SearchIndex">
+							<input name="text" type="text" class="form-control" placeholder="عبارت مورد نظر خود را تایپ کنید">
+							<button type="submit" class="form-control">جستجو</button>
 						</form>
 					</div><!-- banner-form -->
 				</div>

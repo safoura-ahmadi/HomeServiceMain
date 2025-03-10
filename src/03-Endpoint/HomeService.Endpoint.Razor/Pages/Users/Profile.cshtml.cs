@@ -9,19 +9,20 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace HomeService.Endpoint.Razor.Pages.Users
 {
-    [Authorize(Roles = "Customer,Admin")]
-    public class ProfileModel(IUserAppService userAppService, UserManager<User> userManager) : PageModel
+    [Authorize]
+    public class ProfileModel(IUserAppService userAppService, UserManager<User> userManager, IExpertSubServiceAppservice expertSubServiceAppservice) : PageModel
     {
         private readonly IUserAppService _userAppService = userAppService;
         private readonly UserManager<User> _userManager = userManager;
 
         [BindProperty]
         public UpdateUsertDto? UserUpdateModel { get; set; } = null;
-       
 
+        [BindProperty]
+        public List<int> SubServiceIds { get; set; } = [];
         public async Task<IActionResult> OnGet(CancellationToken cancellationToken)
         {
-            if (HttpContext.Session.GetString("isConfirmed") != "True")
+            if (Request.Cookies["isConfirmed"] != "True")
             {
                 return Redirect("~/Account/AccessDenied");
             }
@@ -29,7 +30,12 @@ namespace HomeService.Endpoint.Razor.Pages.Users
             if (int.TryParse(userId, out var id))
             {
                 UserUpdateModel = await _userAppService.GetById(id, cancellationToken);
-                
+                if (User.IsInRole("Expert"))
+                {
+                    var expertId = int.Parse(User.Claims.First(c => c.Type == "ExpertId").Value);
+                    SubServiceIds = await expertSubServiceAppservice.GetSubServicesByExpertId(expertId, cancellationToken);
+
+                }
 
                 return Page();
             }
@@ -38,7 +44,7 @@ namespace HomeService.Endpoint.Razor.Pages.Users
         }
         public async Task<IActionResult> OnPost(CancellationToken cancellationToken)
         {
-            if (HttpContext.Session.GetString("isConfirmed") != "True")
+            if (Request.Cookies["isConfirmed"] != "True")
             {
                 return Redirect("~/Account/AccessDenied");
             }
@@ -53,6 +59,18 @@ namespace HomeService.Endpoint.Razor.Pages.Users
 
                     if (result.Succeeded)
                     {
+                        if (User.IsInRole("Expert"))
+                        {
+                            var expertId = int.Parse(User.Claims.First(c => c.Type == "ExpertId").Value);
+                           
+                                var skillResult = await expertSubServiceAppservice.Create(expertId, SubServiceIds, cancellationToken);
+                                if (!skillResult)
+
+                                    TempData["ErrorMessage"] = "در فرایند بروز رسانی  مهارت ها مشکلی ایجاد شده";
+                            
+
+                        }
+
                         TempData["SuccessMessage"] = "مشخصات کاربر با موفقیت تغییر یافت";
                         return RedirectToPage();
 

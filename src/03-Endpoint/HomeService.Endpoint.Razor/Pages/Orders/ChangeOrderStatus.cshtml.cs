@@ -10,7 +10,7 @@ namespace HomeService.Endpoint.Razor.Pages.Orders
 
         public IActionResult OnGet()
         {
-            if (HttpContext.Session.GetString("isConfirmed") != "True")
+            if (Request.Cookies["isConfirmed"] != "True")
             {
                 return Redirect("~/Account/AccessDenied");
             }

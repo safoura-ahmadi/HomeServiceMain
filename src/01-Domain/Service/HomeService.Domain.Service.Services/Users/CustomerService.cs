@@ -9,9 +9,9 @@ public class CustomerService(ICustomerRepository repository) : ICustomerService
 {
     private readonly ICustomerRepository _repository = repository;
 
-    public async Task<Result> Create(int userId, string lName, int cityId, CancellationToken cancellationToken)
+    public async Task<Result> Create(int userId, CancellationToken cancellationToken)
     {
-        return await _repository.Create(userId, lName, cityId, cancellationToken);  
+        return await _repository.Create(userId, cancellationToken);  
     }
 
     public async Task<int> GetTotalCount(CancellationToken cancellationToken)

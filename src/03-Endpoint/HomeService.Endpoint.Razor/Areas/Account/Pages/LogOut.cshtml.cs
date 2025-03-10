@@ -13,9 +13,9 @@ namespace HomeService.Endpoint.Razor.Areas.Account.Pages
         {
             await _signInManager.SignOutAsync();
 
-            HttpContext.Session.Remove("isConfirmed");
+           
 
-            return RedirectToPage("Index");
+            return RedirectToPage("/Login");
 
         }
     }

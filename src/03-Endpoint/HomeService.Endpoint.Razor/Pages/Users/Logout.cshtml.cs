@@ -5,9 +5,11 @@ namespace HomeService.Endpoint.Razor.Pages.Users
 {
     public class LogoutModel : PageModel
     {
-        public void OnGet()
+        public IActionResult OnGet()
         {
-            HttpContext.Session.Remove("isConfirmed");
+            
+            
+            return Page();
         }
     }
 }

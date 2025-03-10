@@ -29,41 +29,51 @@ namespace HomeService.Endpoint.Razor.Areas.Account.Pages
 
         public async Task<IActionResult> OnPost(CancellationToken cancellationToken)
         {
-            
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return Page();
+
+            var result = await userAppService.Login(PageModel.Username, PageModel.Password, cancellationToken);
+
+            if (!result.Succeeded)
             {
-                var result = await userAppService.Login(PageModel.Username, PageModel.Password, cancellationToken);
-
-                if (!result.Succeeded)
-                {
-                    TempData["ErrorMessage"] = "نام کاربری با رمز عبور اشتباه است";
-                    return Page();
-                }
-                if (result.Succeeded)
-                {
-                    var id =int.Parse(User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
-                    var status = await userAppService.IsConfirmedByAdmin(id, cancellationToken);
-                    if(status != Domain.Core.Enums.Users.UserStatusEnum.Accepted)
-                    {
-                        TempData["ErrorMessage"] = "شما هنوز توسط ادمین تایید نشده اید ";
-                        HttpContext.Session.SetString("isConfirmed", "False");
-                        return Page();
-                    }
-                    HttpContext.Session.SetString("isConfirmed", "True");
-
-                }
-                var userRole = User.Claims.First(x => x.Type == ClaimTypes.Role).Value;
-
-
-                return userRole switch
-                {
-                    "Admin" => RedirectToPage("Index", new { area = "Admin" }),
-                    "Customer" => RedirectToPage("Index"),
-                    "Expert" => RedirectToPage("Index"),
-                    _ => RedirectToPage("Login"),
-                };
+                TempData["ErrorMessage"] = "نام کاربری با رمز عبور اشتباه است";
+                return Page();
             }
-            return Page();
+
+            var id = int.Parse(User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            var status = await userAppService.IsConfirmedByAdmin(id, cancellationToken);
+
+            if (status != Domain.Core.Enums.Users.UserStatusEnum.Accepted)
+            {
+                TempData["ErrorMessage"] = "شما هنوز توسط ادمین تایید نشده اید ";
+                Response.Cookies.Append("isConfirmed", "False", new CookieOptions
+                {
+                    Expires = DateTime.UtcNow.AddDays(30), 
+                    HttpOnly = true,  
+                    Secure = true,  
+                    SameSite = SameSiteMode.Strict 
+                });
+                return Page();
+            }
+
+            Response.Cookies.Append("isConfirmed", "True", new CookieOptions
+            {
+                Expires = DateTime.UtcNow.AddDays(30),
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict
+            });
+
+            var userRole = User.Claims.First(x => x.Type == ClaimTypes.Role).Value;
+
+            return userRole switch
+            {
+                "Admin" => RedirectToPage("Index", new { area = "Admin" }),
+                "Customer" => RedirectToPage("Index"),
+                "Expert" => RedirectToPage("Index"),
+                _ => RedirectToPage("Login"),
+            };
         }
+
     }
 }

@@ -30,14 +30,13 @@ public class CustomerEfRepository(ApplicationDbContext dbContext, ILogger<Custom
         }
     }
 
-    public async Task<Result> Create(int userId,string lName, int cityId, CancellationToken cancellationToken)
+    public async Task<Result> Create(int userId, CancellationToken cancellationToken)
     {
         try
         {
             var item = new Customer()
             {
-                Lname = lName,
-                CityId = cityId,
+              
                 UserId = userId,
 
             };

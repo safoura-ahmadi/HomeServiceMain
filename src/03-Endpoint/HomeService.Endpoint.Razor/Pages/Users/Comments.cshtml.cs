@@ -13,7 +13,7 @@ namespace HomeService.Endpoint.Razor.Pages.Users
         public List<GetCommentDto> Comments { get; set; } = [];
         public async Task<IActionResult> OnGet(int id, CancellationToken cancellationToken)
         {
-            if (HttpContext.Session.GetString("isConfirmed") != "True")
+            if (Request.Cookies["isConfirmed"] != "True")
             {
                 return Redirect("~/Account/AccessDenied");
             }

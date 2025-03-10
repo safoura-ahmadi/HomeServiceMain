@@ -57,7 +57,8 @@ public class CommentEfRepository(ApplicationDbContext dbContext, ILogger<Comment
                     Score = c.Score,
                     Text = c.Text,
                     CreateAt = c.CreateAt,
-                    ExpertLname = c.Expert!.User!.Lname ?? "نامشخص"
+                    ExpertLname = c.Expert!.User!.Lname ?? "نامشخص",
+                    CustomerLname = c.Customer!.User!.Lname??"نامشخص"
                 }
 
                ).ToListAsync(cancellationToken);
@@ -76,7 +77,7 @@ public class CommentEfRepository(ApplicationDbContext dbContext, ILogger<Comment
             var averageScore = await _dbContext.Comments
                 .Where(c => c.ExpertId == expertId && c.Score != 0)
                 .Select(c => (float?)c.Score).AverageAsync(cancellationToken);
-            return averageScore ?? 0f;
+            return averageScore ?? 5f;
         }
         catch (Exception ex)
         {
@@ -159,12 +160,12 @@ public class CommentEfRepository(ApplicationDbContext dbContext, ILogger<Comment
         {
             var items = await _dbContext.Comments.AsNoTracking()
                 .Include(c => c.Expert)
-                .Where(c => (!string.IsNullOrEmpty(c.Text) && c.Text.Contains(text)) || (string.IsNullOrEmpty(c.Expert!.Lname) && c.Expert!.Lname!.Contains(text)) && c.Status != CommentStatusEnum.Rejected)
+                .Where(c => (!string.IsNullOrEmpty(c.Text) && c.Text.Contains(text)) || (string.IsNullOrEmpty(c.Expert!.User!.Lname) && c.Expert!.User!.Lname!.Contains(text)) && c.Status != CommentStatusEnum.Rejected)
                 .Select(c => new GetCommentDto
                 {
                     Id = c.Id,
                     Text = c.Text,
-                    ExpertLname = c.Expert!.Lname ?? "نامشخص",
+                    ExpertLname = c.Expert!.User!.Lname ?? "نامشخص",
                     Status = c.Status,
                     Score = c.Score,
                     CreateAt = c.CreateAt,

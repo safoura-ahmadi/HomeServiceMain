@@ -13,5 +13,8 @@ public interface ISubServiceAppService
     Task<List<GetSubServiceDto>> Search(string text, CancellationToken cancellationToken);
     Task<UpdateSubServiceDto?> GetById(int id, CancellationToken cancellationToken);
     Task<List<GetSubServiceDto>> GetBySubCategoryId(int subcategoryId, CancellationToken cancellationToken);
+    Task<List<GetExpertPageSubServiceDto>> GetAllForExpertPages(CancellationToken cancellationToken);
+
+
 
 }

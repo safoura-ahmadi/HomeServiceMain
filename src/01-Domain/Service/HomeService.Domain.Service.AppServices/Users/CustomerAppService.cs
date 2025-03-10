@@ -8,11 +8,11 @@ public class CustomerAppService(ICustomerService customerService) : ICustomerApp
 {
     private readonly ICustomerService _customerService = customerService;
 
-    public async Task<Result> Create(int userId, string lName, int cityId, CancellationToken cancellationToken)
+    public async Task<Result> Create(int userId, CancellationToken cancellationToken)
     {
-        if (userId <= 0 || cityId <= 0 || string.IsNullOrEmpty(lName))
+        if (userId <= 0)
             return Result.Fail("مشخصات وارد شده نامعتبر است");
-        return await _customerService.Create(userId,lName,cityId,cancellationToken);
+        return await _customerService.Create(userId,cancellationToken);
             
     }
 

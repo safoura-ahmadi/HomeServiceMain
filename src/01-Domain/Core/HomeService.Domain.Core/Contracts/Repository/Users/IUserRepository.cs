@@ -19,5 +19,7 @@ public interface IUserRepository
     Task Commit(CancellationToken cancellationToken);
    
     Task<GetUserStaticDataDto?> GetUserStaticDate(int id, CancellationToken cancellationToken);
+    Task<int> GetCityId(int id, CancellationToken cancellationToken);
+
 
 }

@@ -13,7 +13,7 @@ public class Expert
     [Key]
     public int Id { get; set; }
     [MaxLength(100)]
-    public string? Lname { get; set; }
+
 
     #endregion
 

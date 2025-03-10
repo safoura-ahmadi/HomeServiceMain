@@ -9,7 +9,7 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
 {
     public void Configure(EntityTypeBuilder<Customer> builder)
     {
-        
+
 
         builder.HasOne(c => c.User)
             .WithOne(u => u.Customer);
@@ -19,9 +19,8 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
             {
                 Id = 1,
                 UserId = 3,
-                CityId = 1,
-                Lname = "ahmadi"
-             
+               
+
             });
 
 

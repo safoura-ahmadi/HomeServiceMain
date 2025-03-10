@@ -6,5 +6,5 @@ namespace HomeService.Domain.Core.Contracts.Service.Users;
 public interface ICustomerService
 {
     Task<int> GetTotalCount(CancellationToken cancellationToken);
-    Task<Result> Create(int userId, string lName, int cityId, CancellationToken cancellationToken);
+    Task<Result> Create(int userId, CancellationToken cancellationToken);
 }

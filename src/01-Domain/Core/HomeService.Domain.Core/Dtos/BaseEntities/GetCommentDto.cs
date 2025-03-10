@@ -10,5 +10,6 @@ public class GetCommentDto
     public int Score { get; set; } = 0;
     public CommentStatusEnum Status { get; set; }
     public string ExpertLname { get; set; } = null!;
+    public string CustomerLname { get; set; } = null!;
     public DateTime CreateAt { get; set; }
 }

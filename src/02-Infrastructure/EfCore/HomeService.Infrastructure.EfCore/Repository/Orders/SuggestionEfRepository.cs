@@ -27,7 +27,8 @@ public class SuggestionEfRepository(ApplicationDbContext dbContext, ILogger<Sugg
                 TimeToDone = suggestion.TimeToDone,
                 Price = suggestion.Price,
                 IsAccepted = false,
-                IsActive = false
+                IsActive = true,
+                CreateAt = DateTime.Now
             };
             await _dbContext.AddAsync(item, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);
@@ -51,7 +52,7 @@ public class SuggestionEfRepository(ApplicationDbContext dbContext, ILogger<Sugg
                 .Select(s => new GetSuggestionForOrderDto
                 {
                     Id = s.Id,
-                    ExperLname = s.Expert!.User!.Lname??"نامشخص",
+                    ExperLname = s.Expert!.User!.Lname ?? "نامشخص",
                     Price = s.Price,
                     CreateAt = s.CreateAt,
                     TimeToDone = s.TimeToDone,
@@ -131,7 +132,6 @@ public class SuggestionEfRepository(ApplicationDbContext dbContext, ILogger<Sugg
                 {
                     Id = s.Id,
                     Description = s.Description,
-                    ExperLname = s.Expert!.Lname,
                     ExpertId = s.ExpertId,
                     OrderId = s.OrderId,
                     Price = s.Price,
@@ -241,7 +241,7 @@ public class SuggestionEfRepository(ApplicationDbContext dbContext, ILogger<Sugg
         try
         {
             var item = await _dbContext.Suggestions.AsNoTracking()
-                .Where(s => s.ExpertId == expertId && s.IsActive)
+                .Where(s => s.ExpertId == expertId && s.IsActive && s.Order!.IsActive )
                 .CountAsync(cancellationToken);
             return item;
         }
@@ -259,7 +259,7 @@ public class SuggestionEfRepository(ApplicationDbContext dbContext, ILogger<Sugg
         {
             var item = await _dbContext.Suggestions.AsNoTracking()
                 .Include(s => s.Order)
-                .Where(s => s.Order!.CustomerId == customerId && s.IsActive)
+                .Where(s => s.Order!.CustomerId == customerId && s.IsActive && s.Order!.IsActive)
                 .CountAsync(cancellationToken);
             return item;
         }

@@ -26,10 +26,7 @@ namespace HomeService.Endpoint.Razor.Pages
         public string PersianDate { get; set; } = null!;
         public async Task<IActionResult> OnGet(int id, CancellationToken cancellationToken)
         {
-            if (HttpContext.Session.GetString("isConfirmed") != "True")
-            {
-                return RedirectToPage("AccessDenied", new { area = "Account" });
-            }
+         
 
             SubCategoryId = id;
             Subservices = await _subServiceAppService.GetBySubCategoryId(id, cancellationToken);
@@ -38,7 +35,7 @@ namespace HomeService.Endpoint.Razor.Pages
         public async Task<IActionResult> OnPost(CancellationToken cancellationToken)
 
         {
-            if (HttpContext.Session.GetString("isConfirmed") != "True")
+            if (Request.Cookies["isConfirmed"] != "True")
             {
                return RedirectToPage("AccessDenied", new { area = "Account" });
             }
@@ -53,12 +50,12 @@ namespace HomeService.Endpoint.Razor.Pages
                 try
                 {
                     var date = PersianDate.ToGregorianDate();
-                    if (date <= DateTime.Now)
+                    if (date < DateTime.Now)
                     {
                         TempData["ErrorMessage"] = "تاریخ انتخابی شما نامعتبر است";
                         return Page();
                     }
-                    Order!.SubServiceId = SubCategoryId;
+                 
                     Order.TimeToDone = date;
                     Order.CustomerId = int.Parse(User.Claims.First(x => x.Type == "CustomerId").Value);
                     var result = await _orderAppService.Create(Order, cancellationToken);
@@ -85,7 +82,7 @@ namespace HomeService.Endpoint.Razor.Pages
 
             return Page();
         }
-
+      
 
     }
 }

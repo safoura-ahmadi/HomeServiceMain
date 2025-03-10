@@ -32,7 +32,7 @@ public class SubServiceEfRepository(ApplicationDbContext dbContext, ILogger<SubS
             return Result.Ok("سرویس جدید با موفقیت ایجاد شد");
 
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SubServiceEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
@@ -59,7 +59,7 @@ public class SubServiceEfRepository(ApplicationDbContext dbContext, ILogger<SubS
                  ).ToListAsync(cancellationToken);
             return item;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SubServiceEfRepository", ex.Message);
             return [];
@@ -71,21 +71,24 @@ public class SubServiceEfRepository(ApplicationDbContext dbContext, ILogger<SubS
         try
         {
             var item = await _dbContext.SubServices.AsNoTracking()
-                .Where(s => s.IsActive && s.Title.Contains(text) || s.Description.Contains(text))
-                .Include(s => s.SubCategory)
-                .Select(s => new GetSubServiceDto
-                {
-                    Id = s.Id,
-                    Title = s.Title,
-                    BasePrice = s.BasePrice,
-                    Description = s.Description,
-                    ImagePath = s.ImagePath,
-                    SubCategoryTitle = s.SubCategory!.Title
+                 .Include(s => s.SubCategory)
+                 .ThenInclude(c => c!.Category)
+                 .Where(s => s.IsActive && s.Title.Contains(text) || s.Description.Contains(text) ||
+                  s.SubCategory!.Title.Contains(text))
+                               .Select(s => new GetSubServiceDto
+                               {
+                                   Id = s.Id,
+                                   Title = s.Title,
+                                   BasePrice = s.BasePrice,
+                                   Description = s.Description,
+                                   ImagePath = s.ImagePath,
+                                   SubCategoryTitle = s.SubCategory!.Title,
+                                   CategoryTitle = s.SubCategory!.Category!.Title
 
-                }).ToListAsync(cancellationToken);
+                               }).ToListAsync(cancellationToken);
             return item;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SubServiceEfRepository", ex.Message);
             return [];
@@ -101,7 +104,7 @@ public class SubServiceEfRepository(ApplicationDbContext dbContext, ILogger<SubS
                 .FirstAsync(cancellationToken);
             return item;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SubServiceEfRepository", ex.Message);
             return 0;
@@ -119,13 +122,13 @@ public class SubServiceEfRepository(ApplicationDbContext dbContext, ILogger<SubS
                 return Result.Fail("هوم سرویسی با این مشخصات وجود ندارد");
             item.Title = model.Title;
             item.Description = model.Description;
-            item.ImagePath = model.ImagePath??item.ImagePath;
+            item.ImagePath = model.ImagePath ?? item.ImagePath;
             item.BasePrice = model.BasePrice;
             item.SubCategoryId = model.SubCategoryId;
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("ویرایش هوم سرویس با موفقیت انجام شد");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SubServiceEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
@@ -142,7 +145,7 @@ public class SubServiceEfRepository(ApplicationDbContext dbContext, ILogger<SubS
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("هوم سرویس با موفقیت حذف شد ");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SubServiceEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
@@ -169,7 +172,7 @@ public class SubServiceEfRepository(ApplicationDbContext dbContext, ILogger<SubS
                  ).ToListAsync(cancellationToken);
             return item;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SubServiceEfRepository", ex.Message);
             return [];
@@ -183,7 +186,7 @@ public class SubServiceEfRepository(ApplicationDbContext dbContext, ILogger<SubS
                 .CountAsync(cancellationToken);
             return item;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SubServiceEfRepository", ex.Message);
             return 0;
@@ -206,10 +209,31 @@ public class SubServiceEfRepository(ApplicationDbContext dbContext, ILogger<SubS
                 }).FirstOrDefaultAsync(cancellationToken);
             return item;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SubServiceEfRepository", ex.Message);
             return null;
         }
+    }
+
+    public async Task<List<GetExpertPageSubServiceDto>> GetAllForExpertPages(CancellationToken cancellationToken)
+    {
+        try
+        {
+            var item = await _dbContext.SubServices.AsNoTracking()
+                .Where(s => s.IsActive)
+                .Select(s => new GetExpertPageSubServiceDto
+                {
+                    Id = s.Id,
+                    Title = s.Title
+                }).ToListAsync(cancellationToken);
+            return item;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SubServiceEfRepository", ex.Message);
+            return [];
+        }
+
     }
 }

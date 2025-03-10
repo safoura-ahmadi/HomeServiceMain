@@ -96,21 +96,31 @@
                                             <span><a href="#"> @item.CategoryTitle  </a></span> /
                                             <span><a href="#">@item.SubCategoryTitle</a></span>
                                         </div>
-                                        <h3 class="item-price mt-4">قیمت پایه :@item.BasePrice تومان </h3>
-                                        @if (!User.Identity!.IsAuthenticated)
-                                        {
-                                            <a asp-area="Account" asp-page="/Login" class="btn btn-danger round float-left py-1">
-                                                <i class="icon-size-fullscreen"></i>
-                                                ورود به حساب کاربری
-                                            </a>
-                                        }
-                                        else if (User.IsInRole("Customer"))
-                                        {
-                                            <button class="btn btn-success round float-left py-1" data-bs-toggle="modal" data-bs-target="#form-modal">
-                                                <i class="icon-size-fullscreen"></i>
-                                                ثبت سفارش
-                                            </button>
-                                        }
+                                        <p class="item-title" style="color: black;">@item.Description</p>
+
+                                        <!-- بخش قیمت و دکمه‌ها -->
+                                        <div class="mt-5">
+                                            <!-- اضافه کردن فاصله از توضیحات -->
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <h3 class="item-price mb-0">قیمت پایه :@item.BasePrice تومان </h3>
+                                                @if (!User.Identity!.IsAuthenticated)
+                                                {
+                                                    <a asp-area="Account" asp-page="/Login" class="btn btn-danger round py-1">
+                                                        <i class="icon-size-fullscreen"></i>
+                                                        ورود به حساب کاربری
+                                                    </a>
+                                                }
+                                                else if (User.IsInRole("Customer"))
+                                                {
+                                                    <button class="btn btn-success round py-1" data-bs-toggle="modal" data-bs-target="#form-modal"
+                                                            onclick="setSubServiceId(@item.Id)">
+                                                        <i class="icon-size-fullscreen"></i>
+                                                        ثبت سفارش
+                                                    </button>
+
+                                                }
+                                            </div>
+                                        </div>
                                     </div>
                                 </div><!-- rending-text -->
                             </div><!-- ad-item -->
@@ -134,40 +144,51 @@
                 <h4 style="text-align: right;">
                     ثبت سفارش
                 </h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div><!-- /.modal-header -->
             <div class="modal-body rtl">
                 <div class="row">
                     <div class="col-lg-12">
                         <form id="create-order-form" method="post" asp-page="/HomePageSubService" enctype="multipart/form-data" class="form-horizontal rtl" role="form">
+                          
+                            <input type="hidden" id="Order_SubServiceId" asp-for="Order.SubServiceId" />
+                            <!-- فیلد قیمت پیشنهادی -->
                             <div class="form-group">
                                 <div class="col-md-8 col-lg-6 m-auto mb-3">
                                     <div class="input-group">
                                         <input asp-for="Order.Price" type="text" class="form-control text-right" placeholder="قیمت پیشنهادی (تومان)" id="price">
                                     </div><!-- /.input-group -->
-                                    <div class="error-message text-danger small mt-1" id="price-error">
-                                    </div>
+                                    <div class="error-message text-danger small mt-1" id="price-error"></div>
                                 </div><!-- /.col-md-8 -->
                             </div><!-- /.form-group -->
+                            <!-- فیلد تاریخ -->
                             <div class="form-group">
                                 <div class="col-md-8 col-lg-6 m-auto mb-3">
                                     <div class="input-group">
-                                        <input asp-for="PersianDate" type="text" class="has-persian-datepicker form-control" id="timeToDone">
-
+                                        <input asp-for="PersianDate" type="text" class="has-persian-datepicker form-control" id="timeToDone" placeholder="تاریخ تحویل">
                                     </div><!-- /.input-group -->
-                                    <div class="error-message text-danger small mt-1" id="timeToDone-error">
-                                    </div>
+                                    <div class="error-message text-danger small mt-1" id="timeToDone-error"></div>
                                 </div><!-- /.col-md-8 -->
                             </div><!-- /.form-group -->
-
+                            <!-- فیلد آپلود تصاویر -->
                             <div class="form-group">
                                 <div class="col-md-8 col-lg-6 m-auto mb-3">
                                     <div class="input-group">
                                         <input asp-for="Order.Images" type="file" class="form-control-file" id="imageUpload" multiple>
                                     </div><!-- /.input-group -->
-                                    <div class="error-message text-danger small mt-1" id="images-error">
-                                    </div>
+                                    <div class="error-message text-danger small mt-1" id="images-error"></div>
                                 </div><!-- /.col-md-8 -->
                             </div><!-- /.form-group -->
+                            <!-- فیلد توضیحات -->
+                            <div class="form-group">
+                                <div class="col-md-8 col-lg-6 m-auto mb-3">
+                                    <div class="input-group">
+                                        <textarea asp-for="Order.Description" class="form-control" placeholder="توضیحات سفارش" rows="4" id="description"></textarea>
+                                    </div><!-- /.input-group -->
+                                    <div class="error-message text-danger small mt-1" id="description-error"></div>
+                                </div><!-- /.col-md-8 -->
+                            </div><!-- /.form-group -->
+                            <!-- دکمه‌های ثبت و بازگشت -->
                             <div class="form-group">
                                 <div class="col-md-8 col-lg-6 m-auto mb-4">
                                     <button type="submit" class="btn btn-success btn-block">
@@ -197,14 +218,21 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+
     <script>
+             function setSubServiceId(subServiceId) {
+            console.log("SubServiceId Set To:", subServiceId); // بررسی مقدار
+            document.getElementById('Order_SubServiceId').value = subServiceId;
+        }
+    </script>
+    <script>
+
         $(document).ready(function() {
             $('#create-order-form').on('submit', function(event) {
                 event.preventDefault(); // جلوگیری از ارسال فرم تا زمانی که اعتبارسنجی انجام شود
 
                 let isValid = true;
-
-                // اعتبارسنجی قیمت
+                              // اعتبارسنجی قیمت
                 const priceInput = $('#price');
                 const priceValue = priceInput.val().trim();
                 const priceError = $('#price-error');

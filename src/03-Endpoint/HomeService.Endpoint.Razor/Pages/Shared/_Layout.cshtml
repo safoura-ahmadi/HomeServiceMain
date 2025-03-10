@@ -32,6 +32,8 @@
     <link id="preset" rel="stylesheet" href="~/UserTemplate/css/presets/preset1.css" />
     <link rel="stylesheet" href="~/UserTemplate/css/responsive.css" />
 
+
+
     <!-- font -->
     <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,500,700,300"
     rel="stylesheet"
@@ -62,7 +64,7 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <!-- Template Developed By ThemeRegion -->
-  
+
     <style>
         .collapse-table {
         overflow: hidden;
@@ -90,7 +92,7 @@
         string profile = "";
         string orders = "";
         string logout = "";
-
+        string comments = "";
 
 
 
@@ -102,6 +104,9 @@
             case "سفارشات من":
             case "جزئیات سفارش":
                 orders = "active";
+                break;
+            case "کامنت‌ها":
+                comments = "active";
                 break;
             case "خروج":
                 logout = "active";
@@ -134,32 +139,40 @@
                 <a class="navbar-brand" href="index.html">
                     <img class="img-fluid" src="~/UserTemplate/images/logo.png" alt="Logo" />
                 </a>
-                @* 
+
                 <div class="collapse navbar-collapse" id="tr-mainmenu">
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
-                            <a href="javascript:void(0);"
-                               class="dropdown-toggle"
-                               data-toggle="dropdown">
+                            <a 
+                            href="javascript:void(0);"
+                            class="dropdown-toggle"
+                            data-toggle="dropdown">
                                 ‌خانه<span class="caret"></span>
                             </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="index.html">خانه اصلی </a></li>
-                            </ul>
+                            @if (ViewData["Title"] != "خانه ی اصلی")
+                            {
+                                <ul class="dropdown-menu">
+                                    <li><a asp-page="../Index">خانه اصلی </a></li>
+                                </ul>
+                            }
                         </li>
                         <li class="active dropdown">
                             <a href="javascript:void(0);"
-                               class="dropdown-toggle"
-                               data-toggle="dropdown">
-                                صفحات<span class="caret"></span>
+                            class="dropdown-toggle"
+                            data-toggle="dropdown">
+                                دسته بندی<span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="about-us.html">درباره ما</a></li>
-                                <li><a href="contact-us.html">ارتباط با ما</a></li>
+                                <li><a asp-page="/HomePageSubService">مد و زیبایی</a></li>
+                                <li><a asp-page="/HomePageSubService">ماشین و وسایل نقلیه</a></li>
+                                <li><a asp-page="/HomePageSubService">دستگاه‌های دیجیتال  و گجت‌ها</a></li>
+                                <li><a asp-page="/HomePageSubService">املاک</a></li>
+                                <li><a asp-page="/HomePageSubService">ورزشی و بازی</a></li>
                             </ul>
+
                         </li>
                     </ul>
-                </div> *@
+                </div>
 
                 <div class="nav-right">
                     <!-- sign-in -->
@@ -235,14 +248,14 @@
                         </div>
 
                         <div class="user">
-                        @if(data is not null && data.Fname != null)
-                        {
-                            <h2>سلام, <a href="#">@data.Fname عزیز</a></h2>
-                        }
-                        else
-                        {
+                            @if(data is not null && data.Fname != null)
+                            {
+                                <h2>سلام, <a href="#">@data.Fname عزیز</a></h2>
+                            }
+                            else
+                            {
                                 <h2>سلام, <a href="#"> کاربر عزیز</a></h2>
-                        }
+                            }
                             <h5>امروز @DateTime.Now.ToPersianString("dddd, dd MMMM,yyyy") </h5>
                         </div>
 
@@ -320,7 +333,18 @@
 
                     <ul class="user-menu">
                         <li class=@profile><a asp-page="/Users/Profile">پروفایل</a></li>
-                        <li class=@orders><a asp-page="/Orders/Index"> سفارشات من</a></li>
+                        @if (User.IsInRole("Customer"))
+                        {
+                            <li class=@orders><a asp-page="/Orders/Index"> سفارشات من</a></li>
+                        }
+                        else{
+                            <li class=@orders><a asp-page="/Orders/ExpertOrders"> سفارشات من</a></li>
+                        }
+                        @if(User.IsInRole("Expert"))
+                        {
+                            var expertId = int.Parse(User.Claims.First(c => c.Type == "ExpertId").Value);
+                            <li class=@comments><a asp-page="/Users/Comments" asp-route-id="@expertId">کامنت‌ها</a></li>
+                        }
                         <li class=@logout><a asp-page="/Users/Logout">خروج از اکانت</a></li>
                     </ul>
                 </div>

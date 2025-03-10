@@ -16,7 +16,7 @@ public class CreateOrderDto
     public string? Description { get; set; }
     public int CustomerId { get; set; }
     public int SubServiceId { get; set; }
-    [AllowedExtensions(new string[] { ".jpg", ".jpeg", ".png" }, ErrorMessage = "فرمت فایل نامعتبر است. فقط jpg، jpeg و png مجاز هستند.")]
+    [AllowedExtensionsValidation(new string[] { ".jpg", ".jpeg", ".png" }, ErrorMessage = "فرمت فایل نامعتبر است. فقط jpg، jpeg و png مجاز هستند.")]
 
     public List<IFormFile>? Images { get; set; }
 }

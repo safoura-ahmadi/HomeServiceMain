@@ -103,12 +103,11 @@ try
     builder.Services.AddScoped<ICityAppService, CityAppService>();
     builder.Services.AddScoped<ICityService, CityService>();
     builder.Services.AddScoped<ICityRepository, CityEfRepository>();
-    builder.Services.AddSession(options =>
-    {
-        options.IdleTimeout = TimeSpan.FromMinutes(15);
-        options.Cookie.HttpOnly = true;
-        options.Cookie.IsEssential = true;
-    });
+    builder.Services.AddScoped<IExpertSubServiceAppservice, ExpertSubServiceAppService>();
+    builder.Services.AddScoped<IExpertSubServiceService, ExpertSubServiceService>();
+    builder.Services.AddScoped<IExpertSubServiceRepository, ExpertSubServiceEfRepository>();
+
+
     builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
     {
        
@@ -133,7 +132,7 @@ try
         // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
         app.UseHsts();
     }
-    app.UseSession();
+
     app.UseErrorLogging();
     app.UseHttpsRedirection();
 

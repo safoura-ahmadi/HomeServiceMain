@@ -10,7 +10,7 @@ public class OrderService(IOrderRepository repository) : IOrderService
 {
     private readonly IOrderRepository _repository = repository;
 
-   
+
 
     public async Task<Result> ChangeStateToWaitingForExpertOffer(int id, CancellationToken cancellationToken)
     {
@@ -42,9 +42,9 @@ public class OrderService(IOrderRepository repository) : IOrderService
         return await _repository.GetAll(pageNumber, pageSize, cancellationToken);
     }
 
-    public async Task<List<GetOrderDto>> GetAvailableOrdersForExpert(int cityId, int subserviceId, CancellationToken cancellationToken)
+    public async Task<List<GetOrderDto>> GetAvailableOrdersForExpert(int expertId, int cityId, List<int> subserviceIds, CancellationToken cancellationToken)
     {
-        return await _repository.GetAvailableOrdersForExpert(cityId, subserviceId, cancellationToken);
+        return await _repository.GetAvailableOrdersForExpert(expertId, cityId, subserviceIds, cancellationToken);
     }
 
     public async Task<OrderStatusEnum> GetLastStatusOfOrder(int id, CancellationToken cancellationToken)
@@ -100,10 +100,10 @@ public class OrderService(IOrderRepository repository) : IOrderService
 
     public async Task<Result> ChangeStateToCompleted(int id, CancellationToken cancellationToken)
     {
-       return await _repository.ChangeStateToCompleted(id, cancellationToken);
+        return await _repository.ChangeStateToCompleted(id, cancellationToken);
     }
 
-  
+
 
     public async Task<Result> Update(UpdateOrderDto model, CancellationToken cancellationToken)
     {
@@ -113,6 +113,6 @@ public class OrderService(IOrderRepository repository) : IOrderService
     public async Task<GetFinalOrderDto?> GetFinalInfoById(int id, CancellationToken cancellationToken)
     {
         return await _repository.GetFinalInfoById(id, cancellationToken);
-             
+
     }
 }

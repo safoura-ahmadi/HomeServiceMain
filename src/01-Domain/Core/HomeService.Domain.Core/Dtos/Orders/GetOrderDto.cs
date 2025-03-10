@@ -14,7 +14,7 @@ public class GetOrderDto
     public string? Description { get; set; }
     public string? CustomerLname { get; set; }
     public string SubServiceName { get; set; } = null!;
-    public OrderStatusEnum Status { get; set; } = OrderStatusEnum.WaitingForExpertOffer;
+    public OrderStatusEnum Status { get; set; }
     public List<Image> Images { get; set; } = [];
-
+    public int SubServiceId { get; set; }
 }

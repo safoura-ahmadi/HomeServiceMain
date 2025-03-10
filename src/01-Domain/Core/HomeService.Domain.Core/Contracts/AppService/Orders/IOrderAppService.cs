@@ -1,5 +1,6 @@
 ﻿using HomeService.Domain.Core.Dtos.Orders;
 using HomeService.Domain.Core.Entities;
+using HomeService.Domain.Core.Enums.Orders;
 
 
 namespace HomeService.Domain.Core.Contracts.AppService.Orders;
@@ -24,4 +25,7 @@ public interface IOrderAppService
    
     Task<Result> Update(UpdateOrderDto model, CancellationToken cancellationToken);
     Task<GetFinalOrderDto?> GetFinalInfoById(int id, CancellationToken cancellationToken);
+    Task<OrderStatusEnum> GetLastStatusOfOrder(int id, CancellationToken cancellationToken);
+    Task<List<GetOrderDto>> GetAvailableOrdersForExpert(int expertId, int cityId, List<int> subserviceIds, CancellationToken cancellationToken);
+
 }

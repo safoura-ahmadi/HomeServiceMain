@@ -1,6 +1,9 @@
-﻿namespace HomeService.Domain.Core.Contracts.Service.Users;
+﻿using HomeService.Domain.Core.Dtos.Users;
+
+namespace HomeService.Domain.Core.Contracts.Service.Users;
 public interface IExpertSubServiceService
 {
-    Task<bool> Create(int expertId, int subServiceId, CancellationToken cancellationToken);
-    Task<Dictionary<int, string>> GetSubServicesForExpert(int expertId, CancellationToken cancellationToken);
+    Task<bool> Create(int expertId, List<int> subServiceIds, CancellationToken cancellationToken);
+    Task<List<int>> GetSubServicesByExpertId(int expertId, CancellationToken cancellationToken);
+    Task<bool> Delete(int expertId, CancellationToken cancellationToken);
 }

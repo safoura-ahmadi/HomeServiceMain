@@ -17,7 +17,7 @@ public class UpdateCategoryDto
     public string? ImagePath { get; set; }
 
 
-    [AllowedExtensions(new string[] { ".jpg", ".jpeg", ".png" }, ErrorMessage = "فرمت فایل نامعتبر است. فقط jpg، jpeg و png مجاز هستند.")]
+    [AllowedExtensionsValidation(new string[] { ".jpg", ".jpeg", ".png" }, ErrorMessage = "فرمت فایل نامعتبر است. فقط jpg، jpeg و png مجاز هستند.")]
     public IFormFile? ImageFile { get; set; }
 }
 

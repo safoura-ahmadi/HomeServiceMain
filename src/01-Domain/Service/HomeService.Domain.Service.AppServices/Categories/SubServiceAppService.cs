@@ -43,11 +43,16 @@ public class SubServiceAppService(ISubServiceService subService, IImageReposiotr
         return await _subService.GetAll(pageNumber, 10, cancellationToken);
     }
 
+    public async Task<List<GetExpertPageSubServiceDto>> GetAllForExpertPages(CancellationToken cancellationToken)
+    {
+        return await _subService.GetAllForExpertPages(cancellationToken);
+    }
+
     public async Task<UpdateSubServiceDto?> GetById(int id, CancellationToken cancellationToken)
     {
         if (id <= 0)
             return null;
-         return await _subService.GetById(id, cancellationToken);
+        return await _subService.GetById(id, cancellationToken);
     }
 
     public async Task<List<GetSubServiceDto>> GetBySubCategoryId(int subcategoryId, CancellationToken cancellationToken)
