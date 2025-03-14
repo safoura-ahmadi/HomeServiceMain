@@ -1,6 +1,7 @@
 ﻿using HomeService.Domain.Core.Contracts.AppService.Users;
 using HomeService.Domain.Core.Dtos.Users;
 using HomeService.Domain.Core.Entities.Users;
+using HomeService.Domain.Core.Entities.ValidationAtrribute;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +19,7 @@ namespace HomeService.Endpoint.Razor.Pages.Users
         [BindProperty]
         public UpdateUsertDto? UserUpdateModel { get; set; } = null;
 
+      
         [BindProperty]
         public List<int> SubServiceIds { get; set; } = [];
         public async Task<IActionResult> OnGet(CancellationToken cancellationToken)

@@ -5,6 +5,7 @@ using HomeService.Domain.Core.Entities.Users;
 using HomeService.Infrastructure.EfCore.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace HomeService.Infrastructure.EfCore.Repository.Users;
 
@@ -62,7 +63,7 @@ public class ExpertSubServiceEfRepository(ApplicationDbContext dbContext, ILogge
         try
         {
             var items = await _dbContext.ExpertSubServices
-                .Where(e => e.ExpertId == expertId || e.SubService!.IsActive)
+                .Where(e => e.ExpertId == expertId && e.SubService!.IsActive)
                 .ToListAsync(cancellationToken);
             if (items == null || !items.Any())
             {
@@ -80,4 +81,22 @@ public class ExpertSubServiceEfRepository(ApplicationDbContext dbContext, ILogge
             return false;
         }
     }
+
+    public async Task<List<string>> GetExpertSkillsTitle(int expertId, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var item = await _dbContext.ExpertSubServices.AsNoTracking()
+                .Where(es => es.ExpertId == expertId)
+                .Select(sc => sc.SubService!.Title)
+                .ToListAsync (cancellationToken);
+            return item;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "ExpertSubServiceEfRepository", ex.Message);
+            return [];
+        }
+    }
+
 }

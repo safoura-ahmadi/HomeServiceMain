@@ -19,6 +19,13 @@ public class ExpertSubServiceService(IExpertSubServiceRepository repository) : I
         return await _repository.Delete(expertId, cancellationToken);
     }
 
+    public async Task<List<string>> GetExpertSkillsTitle(int expertId, CancellationToken cancellationToken)
+    {
+        if (expertId <= 0)
+            return [];
+        return await _repository.GetExpertSkillsTitle(expertId, cancellationToken);
+    }
+
     public async Task<List<int>> GetSubServicesByExpertId(int expertId, CancellationToken cancellationToken)
     {
         return await _repository.GetSubServicesByExpertId(expertId, cancellationToken);

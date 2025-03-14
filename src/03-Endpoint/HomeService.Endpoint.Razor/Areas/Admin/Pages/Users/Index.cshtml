@@ -106,6 +106,16 @@
                                             </div>
                                             <div class="text-danger small mt-1" id="password-error"></div> <!-- تگ برای نمایش خطای پسورد -->
                                         </div>
+                                        <div class="col-md-8 col-lg-6 m-auto m-b-10">
+                                            <div class="input-group round">
+                                                <span class="input-group-addon">
+                                                    <i class="icon-lock"></i>
+                                                </span>
+                                                <input type="password" asp-for="CreateModel.RePassword" class="form-control ltr text-left" placeholder=" تکرار کلمه عبور">
+
+                                            </div>
+                                            <div class="text-danger small mt-1" id="rePassword-error"></div>
+                                        </div>
                                         <div class="col-md-8 col-lg-6 m-auto">
                                             <button type="submit" class="btn btn-success btn-block mt-4 mb-2">
                                                 <i class="icon-cursor"></i>
@@ -154,6 +164,17 @@
                         } else {
                             passwordError.text(''); // پاک کردن خطا
                         }
+                        const rePasswordInput = $('input[name="CreateModel.RePassword"]');
+                        const rePasswordValue = rePasswordInput.val().trim();
+                        const rePasswordError = $('#rePassword-error'); // انتخاب تگ خطا برای پسورد
+
+                        if (rePasswordValue != passwordValue) {
+                            isValid = false;
+                            rePasswordError.text('رمز عبور و تکرار آن تطابق ندارند'); // نمایش خطا
+                        } else {
+                            rePasswordError.text(''); // پاک کردن خطا
+                        }
+
 
                         // اگر فرم معتبر باشد، ارسال شود
                         if (isValid) {

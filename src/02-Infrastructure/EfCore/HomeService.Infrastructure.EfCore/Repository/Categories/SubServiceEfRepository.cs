@@ -151,24 +151,22 @@ public class SubServiceEfRepository(ApplicationDbContext dbContext, ILogger<SubS
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
         }
     }
-    public async Task<List<GetSubServiceDto>> GetAll(int pageNumber, int pageSize, CancellationToken cancellationToken)
+    public async Task<List<GetSubServiceDto>> GetAll(CancellationToken cancellationToken)
     {
         try
         {
             var item = await _dbContext.SubServices.AsNoTracking()
                  .Where(s => s.IsActive)
                  .Include(S => S.SubCategory)
-                 .Skip((pageNumber - 1) * pageSize)
-                 .Take(pageSize)
-                 .Select(s => new GetSubServiceDto
-                 {
-                     Id = s.Id,
-                     Title = s.Title,
-                     Description = s.Description,
-                     BasePrice = s.BasePrice,
-                     ImagePath = s.ImagePath,
-                     SubCategoryTitle = s.SubCategory!.Title
-                 }
+                                  .Select(s => new GetSubServiceDto
+                                  {
+                                      Id = s.Id,
+                                      Title = s.Title,
+                                      Description = s.Description,
+                                      BasePrice = s.BasePrice,
+                                      ImagePath = s.ImagePath,
+                                      SubCategoryTitle = s.SubCategory!.Title
+                                  }
                  ).ToListAsync(cancellationToken);
             return item;
         }

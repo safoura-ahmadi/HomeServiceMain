@@ -96,23 +96,23 @@
                                             <span><a href="#"> @item.CategoryTitle  </a></span> /
                                             <span><a href="#">@item.SubCategoryTitle</a></span>
                                         </div>
-                                        <p class="item-title" style="color: black;">@item.Description</p>
+                                        <p style="color:black">@item.Description</p>
 
                                         <!-- بخش قیمت و دکمه‌ها -->
-                                        <div class="mt-5">
+                                        <div class="mt-3">
                                             <!-- اضافه کردن فاصله از توضیحات -->
                                             <div class="d-flex justify-content-between align-items-center">
-                                                <h3 class="item-price mb-0">قیمت پایه :@item.BasePrice تومان </h3>
+                                                <h3 class="item-price">قیمت پایه :@item.BasePrice تومان </h3>
                                                 @if (!User.Identity!.IsAuthenticated)
                                                 {
-                                                    <a asp-area="Account" asp-page="/Login" class="btn btn-danger round py-1">
+                                                    <a asp-area="Account" asp-page="/Login" class="btn btn-danger round">
                                                         <i class="icon-size-fullscreen"></i>
                                                         ورود به حساب کاربری
                                                     </a>
                                                 }
                                                 else if (User.IsInRole("Customer"))
                                                 {
-                                                    <button class="btn btn-success round py-1" data-bs-toggle="modal" data-bs-target="#form-modal"
+                                                    <button class="btn btn-success round" data-bs-toggle="modal" data-bs-target="#form-modal"
                                                             onclick="setSubServiceId(@item.Id)">
                                                         <i class="icon-size-fullscreen"></i>
                                                         ثبت سفارش
@@ -171,7 +171,8 @@
                                 </div><!-- /.col-md-8 -->
                             </div><!-- /.form-group -->
                             <!-- فیلد آپلود تصاویر -->
-                            <div class="form-group">
+
+                            <div class="mb-3">
                                 <div class="col-md-8 col-lg-6 m-auto mb-3">
                                     <div class="input-group">
                                         <input asp-for="Order.Images" type="file" class="form-control-file" id="imageUpload" multiple>

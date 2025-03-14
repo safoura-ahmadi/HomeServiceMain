@@ -5,6 +5,7 @@ namespace HomeService.Domain.Core.Contracts.Service.Categories;
 
 public interface ISubCategoryService
 {
+    Task<List<GetAllSubCategoryWithServiceDto>> GetAllWithService(CancellationToken cancellationToken);
     Task<List<GetSubCategoryDto>> GetByCategoryId(int categoryId, CancellationToken cancellationToken);
     Task<List<GetSubCategoryDto>> GetAll(CancellationToken cancellationToken);
     Task<Result> Create(string title, int CategoryId, CancellationToken cancellationToken);

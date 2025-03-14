@@ -2,12 +2,13 @@
 using HomeService.Domain.Core.Contracts.Service.Categories;
 using HomeService.Domain.Core.Dtos.Categories;
 using HomeService.Domain.Core.Entities;
+using HomeService.Domain.Core.Entities.Categories;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace HomeService.Domain.Service.Services.Categories;
 
-public class SubServiceService(ISubServiceRepository repository, IMemoryCache memoryCache) : ISubServiceService
+public class SubServiceService(ISubServiceRepository repository,ISubServiceDapperRepo dapperRepo, IMemoryCache memoryCache) : ISubServiceService
 {
     private readonly ISubServiceRepository _repository = repository;
     private readonly IMemoryCache _memoryCache = memoryCache;
@@ -25,7 +26,24 @@ public class SubServiceService(ISubServiceRepository repository, IMemoryCache me
 
     public async Task<List<GetSubServiceDto>> GetAll(int pageNumber, int pageSize, CancellationToken cancellationToken)
     {
-        return await _repository.GetAll(pageNumber, pageSize, cancellationToken);
+
+        List<GetSubServiceDto> item = _memoryCache.Get<List<GetSubServiceDto>>($"SubService{pageNumber}-{pageSize}List") ?? [];
+
+        if (item.Count > 0)
+        {
+
+        }
+        else
+        {
+            item = await dapperRepo.GetAll(cancellationToken);
+            item = item
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+            _memoryCache.Set($"SubService{pageNumber}-{pageSize}List", item, TimeSpan.FromHours(12));
+        }
+        return item;
+       
     }
 
     public async Task<List<GetExpertPageSubServiceDto>> GetAllForExpertPages(CancellationToken cancellationToken)

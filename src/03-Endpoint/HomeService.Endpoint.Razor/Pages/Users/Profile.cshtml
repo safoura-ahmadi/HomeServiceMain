@@ -56,12 +56,12 @@
                         <input asp-for="UserUpdateModel!.Id" type="hidden">
                         <input asp-for="UserUpdateModel!.Email" type="hidden">
                         <input asp-for="UserUpdateModel!.Balance" type="hidden">
-                        <input asp-for="UserUpdateModel!.Mobile" type="hidden">
+                       
                         <div class="form-group">
                             <label>نام</label>
                             <input asp-for="UserUpdateModel!.Fname"
-                            type="text"
-                            class="form-control" />
+                                   type="text"
+                                   class="form-control" />
                             <div class="error-message text-danger small mt-1">
                                 <span asp-validation-for="UserUpdateModel!.Fname"></span>
                             </div>
@@ -70,8 +70,8 @@
                         <div class="form-group">
                             <label>نام خانوادگی</label>
                             <input type="text"
-                            asp-for="UserUpdateModel!.Lname"
-                            class="form-control" />
+                                   asp-for="UserUpdateModel!.Lname"
+                                   class="form-control" />
                             <div class="error-message text-danger small mt-1">
                                 <span asp-validation-for="UserUpdateModel!.Lname"></span>
                             </div>
@@ -80,27 +80,27 @@
                         <div class="form-group">
                             <label>ایمیل</label>
                             <input asp-for="UserUpdateModel!.Email"
-                            type="email"
-                            class="form-control"
-                            disabled />
+                                   type="email"
+                                   class="form-control"
+                                   disabled />
                         </div>
 
                         <div class="form-group">
                             <label>موبایل</label>
-                            <input type="text"
-                            asp-for="UserUpdateModel!.Mobile"
-                            class="form-control"
-                            placeholder="@Model.UserUpdateModel!.Mobile" />
-                            <div class="error-message text-danger">
-                                <span asp-validation-for="UserUpdateModel!.Mobile"></span>
+                            <input asp-for="UserUpdateModel.Mobile"
+                                   type="tel"
+                                   class="form-control" />
+                            <div class="error-message text-danger small mt-1">
+                                <span asp-validation-for="UserUpdateModel.Mobile"></span>
                             </div>
                         </div>
+                      
                         <div class="form-group">
                             <label> موجودی کیف پول (تومان)</label>
                             <input asp-for="UserUpdateModel!.Balance"
-                            type="text"
-                            class="form-control"
-                            disabled />
+                                   type="text"
+                                   class="form-control"
+                                   disabled />
                         </div>
                         @if (User.IsInRole("Customer"))
                         {
@@ -139,7 +139,7 @@
                                 }
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div class="mb-3">
 
                             <div class="input-group round">
                                 <label>پروفایل</label>
@@ -275,7 +275,7 @@
     <script src="~/UserTemplate/js/bootstrap.min.js"></script>
 
     <!-- اسکریپت‌های ضروری دیگر در صورت نیاز -->
-    @* <script src="~/UserTemplate/js/popper.min.js"></script> *@
-    @* <script src="~/UserTemplate/js/modernizr.min.js"></script> *@
-    @* <script src="~/UserTemplate/js/custom.js"></script> *@
+@* <script src="~/UserTemplate/js/popper.min.js"></script> *@
+@* <script src="~/UserTemplate/js/modernizr.min.js"></script> *@
+@* <script src="~/UserTemplate/js/custom.js"></script> *@
 }

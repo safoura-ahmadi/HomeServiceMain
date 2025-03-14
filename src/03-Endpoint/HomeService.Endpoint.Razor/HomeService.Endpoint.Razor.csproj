@@ -21,6 +21,7 @@
 		<ProjectReference Include="..\..\01-Domain\Core\HomeService.Domain.Core\HomeService.Domain.Core.csproj" />
 		<ProjectReference Include="..\..\01-Domain\Service\HomeService.Domain.Service.AppServices\HomeService.Domain.Service.AppServices.csproj" />
 		<ProjectReference Include="..\..\01-Domain\Service\HomeService.Domain.Service.Services\HomeService.Domain.Service.Services.csproj" />
+		<ProjectReference Include="..\..\02-Infrastructure\Dapper\HomeService.Infrastructure.Dapper\HomeService.Infrastructure.Dapper.csproj" />
 		<ProjectReference Include="..\..\02-Infrastructure\EfCore\HomeService.Infrastructure.EfCore\HomeService.Infrastructure.EfCore.csproj" />
 	</ItemGroup>
 

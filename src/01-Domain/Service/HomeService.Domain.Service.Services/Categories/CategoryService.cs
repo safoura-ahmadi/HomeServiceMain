@@ -6,7 +6,7 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace HomeService.Domain.Service.Services.Categories;
 
-public class CategoryService(ICategoryRepository repository, IMemoryCache memoryCache) : ICategoryService
+public class CategoryService(ICategoryRepository repository,ICategoryDapperRepo dapperRepo, IMemoryCache memoryCache) : ICategoryService
 
 {
     private readonly ICategoryRepository _repository = repository;
@@ -32,7 +32,7 @@ public class CategoryService(ICategoryRepository repository, IMemoryCache memory
         }
         else
         {
-            item = await _repository.GetAll(cancellationToken);
+            item = await dapperRepo.GetAll(cancellationToken);
             _memoryCache.Set("AdminCategoryList", item, TimeSpan.FromHours(12));
         }
 

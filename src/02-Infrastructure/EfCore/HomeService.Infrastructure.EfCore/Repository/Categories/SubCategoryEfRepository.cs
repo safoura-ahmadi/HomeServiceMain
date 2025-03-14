@@ -15,7 +15,7 @@ public class SubCategoryEfRepository(ApplicationDbContext dbContext, ILogger<Sub
 
     public async Task<List<GetSubCategoryDto>> GetByCategoryId(int categoryId, CancellationToken cancellationToken)
     {
-       
+
         try
         {
             var item = await _dbContext.SubCategories.AsNoTracking()
@@ -28,7 +28,7 @@ public class SubCategoryEfRepository(ApplicationDbContext dbContext, ILogger<Sub
                 }).ToListAsync(cancellationToken);
             return item;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SubCategoryEfRepository", ex.Message);
             return [];
@@ -37,7 +37,7 @@ public class SubCategoryEfRepository(ApplicationDbContext dbContext, ILogger<Sub
     //admin
     public async Task<List<GetSubCategoryDto>> GetAll(CancellationToken cancellationToken)
     {
-       
+
         try
         {
             var item = await _dbContext.SubCategories.AsNoTracking()
@@ -49,11 +49,11 @@ public class SubCategoryEfRepository(ApplicationDbContext dbContext, ILogger<Sub
                     Id = sc.Id,
                     Title = sc.Title,
                     CategoryName = sc.Category!.Title
-                  
+
                 }).ToListAsync(cancellationToken);
             return item;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SubCategoryEfRepository", ex.Message);
             return [];
@@ -73,7 +73,7 @@ public class SubCategoryEfRepository(ApplicationDbContext dbContext, ILogger<Sub
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("سابکتگوری با موفقیت ایحاد شد");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SubCategoryEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
@@ -90,7 +90,7 @@ public class SubCategoryEfRepository(ApplicationDbContext dbContext, ILogger<Sub
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("سابکتگوری با موفقیت حذف شد");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SubCategoryEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
@@ -110,7 +110,7 @@ public class SubCategoryEfRepository(ApplicationDbContext dbContext, ILogger<Sub
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Result.Ok("سلبکتگوری با موفقیت ویرایش شد");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SubCategoryEfRepository", ex.Message);
             return Result.Fail("مشکلی در دیتا بیس وجود دارد");
@@ -136,6 +136,43 @@ public class SubCategoryEfRepository(ApplicationDbContext dbContext, ILogger<Sub
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SubCategoryEfRepository", ex.Message);
             return null;
+        }
+    }
+
+    public async Task<List<GetAllSubCategoryWithServiceDto>> GetAllWithService(CancellationToken cancellationToken)
+    {
+        try
+        {
+            var item = await _dbContext.SubCategories.AsNoTracking()
+                .Where(sc => sc.IsActive)
+                .Select(sc => new GetAllSubCategoryWithServiceDto
+                {
+                    SubCategory = new GetSubCategoryDto
+                    {
+                        Id = sc.Id,
+                        CategoryName = sc.Category!.Title,
+                        Title = sc.Title
+
+                    },
+                    SubService = sc.SubServices
+                    .Where(s => s.IsActive)
+                    .Select(s => new GetSubCategoryServiceDto
+                    {
+                        Id = s.Id,
+                        BasePrice = s.BasePrice,
+                        Description = s.Description,
+                        ImagePath = s.ImagePath,
+                        Title = s.Title
+                    }).ToList()
+
+
+                }).ToListAsync(cancellationToken);
+            return item;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SubCategoryEfRepository", ex.Message);
+            return [];
         }
     }
 }

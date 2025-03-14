@@ -12,4 +12,9 @@ public class SubCategoryAppService(ISubCategoryService subCategoryService) : ISu
     {
         return await _subCategoryService.GetAll(cancellationToken);
     }
+
+    public async Task<List<GetAllSubCategoryWithServiceDto>> GetAllWithService(CancellationToken cancellationToken)
+    {
+        return await _subCategoryService.GetAllWithService(cancellationToken);
+    }
 }

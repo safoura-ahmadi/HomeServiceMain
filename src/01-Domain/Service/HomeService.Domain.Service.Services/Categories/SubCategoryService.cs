@@ -6,7 +6,7 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace HomeService.Domain.Service.Services.Categories;
 
-public class SubCategoryService(ISubCategoryRepository repository, IMemoryCache memoryCache) : ISubCategoryService
+public class SubCategoryService(ISubCategoryRepository repository,ISubCategoryDapperRepo dapperRepo, IMemoryCache memoryCache) : ISubCategoryService
 {
     private readonly ISubCategoryRepository _repository = repository;
     private readonly IMemoryCache _memoryCache = memoryCache;
@@ -31,11 +31,16 @@ public class SubCategoryService(ISubCategoryRepository repository, IMemoryCache 
         }
         else
         {
-            item = await _repository.GetAll(cancellationToken);
+            item = await dapperRepo.GetAll(cancellationToken);
             _memoryCache.Set("AllSubCategoryList", item, TimeSpan.FromHours(12));
         }
         return item;
 
+    }
+
+    public async Task<List<GetAllSubCategoryWithServiceDto>> GetAllWithService(CancellationToken cancellationToken)
+    {
+       return await _repository.GetAllWithService(cancellationToken);
     }
 
     public async Task<List<GetSubCategoryDto>> GetByCategoryId(int categoryId, CancellationToken cancellationToken)

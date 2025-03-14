@@ -1,7 +1,9 @@
 ﻿using HomeService.Domain.Core.Contracts.AppService.Orders;
+using HomeService.Domain.Core.Contracts.AppService.Users;
 using HomeService.Domain.Core.Contracts.Service.BaseEntities;
 using HomeService.Domain.Core.Contracts.Service.Categories;
 using HomeService.Domain.Core.Contracts.Service.Orders;
+using HomeService.Domain.Core.Contracts.Service.Users;
 using HomeService.Domain.Core.Dtos.Orders;
 using HomeService.Domain.Core.Entities;
 using HomeService.Domain.Core.Entities.Categories;
@@ -9,7 +11,7 @@ using HomeService.Domain.Core.Entities.Orders;
 
 namespace HomeService.Domain.Service.AppServices.Orders;
 
-public class SuggestionAppService(ISuggestionService suggestionService, ICommentService commentService, IOrderService orderService,ISubServiceService subServiceService) : ISuggestionAppService
+public class SuggestionAppService(ISuggestionService suggestionService, ICommentService commentService, IOrderService orderService,ISubServiceService subServiceService,IExpertSubServiceService expertSubServiceService) : ISuggestionAppService
 
 {
     private readonly ISuggestionService _suggestionService = suggestionService;
@@ -55,7 +57,10 @@ public class SuggestionAppService(ISuggestionService suggestionService, IComment
             return null;
         var item = await _suggestionService.GetDetailById(id, cancellationToken);
         if (item is not null)
+        {
             item.Score = await _commentService.GetExpertScore(item.ExpertId, cancellationToken);
+            item.ExpertSkillsTitle = await expertSubServiceService.GetExpertSkillsTitle(item.ExpertId, cancellationToken);
+        }
         return item;
     }
 

@@ -113,8 +113,7 @@ public class UserAppService(IUserService userService, ICustomerAppService custom
             await _userManager.AddToRoleAsync(user, role);
             await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, role));
             await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Email, user.Email));
-            await _userManager.AddClaimAsync(user, new Claim("Fname", user.Fname ?? "کاربر"));
-
+          
 
 
             if (model.Role == RoleEnum.Customer)

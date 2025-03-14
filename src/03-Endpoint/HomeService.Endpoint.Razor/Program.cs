@@ -24,6 +24,8 @@ using HomeService.Domain.Service.Services.Categories;
 using HomeService.Domain.Service.Services.Orders;
 using HomeService.Domain.Service.Services.Users;
 using HomeService.Endpoint.Razor.Middleware;
+using HomeService.Infrastructure.Dapper.Repositories.BaseEntites;
+using HomeService.Infrastructure.Dapper.Repositories.Categories;
 using HomeService.Infrastructure.EfCore.Common;
 using HomeService.Infrastructure.EfCore.Repository.BaseEntities;
 using HomeService.Infrastructure.EfCore.Repository.Categories;
@@ -88,26 +90,27 @@ try
     builder.Services.AddScoped<ISubServiceAppService, SubServiceAppService>();
     builder.Services.AddScoped<ISubServiceService, SubServiceService>();
     builder.Services.AddScoped<ISubServiceRepository, SubServiceEfRepository>();
+    builder.Services.AddScoped<ISubServiceDapperRepo, SubServiceDapperRepository>();
     builder.Services.AddScoped<IImageReposiotry, ImageService>();
     builder.Services.AddScoped<IImageRepository, ImageEfRepository>();
     builder.Services.AddScoped<IAdminSubserviceManagement, AdminSubserviceManagement>();
     builder.Services.AddScoped<ISubCategoryService, SubCategoryService>();
     builder.Services.AddScoped<ISubCategoryRepository, SubCategoryEfRepository>();
+    builder.Services.AddScoped<ISubCategoryDapperRepo, SubCategoryDapperRepository>();
     builder.Services.AddScoped<ICategoryAppService, CategoryAppService>();
     builder.Services.AddScoped<ICategoryService, CategoryService>();
     builder.Services.AddScoped<ICategoryRepository, CategoryEfRepository>();
+    builder.Services.AddScoped<ICategoryDapperRepo, CategoryDapperRepository>();
     builder.Services.AddScoped<IAdminSubCategoryManagement, AdminSubCategoryManagement>();
     builder.Services.AddScoped<IUserAppService, UserAppService>();
     builder.Services.AddScoped<IUserService, UserService>();
     builder.Services.AddScoped<IUserRepository, UserEfRepository>();
     builder.Services.AddScoped<ICityAppService, CityAppService>();
     builder.Services.AddScoped<ICityService, CityService>();
-    builder.Services.AddScoped<ICityRepository, CityEfRepository>();
+    builder.Services.AddScoped<ICityRepository, CityDapperRepository>();
     builder.Services.AddScoped<IExpertSubServiceAppservice, ExpertSubServiceAppService>();
     builder.Services.AddScoped<IExpertSubServiceService, ExpertSubServiceService>();
     builder.Services.AddScoped<IExpertSubServiceRepository, ExpertSubServiceEfRepository>();
-
-
     builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
     {
        

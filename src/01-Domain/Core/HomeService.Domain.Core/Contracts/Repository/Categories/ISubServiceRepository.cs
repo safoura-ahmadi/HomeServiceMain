@@ -11,7 +11,7 @@ public interface ISubServiceRepository
     Task<int> GetBasePrice(int id, CancellationToken cancellationToken);
     Task<Result> Update(UpdateSubServiceDto model, CancellationToken cancellationToken);
     Task<Result> Delete(int id, CancellationToken cancellationToken);
-    Task<List<GetSubServiceDto>> GetAll(int pageNumber, int pageSize, CancellationToken cancellationToken);
+    Task<List<GetSubServiceDto>> GetAll(CancellationToken cancellationToken);
     Task<int> GetTotalCount(CancellationToken cancellationToken);
     Task<UpdateSubServiceDto?> GetById(int id, CancellationToken cancellationToken);
     Task<List<GetExpertPageSubServiceDto>> GetAllForExpertPages(CancellationToken cancellationToken);

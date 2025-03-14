@@ -2,7 +2,8 @@
 {
     public class SiteSetting
     {
-        public ConnectionString ConnectionString { get; set; }
+        public ConnectionString ConnectionString { get; set; } = null!;
         public int SiteFeePercent { get; set; }
+        public string ApiKey { get; set; } = null!;
     }
 }

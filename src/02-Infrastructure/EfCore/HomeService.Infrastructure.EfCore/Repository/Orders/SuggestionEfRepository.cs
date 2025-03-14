@@ -223,7 +223,9 @@ public class SuggestionEfRepository(ApplicationDbContext dbContext, ILogger<Sugg
                     ExpertLname = s.Expert!.User!.Lname ?? "نامشخص",
                     OrderId = s.OrderId,
                     Score = 0,
-                    ExpertId = s.ExpertId
+                    ExpertId = s.ExpertId,
+                    
+                    
 
                 }).FirstOrDefaultAsync(cancellationToken);
             return item;

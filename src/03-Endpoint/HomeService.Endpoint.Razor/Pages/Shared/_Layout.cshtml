@@ -22,7 +22,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
+    
     <link rel="stylesheet" href="~/UserTemplate/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/UserTemplate/css/font-awesome.min.css" />
     <link rel="stylesheet" href="~/UserTemplate/css/icofont.css" />
@@ -31,6 +31,11 @@
     <link rel="stylesheet" href="~/UserTemplate/css/main.css" />
     <link id="preset" rel="stylesheet" href="~/UserTemplate/css/presets/preset1.css" />
     <link rel="stylesheet" href="~/UserTemplate/css/responsive.css" />
+
+    <link href="~/UserTemplate/assets/css/style.css" rel="stylesheet">
+    <link href="~/UserTemplate/assets/css/colors.css" rel="stylesheet">
+
+   
 
 
 
@@ -207,14 +212,14 @@
     {
         <section id="main" class="clearfix ad-profile-page">
             <div class="container">
-                <div class="breadcrumb-section">
+               @*  <div class="breadcrumb-section">
                     <!-- breadcrumb -->
                     <ol class="breadcrumb">
-                        <li><a href="index.html">خانه</a></li>
+                        <li>خانه</li>
                         <li> کارتابل شخصی</li>
                     </ol><!-- breadcrumb -->
                     <h2 class="title">@ViewData["Title"]</h2>
-                </div><!-- banner -->
+                </div><!-- banner --> *@
                 <div class="ad-profile section">
                     <div class="user-profile">
 
@@ -289,7 +294,11 @@
 
                                     }
                                     @orderNum
-                                    <small>سفارش های من</small>
+                                   <div class="mb-3">
+                                   <br />
+                                        <small>سفارش های من</small>
+                                   </div>
+                                 
                                 </a>
                             </div>
                             <div class="favorites">
@@ -323,7 +332,11 @@
 
                                     }
                                     @suggestNum
-                                    <small>پیشنهاد های من</small>
+                                    <div class="mb-3">
+                                        <br />
+                                        <small>پیشنهاد های من</small>
+                                    </div>
+                                    
                                 </a>
                             </div>
                         </div>

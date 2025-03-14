@@ -14,6 +14,7 @@ public class CityEfRepository(ApplicationDbContext dbContext, ILogger<CityEfRepo
 
     public async Task<List<City>> GetAll(CancellationToken cancellationToken)
     {
+       
         try
         {
 
@@ -22,11 +23,11 @@ public class CityEfRepository(ApplicationDbContext dbContext, ILogger<CityEfRepo
                 .ToListAsync(cancellationToken);
             return items;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "CityEfRepository", ex.Message);
             return [];
         }
-        
+
     }
 }

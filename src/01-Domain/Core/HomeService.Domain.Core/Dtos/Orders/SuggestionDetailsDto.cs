@@ -8,4 +8,5 @@ public class SuggestionDetailsDto
     public string? ExpertLname { get; set; }
     public string? Description { get; set; }
     public float Score { get; set; }
+    public List<string> ExpertSkillsTitle { get; set; } = [];
 }

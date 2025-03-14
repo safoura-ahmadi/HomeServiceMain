@@ -15,10 +15,10 @@ namespace HomeService.Endpoint.Razor.Areas.Admin.Pages.Users
     public class IndexModel(IUserAppService userAppService) : PageModel
     {
         private readonly IUserAppService _userAppService = userAppService;
-   
+
 
         [BindProperty]
-        public CreateUserDto CreateModel { get; set; } = null!;
+        public CreateUserDto CreateModel { get; set; } = new();
         [BindProperty]
         public List<GetAllUserDto> Users { get; set; } = [];
 
@@ -47,6 +47,7 @@ namespace HomeService.Endpoint.Razor.Areas.Admin.Pages.Users
         }
         public async Task<IActionResult> OnPost(CancellationToken cancellationToken)
         {
+           
             if (ModelState.IsValid)
             {
                 try

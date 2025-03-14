@@ -41,6 +41,14 @@
 </head>
 <body>
     <section id="main" class="clearfix user-page">
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div id="successMessage" class="alert alert-success" role="alert">
+                @TempData["SuccessMessage"]
+            </div>
+            <hr />
+            TempData["SuccessMessage"] = null;
+        }
         @if (TempData["ErrorMessage"] != null)
         {
             <div id="errorMessage" class="alert alert-danger" role="alert">

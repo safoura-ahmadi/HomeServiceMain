@@ -5,6 +5,7 @@
 @{
     ViewData["Title"] = "سفارشات من";
 }
+
 @inject ISuggestionAppService _SuggestionAppService
 @if (TempData["SuccessMessage"] != null)
 {
@@ -25,20 +26,20 @@
 <script>
 
     setTimeout(function () {
-        var successMessage = document.getElementById("successMessage");
-        var errorMessage = document.getElementById("errorMessage");
+    var successMessage = document.getElementById("successMessage");
+    var errorMessage = document.getElementById("errorMessage");
 
-        if (successMessage) {
-            successMessage.style.transition = "opacity 0.5s";
-            successMessage.style.opacity = "0";
-            setTimeout(function () { successMessage.style.display = "none"; }, 500);
-        }
+    if (successMessage) {
+    successMessage.style.transition = "opacity 0.5s";
+    successMessage.style.opacity = "0";
+    setTimeout(function () { successMessage.style.display = "none"; }, 500);
+    }
 
-        if (errorMessage) {
-            errorMessage.style.transition = "opacity 0.5s";
-            errorMessage.style.opacity = "0";
-            setTimeout(function () { errorMessage.style.display = "none"; }, 500);
-        }
+    if (errorMessage) {
+    errorMessage.style.transition = "opacity 0.5s";
+    errorMessage.style.opacity = "0";
+    setTimeout(function () { errorMessage.style.display = "none"; }, 500);
+    }
     }, 5000);
 </script>
 <div class="ads-info">
@@ -69,10 +70,10 @@
                                     <td>@order.SubServiceName</td>
                                     <td>@order.CreateAt.ToPersianString("yyyy/MM/dd")</td>
                                     @if (
-                                   order.Status == Domain.Core.Enums.Orders.OrderStatusEnum.UnDefined
-                                   || order.Status == Domain.Core.Enums.Orders.OrderStatusEnum.WaitingForExpertOffer
-                                   || order.Status == Domain.Core.Enums.Orders.OrderStatusEnum.WaitingForExpertSelection
-                                   )
+                                  order.Status == Domain.Core.Enums.Orders.OrderStatusEnum.UnDefined
+                                  || order.Status == Domain.Core.Enums.Orders.OrderStatusEnum.WaitingForExpertOffer
+                                  || order.Status == Domain.Core.Enums.Orders.OrderStatusEnum.WaitingForExpertSelection
+                                  )
                                     {
                                         <td><button class="badge p-2 bg-danger">@order.Status.GetEnumDisplayName() </button></td>
                                     }
@@ -123,7 +124,7 @@
                                                             <td>@item.CreateAt.ToPersianString("yyyy/MM/dd")</td>
                                                             <td>@item.TimeToDone.ToPersianString("yyyy/MM/dd")</td>
                                                             @if (order.Status == Domain.Core.Enums.Orders.OrderStatusEnum.WaitingForExpertOffer ||
-                                                           order.Status == Domain.Core.Enums.Orders.OrderStatusEnum.WaitingForExpertSelection)
+                                                          order.Status == Domain.Core.Enums.Orders.OrderStatusEnum.WaitingForExpertSelection)
                                                             {
                                                                 <td>
 
@@ -151,7 +152,7 @@
 
                                                             <td>
                                                                 <button class="btn btn-warning suggestion-detail-button" data-id="@item.Id"
-                                                                        data-expert-id="@item.ExpertId">
+                                                                data-expert-id="@item.ExpertId">
                                                                     جزییات پیشنهاد
                                                                 </button>
                                                             </td>
@@ -191,6 +192,10 @@
                 <input id="SuggestionDetail_Score" type="text" class="form-control" disabled />
                 <label for="SuggestionDetail_Description" class="form-label">توضیحات</label>
                 <input id="SuggestionDetail_Description" type="text" class="form-control" style="height: 100px" disabled />
+                <label for="SuggestionDetail_ExpertSkillsTitle" class="form-label">مهارت ها</label>
+                <div id="SuggestionDetail_ExpertSkillsTitle" class="skills-container">
+                    <!-- مهارت‌ها اینجا نمایش داده می‌شوند -->
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary mx-2" data-dismiss="modal">بستن</button>
@@ -269,9 +274,9 @@
                 <input id="OrderFinalInfo_ExpertLname" type="text" class="form-control" disabled />
                 <label for="OrderFinalInfo_TotalPrice" class="form-label">مبلغ نهایی</label>
                 <input id="OrderFinalInfo_TotalPrice" type="text" class="form-control" disabled />
-                 <form method="post" asp-page="/Orders/Index" class="form-horizontal" role="form" id="registration-form">
-                <label for="" class="form-label"> کامنت </label>
-                <input asp-for="Comment!.Text" type="text" class="form-control" style="height: 100px"  />
+                <form method="post" asp-page="/Orders/Index" class="form-horizontal" role="form" id="registration-form">
+                    <label for="" class="form-label"> کامنت </label>
+                    <input asp-for="Comment!.Text" type="text" class="form-control" style="height: 100px" />
                     <div class="form-group mt-3">
                         <label class="form-label">امتیازدهی:</label>
                         <div class="d-flex flex-row">
@@ -297,11 +302,11 @@
                             </div>
                         </div>
                     </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary mx-2" data-dismiss="modal">بستن</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary mx-2" data-dismiss="modal">بستن</button>
 
                         <button type="submit" class="btn btn-success">پرداخت هزینه</button>
-                </div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -312,7 +317,7 @@
 
 
 @section Scripts
-    {
+{
     <script src="~/UserTemplate/js/jquery.min.js"></script>
     <script src="~/UserTemplate/js/popper.min.js"></script>
     <script src="~/UserTemplate/js/modernizr.min.js"></script>
@@ -325,10 +330,10 @@
     <script src="~/UserTemplate/js/jquery.countdown.js"></script>
     <script src="~/UserTemplate/js/switcher.js"></script>
     <script src="~/UserTemplate/js/bootstrap.min.js"></script>
-    @*    <script src="~/UserTemplate/js/jquery-3.7.1.slim.min.js"></script>*@
+@*    <script src="~/UserTemplate/js/jquery-3.7.1.slim.min.js"></script>*@
     <script src="~/UserTemplate/js/bootstrap.bundle.min.js"></script>
     <script>
-        $(document).ready(function () {
+               $(document).ready(function () {
             $('.suggestion-detail-button').click(function (e) {
                 e.preventDefault();
                 var id = $(this).data('id');
@@ -344,6 +349,14 @@
                         $('#SuggestionDetail_Score').val(data.score);
                         $('#SuggestionDetail_Description').val(data.description);
                         $('#viewCommentsLink').attr('href', '/Users/Comments?id=' + data.expertId);
+
+                        // نمایش مهارت‌ها
+                        var skillsContainer = $('#SuggestionDetail_ExpertSkillsTitle');
+                        skillsContainer.empty(); // پاک کردن محتوای قبلی
+                        data.expertSkillsTitle.forEach(function (skill) {
+                            skillsContainer.append('<span class="label label-default">' + skill + '</span> ');
+                        });
+
                         $('#pishnahaddetail').modal('show');
                     },
                     error: function (xhr, status, error) {

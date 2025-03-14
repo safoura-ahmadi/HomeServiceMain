@@ -29,11 +29,14 @@ namespace HomeService.Endpoint.Razor.Pages.Orders
             {
                 return RedirectToPage("AccessDenied", new { area = "Account" });
             }
-            var userId = int.Parse(User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
-            var expertId = int.Parse(User.Claims.First(c => c.Type == "ExpertId").Value);
-            var cityId = await userAppService.GetCityId(userId, cancellationToken);
-            var skills = await expertSubServiceAppservice.GetSubServicesByExpertId(expertId, cancellationToken);
-            Orders = await orderAppService.GetAvailableOrdersForExpert(expertId, cityId, skills, cancellationToken);
+            if (User.IsInRole("Expert"))
+            {
+                var userId = int.Parse(User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+                var expertId = int.Parse(User.Claims.First(c => c.Type == "ExpertId").Value);
+                var cityId = await userAppService.GetCityId(userId, cancellationToken);
+                var skills = await expertSubServiceAppservice.GetSubServicesByExpertId(expertId, cancellationToken);
+                Orders = await orderAppService.GetAvailableOrdersForExpert(expertId, cityId, skills, cancellationToken);
+            }
             return Page();
         }
         public async Task<IActionResult> OnPost(CancellationToken cancellationToken)
@@ -43,11 +46,14 @@ namespace HomeService.Endpoint.Razor.Pages.Orders
             {
                 return RedirectToPage("AccessDenied", new { area = "Account" });
             }
-            var userId = int.Parse(User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
-            var expertId = int.Parse(User.Claims.First(c => c.Type == "ExpertId").Value);
-            var cityId = await userAppService.GetCityId(userId, cancellationToken);
-            var skills = await expertSubServiceAppservice.GetSubServicesByExpertId(expertId, cancellationToken);
-            Orders = await orderAppService.GetAvailableOrdersForExpert(expertId, cityId, skills, cancellationToken);
+            if (User.IsInRole("Expert"))
+            {
+                var userId = int.Parse(User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+                var expertId = int.Parse(User.Claims.First(c => c.Type == "ExpertId").Value);
+                var cityId = await userAppService.GetCityId(userId, cancellationToken);
+                var skills = await expertSubServiceAppservice.GetSubServicesByExpertId(expertId, cancellationToken);
+                Orders = await orderAppService.GetAvailableOrdersForExpert(expertId, cityId, skills, cancellationToken);
+            }
 
             if (!User.IsInRole("Expert"))
             {

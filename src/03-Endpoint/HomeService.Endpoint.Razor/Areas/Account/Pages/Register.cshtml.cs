@@ -24,6 +24,7 @@ namespace HomeService.Endpoint.Razor.Areas.Account.Pages
 
                     if (result.Succeeded)
                     {
+                     
                         return RedirectToPage("Login");
 
                     }
