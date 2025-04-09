@@ -35,7 +35,12 @@
     <!-- END PAGE CSS -->
 </head>
 <body class="active-ripple theme-darkpurple fix-header sidebar-extra bg-1">
-
+    <div id="loader">
+        <div class="double-bounce">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
 
     <!-- BEGIN HEADER -->
 
@@ -116,6 +121,12 @@
 
     <!-- END PAGE JAVASCRIPT -->
     @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        // اسکریپت برای مخفی کردن لودر پس از لود شدن صفحه
+        window.addEventListener('load', function() {
+            document.getElementById('loader').style.display = 'none';
+        });
+    </script>
 </body>
 
 <!-- Mirrored from demo.rayanik.com/modiran/light/dashboard2.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 11 Jan 2025 13:57:10 GMT -->

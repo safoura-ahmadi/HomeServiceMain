@@ -27,7 +27,7 @@
                                 <tr>
                                     <td>@Model.DetailModel.CustomerLname</td>
                                     <td>@Model.DetailModel.SubServiceName</td>
-                                    <td>@Model.DetailModel.Price</td>
+                                    <td>@Model.DetailModel.Price.ToString("N0")</td>
                                     <td>@Model.DetailModel.CreateAt.ToPersianString("yyyy/MM/dd")</td>
                                     <td>@Model.DetailModel.TimeToDone.ToPersianString("yyyy/MM/dd")</td>
                                     <td>@Model.DetailModel.Status.GetEnumDisplayName()</td>

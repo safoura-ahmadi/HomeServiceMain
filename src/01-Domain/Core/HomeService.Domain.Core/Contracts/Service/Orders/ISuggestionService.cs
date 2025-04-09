@@ -19,6 +19,7 @@ public interface ISuggestionService
     Task<int> GetExpertActiveSuggestionsCount(int expertId, CancellationToken cancellationToken);
     Task<int> GetCustomerActiveSuggestionsCount(int customerId, CancellationToken cancellationToken);
     Task<SuggestionOverviewDto?> GetById(int id, CancellationToken cancellationToken);
+    Task<bool> IsExpertSuggestedBefore(int expertId,int orderId, CancellationToken cancellationToken);
 
 
 }

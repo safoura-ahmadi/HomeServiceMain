@@ -162,7 +162,7 @@
                                     </td>
                                     <td> @item.CreateAt.ToPersianString("yyyy/MM/dd")</td>
                                     <td>@item.ExperLname </td>
-                                    <td>@item.Price</td>
+                                    <td>@item.Price.ToString("N0")</td>
                                     <td class="text-center">
                                         <button class="btn btn-warning round suggestion-detail-button"
                                                 data-id="@item.Id"

@@ -295,4 +295,19 @@ public class SuggestionEfRepository(ApplicationDbContext dbContext, ILogger<Sugg
             return null;
         }
     }
+
+    public async Task<bool> IsExpertSuggestedBefore(int expertId, int orderId, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var item = await _dbContext.Suggestions.AsNoTracking()
+                .AnyAsync(s => s.IsActive && s.OrderId == orderId && s.ExpertId == expertId);
+            return item;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("This Error Raised in {RepositoryName} by {ErrorMessage}", "SuggestionEfRepository", ex.Message);
+            return false;
+        }
+    }
 }

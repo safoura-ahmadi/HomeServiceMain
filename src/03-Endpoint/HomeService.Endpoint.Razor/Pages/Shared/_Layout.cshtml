@@ -22,7 +22,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    
+
     <link rel="stylesheet" href="~/UserTemplate/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/UserTemplate/css/font-awesome.min.css" />
     <link rel="stylesheet" href="~/UserTemplate/css/icofont.css" />
@@ -31,36 +31,34 @@
     <link rel="stylesheet" href="~/UserTemplate/css/main.css" />
     <link id="preset" rel="stylesheet" href="~/UserTemplate/css/presets/preset1.css" />
     <link rel="stylesheet" href="~/UserTemplate/css/responsive.css" />
-
     <link href="~/UserTemplate/assets/css/style.css" rel="stylesheet">
     <link href="~/UserTemplate/assets/css/colors.css" rel="stylesheet">
 
-   
 
 
 
     <!-- font -->
     <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,500,700,300"
-    rel="stylesheet"
-    type="text/css" />
+          rel="stylesheet"
+          type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Signika+Negative:400,300,600,700"
-    rel="stylesheet"
-    type="text/css" />
+          rel="stylesheet"
+          type="text/css" />
 
     <!-- icons -->
     <link rel="icon" href="~/UserTemplate/images/ico/favicon.ico" />
     <link rel="apple-touch-icon-precomposed"
-    sizes="144x144"
-    href="~/UserTemplate/images/ico/apple-touch-icon-144-precomposed.png" />
+          sizes="144x144"
+          href="~/UserTemplate/images/ico/apple-touch-icon-144-precomposed.png" />
     <link rel="apple-touch-icon-precomposed"
-    sizes="114x114"
-    href="~/UserTemplate/images/ico/apple-touch-icon-114-precomposed.png" />
+          sizes="114x114"
+          href="~/UserTemplate/images/ico/apple-touch-icon-114-precomposed.png" />
     <link rel="apple-touch-icon-precomposed"
-    sizes="72x72"
-    href="~/UserTemplate/images/ico/apple-touch-icon-72-precomposed.html" />
+          sizes="72x72"
+          href="~/UserTemplate/images/ico/apple-touch-icon-72-precomposed.html" />
     <link rel="apple-touch-icon-precomposed"
-    sizes="57x57"
-    href="~/UserTemplate/images/ico/apple-touch-icon-57-precomposed.png" />
+          sizes="57x57"
+          href="~/UserTemplate/images/ico/apple-touch-icon-57-precomposed.png" />
     <!-- icons -->
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -72,27 +70,32 @@
 
     <style>
         .collapse-table {
-        overflow: hidden;
-        transition: all 0.3s ease-in-out;
+            overflow: hidden;
+            transition: all 0.3s ease-in-out;
         }
 
         .collapse.show {
-        max-height: 500px;
+            max-height: 500px;
         }
 
         .btn-toggle {
-        transition: transform 0.3s ease-in-out;
+            transition: transform 0.3s ease-in-out;
         }
 
-        .btn-toggle.collapsed {
-        transform: rotate(180deg);
-        }
+            .btn-toggle.collapsed {
+                transform: rotate(180deg);
+            }
     </style>
 
 
 </head>
 <body>
-
+    <div id="loader">
+        <div class="double-bounce">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
     @{
         string profile = "";
         string orders = "";
@@ -131,12 +134,12 @@
         <nav class="navbar navbar-default navbar-expand-lg">
             <div class="container">
                 <button class="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#tr-mainmenu"
-                aria-controls="tr-mainmenu"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
+                        type="button"
+                        data-toggle="collapse"
+                        data-target="#tr-mainmenu"
+                        aria-controls="tr-mainmenu"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon">
                         <i class="fa fa-align-justify"></i>
                     </span>
@@ -148,10 +151,9 @@
                 <div class="collapse navbar-collapse" id="tr-mainmenu">
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
-                            <a 
-                            href="javascript:void(0);"
-                            class="dropdown-toggle"
-                            data-toggle="dropdown">
+                            <a href="javascript:void(0);"
+                               class="dropdown-toggle"
+                               data-toggle="dropdown">
                                 ‌خانه<span class="caret"></span>
                             </a>
                             @if (ViewData["Title"] != "خانه ی اصلی")
@@ -163,8 +165,8 @@
                         </li>
                         <li class="active dropdown">
                             <a href="javascript:void(0);"
-                            class="dropdown-toggle"
-                            data-toggle="dropdown">
+                               class="dropdown-toggle"
+                               data-toggle="dropdown">
                                 دسته بندی<span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
@@ -184,8 +186,8 @@
                     @if (!User.Identity!.IsAuthenticated)
                     {
                         <a asp-area="Account"
-                        asp-page="/Login"
-                        class="sign-in btn btn-info">
+                           asp-page="/Login"
+                           class="sign-in btn btn-info">
                             ورود/ثبت نام
                         </a>
 
@@ -212,7 +214,7 @@
     {
         <section id="main" class="clearfix ad-profile-page">
             <div class="container">
-               @*  <div class="breadcrumb-section">
+                @*  <div class="breadcrumb-section">
                     <!-- breadcrumb -->
                     <ol class="breadcrumb">
                         <li>خانه</li>
@@ -253,7 +255,7 @@
                         </div>
 
                         <div class="user">
-                            @if(data is not null && data.Fname != null)
+                            @if (data is not null && data.Fname != null)
                             {
                                 <h2>سلام, <a href="#">@data.Fname عزیز</a></h2>
                             }
@@ -294,11 +296,11 @@
 
                                     }
                                     @orderNum
-                                   <div class="mb-3">
-                                   <br />
+                                    <div class="mb-3">
+                                        <br />
                                         <small>سفارش های من</small>
-                                   </div>
-                                 
+                                    </div>
+
                                 </a>
                             </div>
                             <div class="favorites">
@@ -336,7 +338,7 @@
                                         <br />
                                         <small>پیشنهاد های من</small>
                                     </div>
-                                    
+
                                 </a>
                             </div>
                         </div>
@@ -350,10 +352,11 @@
                         {
                             <li class=@orders><a asp-page="/Orders/Index"> سفارشات من</a></li>
                         }
-                        else{
+                        else
+                        {
                             <li class=@orders><a asp-page="/Orders/ExpertOrders"> سفارشات من</a></li>
                         }
-                        @if(User.IsInRole("Expert"))
+                        @if (User.IsInRole("Expert"))
                         {
                             var expertId = int.Parse(User.Claims.First(c => c.Type == "ExpertId").Value);
                             <li class=@comments><a asp-page="/Users/Comments" asp-route-id="@expertId">کامنت‌ها</a></li>
@@ -482,6 +485,21 @@
     </div>
     <!--/End:Preset Style Chooser-->
     @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        // اسکریپت برای مخفی کردن لودر پس از لود شدن صفحه
+        window.addEventListener('load', function() {
+            document.getElementById('loader').style.display = 'none';
+        });
+    </script>
+  
+    <script>
+        $(document).ready(function() {
+            $('.separate').each(function() {
+                const text = $(this).text();
+                $(this).text(text.replace(/\d+/g, num => parseInt(num).toLocaleString('fa-IR')));
+            });
+        });
+    </script>
 </body>
 
 <!-- Mirrored from atiyehahmadi.ir/trade/my-profile.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 03 Jan 2025 19:01:49 GMT -->

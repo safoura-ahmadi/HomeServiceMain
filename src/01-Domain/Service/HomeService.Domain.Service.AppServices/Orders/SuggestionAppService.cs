@@ -11,7 +11,7 @@ using HomeService.Domain.Core.Entities.Orders;
 
 namespace HomeService.Domain.Service.AppServices.Orders;
 
-public class SuggestionAppService(ISuggestionService suggestionService, ICommentService commentService, IOrderService orderService,ISubServiceService subServiceService,IExpertSubServiceService expertSubServiceService) : ISuggestionAppService
+public class SuggestionAppService(ISuggestionService suggestionService, ICommentService commentService, IOrderService orderService, ISubServiceService subServiceService, IExpertSubServiceService expertSubServiceService) : ISuggestionAppService
 
 {
     private readonly ISuggestionService _suggestionService = suggestionService;
@@ -101,11 +101,20 @@ public class SuggestionAppService(ISuggestionService suggestionService, IComment
     {
         if (suggestion.ExpertId <= 0 || suggestion.SubServiceId <= 0 || suggestion.OrderId <= 0)
             return Result.Fail("مشخصات پیشنهاد نامعتبر است");
+        if (await IsExpertSuggestedBefore(suggestion.ExpertId, suggestion.OrderId, cancellationToken))
+            return Result.Fail("شما پیشنهادی از پیش ارائه داده اید");
         var serviceBasePrice = await subServiceService.GetBasePrice(suggestion.SubServiceId, cancellationToken);
         if (suggestion.Price < serviceBasePrice)
             return Result.Fail("قیمت پیشنهادی شما برای این سفارش نمیتواند کمتر از قیمت پایه ی هوم سرویس باشد");
 
        return await _suggestionService.Create(suggestion, cancellationToken);
        
+    }
+
+    public async Task<bool> IsExpertSuggestedBefore(int expertId, int orderId, CancellationToken cancellationToken)
+    {
+        if (expertId <= 0 || orderId <= 0)
+            return false;
+        return await _suggestionService.IsExpertSuggestedBefore(expertId, orderId, cancellationToken);
     }
 }

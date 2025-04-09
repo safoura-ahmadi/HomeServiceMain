@@ -75,4 +75,10 @@ public class SuggestionService(ISuggestionRepository repository) : ISuggestionSe
     {
         return await _repository.GetById(id, cancellationToken);
     }
+
+    public async Task<bool> IsExpertSuggestedBefore(int expertId, int orderId, CancellationToken cancellationToken)
+    {
+       
+        return await _repository.IsExpertSuggestedBefore(expertId, orderId, cancellationToken); 
+    }
 }

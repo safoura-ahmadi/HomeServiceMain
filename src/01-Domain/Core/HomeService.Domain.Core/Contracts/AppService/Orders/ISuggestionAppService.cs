@@ -17,4 +17,5 @@ public interface ISuggestionAppService
     Task<SuggestionOverviewDto?> GetById(int id, CancellationToken cancellationToken);
     Task<Result> ChangeStatetoAccepted(int id, CancellationToken cancellationToken);
     Task<Result> Create(SuggestionDto suggestion, CancellationToken cancellationToken);
+    Task<bool> IsExpertSuggestedBefore(int expertId,int orderId, CancellationToken cancellationToken);
 }
